@@ -9,13 +9,25 @@
   margin: 0;
 
   .image {
-    background: url("../assets/budget.jpg") no-repeat;
+    background: url("../assets/budget6.jpg") no-repeat center;
     background-size: cover;
-    background-position: center center;
+    background-position: 50% 45%;
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
+
+    @media screen and (max-width: 1500px) {
+      background: url("../assets/budget7.jpg") no-repeat center;
+    }
+
+    @media screen and (max-width: 800px) {
+      background: url("../assets/budget8.jpg") no-repeat center;
+    }
+
+    @media screen and (max-width: 400px) {
+      background: url("../assets/budget9.jpg") no-repeat center;
+    }
   }
 }

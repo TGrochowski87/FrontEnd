@@ -25,8 +25,7 @@ const BudgetTable = () => {
     loadingData();
   }, []);
 
-  const deleteHandler = async (id, event) => {
-    event.preventDefault();
+  const deleteHandler = async (id) => {
     fetch(`https://webhomebudget.azurewebsites.net/api/expenses/${id}`, {
       method: "DELETE",
     }).then(() => {
@@ -76,7 +75,7 @@ const BudgetTable = () => {
         </tbody>
       </Table>
       <div className="form-space">
-        <AddingForm />
+        <AddingForm loadingData={loadingData} data={data} />
       </div>
     </div>
   );

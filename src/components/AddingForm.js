@@ -4,7 +4,7 @@ import DatePicker, { getDefaultLocale } from "react-datepicker";
 import AddButton from "./AddButton";
 import "react-datepicker/dist/react-datepicker.css";
 
-const AddingForm = () => {
+const AddingForm = ({ loadingData, data }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [formActive, setFormActive] = useState(false);
 
@@ -13,18 +13,24 @@ const AddingForm = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    console.log(startDate.toJSON());
+
     fetch("https://webhomebudget.azurewebsites.net/api/expenses", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        date: "2021-03-22T00:00:00",
-        categoryId: 1,
-        amount: 20.0,
+        date: startDate.toJSON(),
+        categoryId: categoryInput,
+        amount: amountInput,
         budgetId: 1,
       }),
-    }).catch((error) => {
-      console.log(error);
-    });
+    })
+      .then(() => {
+        loadingData();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const addHandler = () => {
