@@ -1,0 +1,43 @@
+.table-space {
+  box-shadow: 0px 0px 9px 3px rgba($color: #a1a1a1, $alpha: 0.5);
+  overflow: visible;
+  background-color: rgb(241, 241, 241);
+  padding: 1rem 0 3rem;
+
+  .table-responsive {
+    button {
+      background-color: whitesmoke;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 0.2rem 0.5rem;
+      border: none;
+
+      transition: all 0.2s ease;
+
+      span {
+        padding-left: 0.5rem;
+        font-family: "Lato", sans-serif;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+    }
+
+    .delete-button {
+      color: rgb(195, 42, 42);
+
+      &:hover {
+        background-color: pink;
+      }
+    }
+
+    .edit-button {
+      color: rgb(40, 97, 143);
+
+      &:hover {
+        background-color: rgb(164, 196, 226);
+      }
+    }
+  }
+}

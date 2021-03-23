@@ -1,0 +1,87 @@
+.layout {
+  .table-space {
+    box-shadow: 0px 0px 9px 3px rgba($color: #a1a1a1, $alpha: 0.5);
+    overflow: visible;
+    background-color: rgb(241, 241, 241);
+    padding: 1rem 0 3rem;
+
+    .table-responsive {
+      button {
+        background-color: whitesmoke;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0.2rem 0.5rem;
+        border: none;
+
+        transition: all 0.2s ease;
+
+        span {
+          padding-left: 0.5rem;
+          font-family: "Lato", sans-serif;
+          font-weight: bold;
+          font-size: 1.2rem;
+        }
+      }
+
+      .delete-button {
+        color: rgb(195, 42, 42);
+
+        &:hover {
+          background-color: pink;
+        }
+      }
+
+      .edit-button {
+        color: rgb(40, 97, 143);
+
+        &:hover {
+          background-color: rgb(164, 196, 226);
+        }
+      }
+    }
+
+    .form-space {
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      padding: 1rem 0.5rem;
+
+      .button-space {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        padding: 2rem 0;
+
+        .add-button {
+          position: relative;
+          background-color: rgb(228, 228, 228);
+          border-radius: 8px;
+          border-top: rgb(184, 184, 184) solid 3px;
+          width: 56px;
+          height: 55px;
+          opacity: 80%;
+
+          font-family: "Lato", sans-serif;
+          font-size: 4rem;
+          cursor: pointer;
+
+          transition: all 0.2s ease;
+
+          &:hover {
+            opacity: 100%;
+            background-color: rgb(129, 201, 144);
+          }
+
+          .add-icon {
+            transform: translateY(-33%);
+            color: rgb(32, 167, 62);
+            opacity: 100%;
+            z-index: 2;
+          }
+        }
+      }
+    }
+  }
+}
