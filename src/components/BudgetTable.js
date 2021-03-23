@@ -35,7 +35,7 @@ const BudgetTable = () => {
 
   return (
     <div className="table-space">
-      <Table responsive>
+      <Table responsive style={{ marginLeft: "2rem" }}>
         <thead>
           <tr>
             <th>ID</th>
@@ -60,7 +60,7 @@ const BudgetTable = () => {
                   <td>{record.amount}</td>
                   <td>{today.toLocaleDateString()}</td>
                   <td>
-                    <EditButton record={record} />
+                    <EditButton id={record.id} />
                   </td>
                   <td>
                     <DeleteButton

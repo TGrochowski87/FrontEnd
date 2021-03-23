@@ -7,7 +7,6 @@ const DeleteButton = ({ deleteHandler, id }) => {
     <button
       className="delete-button"
       onClick={() => {
-        console.log(id);
         deleteHandler(id);
       }}
     >
