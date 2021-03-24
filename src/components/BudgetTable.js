@@ -2,17 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
-import AddingForm from "./AddingForm";
+import InputSpace from "./InputSpace";
 
 const BudgetTable = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [recordId, setRecordId] = useState(null);
+
+  const [inputStatus, setInputStatus] = useState("button");
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [categoryInput, setCategoryInput] = useState("");
+  const [amountInput, setAmountInput] = useState("");
 
   const loadingData = () => {
     setIsLoading(true);
     fetch(`https://webhomebudget.azurewebsites.net/api/expenses`)
       .then((response) => {
-        console.log(response);
         return response.json();
       })
       .then((response) => {
@@ -31,6 +37,14 @@ const BudgetTable = () => {
     }).then(() => {
       loadingData();
     });
+  };
+
+  const editHandler = (record) => {
+    setRecordId(record.id);
+    setInputStatus("edit");
+    setStartDate(new Date(record.date));
+    setCategoryInput(record.categoryId);
+    setAmountInput(record.amount);
   };
 
   return (
@@ -60,7 +74,7 @@ const BudgetTable = () => {
                   <td>{record.amount}</td>
                   <td>{today.toLocaleDateString()}</td>
                   <td>
-                    <EditButton id={record.id} />
+                    <EditButton record={record} editHandler={editHandler} />
                   </td>
                   <td>
                     <DeleteButton
@@ -75,7 +89,18 @@ const BudgetTable = () => {
         </tbody>
       </Table>
       <div className="form-space">
-        <AddingForm loadingData={loadingData} data={data} />
+        <InputSpace
+          recordId={recordId}
+          loadingData={loadingData}
+          inputStatus={inputStatus}
+          setInputStatus={setInputStatus}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          categoryInput={categoryInput}
+          setCategoryInput={setCategoryInput}
+          amountInput={amountInput}
+          setAmountInput={setAmountInput}
+        />
       </div>
     </div>
   );

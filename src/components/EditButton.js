@@ -2,16 +2,12 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
-const EditButton = () => {
-  const editHandler = () => {
-    console.log("edit");
-  };
-
+const EditButton = ({ record, editHandler }) => {
   return (
     <button
       className="edit-button"
       onClick={() => {
-        editHandler();
+        editHandler(record);
       }}
     >
       <FontAwesomeIcon icon={faEdit} />
