@@ -4,14 +4,15 @@
   justify-content: center;
   padding: 1rem 0.5rem;
 
-  .add-button {
+  #add-button {
     position: relative;
     background-color: rgb(228, 228, 228);
     border-radius: 8px;
+    border: none;
     border-top: rgb(184, 184, 184) solid 3px;
     width: 56px;
     height: 55px;
-    opacity: 80%;
+    opacity: 0.8;
 
     font-family: "Lato", sans-serif;
     font-size: 4rem;
@@ -20,14 +21,19 @@
     transition: all 0.2s ease;
 
     &:hover {
-      opacity: 100%;
+      opacity: 1;
       background-color: rgb(129, 201, 144);
     }
 
-    .add-icon {
+    #add-icon {
+      position: absolute;
+      top: 17px;
+      left: 0;
+      right: 0;
+      bottom: 0;
       transform: translateY(-33%);
       color: rgb(32, 167, 62);
-      opacity: 100%;
+      opacity: 1;
       z-index: 2;
     }
   }
