@@ -1,0 +1,21 @@
+.navbar {
+  background-color: #358b77; //#3FA78E
+
+  .navbar-brand {
+    color: #bbb;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  .navbar-collapse {
+    .nav-link {
+      color: #bbb;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+}
