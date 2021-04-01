@@ -1,9 +1,10 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Spinner } from "react-bootstrap";
 
 const Login = () => {
   return (
     <div className="login-form">
+      <Spinner animation="border" />
       <Form>
         <Button variant="outline-primary">
           <img
