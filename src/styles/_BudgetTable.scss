@@ -4,6 +4,16 @@
   background-color: rgb(241, 241, 241);
 
   .table-responsive {
+    .loading-cell {
+      text-align: center;
+    }
+
+    tbody {
+      tr {
+        cursor: pointer;
+      }
+    }
+
     button {
       background-color: whitesmoke;
       display: flex;

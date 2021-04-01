@@ -5,6 +5,7 @@ import Jumbotron from "./components/Jumbotron";
 import NavigationBar from "./components/NavigationBar";
 import BudgetTable from "./components/BudgetTable";
 import Login from "./components/Login";
+import ExpenseDetails from "./components/ExpenseDetails";
 import "./styles/App.scss";
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
         <Router>
           <Switch>
             <Route exact path="/" component={BudgetTable} />
-            <Route exact path="/login" component={Login} />
+            <Route path="/login" component={Login} />
+            <Route path="/expenses/:id" component={ExpenseDetails} />
           </Switch>
         </Router>
       </Layout>

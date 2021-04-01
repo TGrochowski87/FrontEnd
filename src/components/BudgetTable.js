@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
+import { Table, Spinner } from "react-bootstrap";
 import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
 import InputSpace from "./InputSpace";
+import { Router, useHistory } from "react-router-dom";
 
 const BudgetTable = () => {
   const [data, setData] = useState([]);
@@ -14,6 +15,8 @@ const BudgetTable = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [categoryInput, setCategoryInput] = useState("");
   const [amountInput, setAmountInput] = useState("");
+
+  const history = useHistory();
 
   const loadingData = () => {
     setIsLoading(true);
@@ -47,9 +50,14 @@ const BudgetTable = () => {
     setAmountInput(record.amount);
   };
 
+  const recordClickHandler = (id) => {
+    console.log(id);
+    history.push(`/expenses/${id}`);
+  };
+
   return (
     <div className="table-space">
-      <Table responsive style={{ marginLeft: "2rem" }}>
+      <Table responsive>
         <thead>
           <tr>
             <th>ID</th>
@@ -61,14 +69,19 @@ const BudgetTable = () => {
         <tbody>
           {isLoading ? (
             <tr>
-              <td>Loading...</td>
+              <td colSpan="4" className="loading-cell">
+                <Spinner animation="border" />
+              </td>
             </tr>
           ) : (
             data.map((record) => {
               let today = new Date(record.date);
 
               return (
-                <tr key={record.id}>
+                <tr
+                  key={record.id}
+                  onClick={() => recordClickHandler(record.id)}
+                >
                   <td>{record.id}</td>
                   <td>{record.category}</td>
                   <td>{record.amount}</td>
