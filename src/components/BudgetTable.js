@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Table, Spinner } from "react-bootstrap";
-import EditButton from "./EditButton";
-import DeleteButton from "./DeleteButton";
-import InputSpace from "./InputSpace";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+
+import { Table, Spinner } from 'react-bootstrap';
+
+import { useHistory } from 'react-router-dom';
+
+import DeleteButton from './DeleteButton';
+import EditButton from './EditButton';
+import InputSpace from './InputSpace';
 
 const BudgetTable = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [recordId, setRecordId] = useState(null);
 
-  const [inputStatus, setInputStatus] = useState("button");
+  const [inputStatus, setInputStatus] = useState('button');
 
   const [startDate, setStartDate] = useState(new Date());
-  const [categoryInput, setCategoryInput] = useState("");
-  const [amountInput, setAmountInput] = useState("");
+  const [categoryInput, setCategoryInput] = useState('');
+  const [amountInput, setAmountInput] = useState('');
 
   const history = useHistory();
 
@@ -36,7 +39,7 @@ const BudgetTable = () => {
 
   const deleteHandler = async (id) => {
     fetch(`https://webhomebudget.azurewebsites.net/api/expenses/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
     }).then(() => {
       loadingData();
     });
@@ -44,19 +47,19 @@ const BudgetTable = () => {
 
   const editHandler = (record) => {
     setRecordId(record.id);
-    setInputStatus("edit");
+    setInputStatus('edit');
     setStartDate(new Date(record.date));
     setCategoryInput(record.categoryId);
     setAmountInput(record.amount);
   };
 
   const recordClickHandler = (id) => {
-    console.log(id);
+    // console.log(id);
     history.push(`/expenses/${id}`);
   };
 
   return (
-    <div className="table-space">
+    <div className='table-space'>
       <Table responsive>
         <thead>
           <tr>
@@ -69,8 +72,8 @@ const BudgetTable = () => {
         <tbody>
           {isLoading ? (
             <tr>
-              <td colSpan="4" className="loading-cell">
-                <Spinner animation="border" />
+              <td colSpan='4' className='loading-cell'>
+                <Spinner animation='border' />
               </td>
             </tr>
           ) : (
@@ -101,7 +104,7 @@ const BudgetTable = () => {
           )}
         </tbody>
       </Table>
-      <div className="form-space">
+      <div className='form-space'>
         <InputSpace
           recordId={recordId}
           loadingData={loadingData}

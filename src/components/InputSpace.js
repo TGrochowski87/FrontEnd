@@ -1,7 +1,9 @@
-import React from "react";
-import "react-datepicker/dist/react-datepicker.css";
-import AddButton from "./AddButton";
-import ExpenseForm from "./ExpenseForm";
+import React from 'react';
+
+import 'react-datepicker/dist/react-datepicker.css';
+
+import AddButton from './AddButton';
+import ExpenseForm from './ExpenseForm';
 
 const InputSpace = ({
   loadingData,
@@ -17,11 +19,12 @@ const InputSpace = ({
 }) => {
   const postHandler = async (event) => {
     event.preventDefault();
-    setInputStatus("button");
+    setInputStatus('button');
+    console.log(categoryInput);
 
-    fetch("https://webhomebudget.azurewebsites.net/api/expenses", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    fetch('https://webhomebudget.azurewebsites.net/api/expenses', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         date: startDate.toJSON(),
         categoryId: categoryInput,
@@ -39,11 +42,12 @@ const InputSpace = ({
 
   const putHandler = async (event) => {
     event.preventDefault();
-    setInputStatus("button");
+    setInputStatus('button');
+    console.log(categoryInput);
 
     fetch(`https://webhomebudget.azurewebsites.net/api/expenses/${recordId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         date: startDate.toJSON(),
         categoryId: categoryInput,
@@ -60,20 +64,20 @@ const InputSpace = ({
   };
 
   const addHandler = (data) => {
-    setInputStatus("add");
+    setInputStatus('add');
   };
 
   const cancelHandler = () => {
     setStartDate(new Date());
-    setCategoryInput("");
-    setAmountInput("");
-    setInputStatus("button");
+    setCategoryInput('');
+    setAmountInput('');
+    setInputStatus('button');
   };
 
   switch (inputStatus) {
-    case "add":
+    case 'add':
       return (
-        <div className="form-space">
+        <div className='form-space'>
           <ExpenseForm
             submitHandler={postHandler}
             cancelHandler={cancelHandler}
@@ -86,9 +90,9 @@ const InputSpace = ({
           />
         </div>
       );
-    case "edit":
+    case 'edit':
       return (
-        <div className="form-space">
+        <div className='form-space'>
           <ExpenseForm
             submitHandler={putHandler}
             cancelHandler={cancelHandler}
@@ -103,7 +107,7 @@ const InputSpace = ({
       );
     default:
       return (
-        <div className="button-space">
+        <div className='button-space'>
           <AddButton addHandler={addHandler} />
         </div>
       );
