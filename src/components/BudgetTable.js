@@ -55,7 +55,7 @@ const BudgetTable = () => {
 
   const recordClickHandler = (id) => {
     // console.log(id);
-    // history.push(`/expenses/${id}`);
+    history.push(`/expenses/${id}`);
   };
 
   return (

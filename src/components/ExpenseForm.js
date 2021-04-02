@@ -18,15 +18,17 @@ const ExpenseForm = ({
 }) => {
   const [availableCategories, setAvailableCategories] = useState(null);
 
-  useEffect(async () => {
-    // potrzebny link
-    fetch('https://webhomebudget.azurewebsites.net/api/category/base')
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        setAvailableCategories(response);
-      });
+  useEffect(() => {
+    const fetchData = async () => {
+      fetch('https://webhomebudget.azurewebsites.net/api/category/base')
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          setAvailableCategories(response);
+        });
+    };
+    fetchData();
   }, []);
 
   return (
