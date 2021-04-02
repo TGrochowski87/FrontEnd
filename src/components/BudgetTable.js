@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Table, Spinner } from 'react-bootstrap';
 
-import { Router, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
