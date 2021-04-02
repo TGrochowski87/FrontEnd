@@ -3,7 +3,7 @@ import { Table, Spinner } from "react-bootstrap";
 import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
 import InputSpace from "./InputSpace";
-import { Router, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const BudgetTable = () => {
   const [data, setData] = useState([]);
