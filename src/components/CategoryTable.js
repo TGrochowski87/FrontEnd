@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import CategoryBlock from "./CategoryBlock";
 
 const CategoryTable = () => {
-  const [categories, setCategories] = useState([
-    "Jedzenie",
-    "Na mieście",
-    "Ubrania",
-  ]);
+  // const [categories, setCategories] = useState([
+  //   "Jedzenie",
+  //   "Na mieście",
+  //   "Ubrania",
+  // ]);
 
   return (
     <div className="category-table">
