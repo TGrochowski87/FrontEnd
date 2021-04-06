@@ -51,7 +51,6 @@ const BudgetTable = () => {
   };
 
   const recordClickHandler = (id) => {
-    console.log(id);
     history.push(`/expenses/${id}`);
   };
 
@@ -101,6 +100,7 @@ const BudgetTable = () => {
           )}
         </tbody>
       </Table>
+
       <div className="form-space">
         <InputSpace
           recordId={recordId}

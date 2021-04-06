@@ -1,0 +1,38 @@
+.category-block {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 10%;
+
+  box-shadow: 0px 0px 9px 3px rgba($color: #a1a1a1, $alpha: 0.5);
+  background-color: rgb(223, 223, 223);
+  height: 4rem;
+
+  margin-bottom: 1rem;
+
+  p {
+    font-size: 1.5rem;
+
+    @media screen and (max-width: 1020px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  .add-category {
+    position: absolute;
+    right: 3%;
+    top: 15%;
+    font-size: 250%;
+    cursor: pointer;
+    color: rgb(32, 167, 62);
+  }
+
+  .delete-category {
+    position: absolute;
+    left: 3%;
+    top: 5%;
+    cursor: pointer;
+    color: rgb(195, 42, 42);
+  }
+}
