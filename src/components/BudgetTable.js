@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+
 import { Table, Spinner } from "react-bootstrap";
-import EditButton from "./EditButton";
-import DeleteButton from "./DeleteButton";
-import InputSpace from "./InputSpace";
+
 import { useHistory } from "react-router-dom";
+
+import DeleteButton from "./DeleteButton";
+import EditButton from "./EditButton";
+import InputSpace from "./InputSpace";
 
 const BudgetTable = () => {
   const [data, setData] = useState([]);
