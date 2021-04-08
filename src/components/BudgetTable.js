@@ -53,7 +53,10 @@ const BudgetTable = () => {
     setAmountInput(record.amount);
   };
 
-  const recordClickHandler = (id) => {
+  const recordClickHandler = (event, id) => {
+    if (event.target.tagName !== "TD") {
+      return;
+    }
     history.push(`/expenses/${id}`);
   };
 
@@ -64,7 +67,7 @@ const BudgetTable = () => {
           <tr>
             <th>ID</th>
             <th>Category</th>
-            <th>Amount</th>
+            <th>Price</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -82,11 +85,11 @@ const BudgetTable = () => {
               return (
                 <tr
                   key={record.id}
-                  onClick={() => recordClickHandler(record.id)}
+                  onClick={(event) => recordClickHandler(event, record.id)}
                 >
                   <td>{record.id}</td>
                   <td>{record.category}</td>
-                  <td>{record.amount}</td>
+                  <td>{record.price}</td>
                   <td>{today.toLocaleDateString()}</td>
                   <td>
                     <EditButton record={record} editHandler={editHandler} />
