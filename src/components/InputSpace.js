@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker.css";
 
-import AddButton from './AddButton';
-import ExpenseForm from './ExpenseForm';
+import AddButton from "./AddButton";
+import ExpenseForm from "./ExpenseForm";
 
 const InputSpace = ({
   loadingData,
@@ -70,7 +70,7 @@ const InputSpace = ({
   };
 
   const addHandler = (data) => {
-    setInputStatus('add');
+    setInputStatus("add");
   };
 
   const cancelHandler = () => {
@@ -81,7 +81,7 @@ const InputSpace = ({
   };
 
   switch (inputStatus) {
-    case 'add':
+    case "add":
       return (
         <ExpenseForm
           submitHandler={postHandler}
@@ -94,7 +94,7 @@ const InputSpace = ({
           setPriceInput={setPriceInput}
         />
       );
-    case 'edit':
+    case "edit":
       return (
         <ExpenseForm
           submitHandler={putHandler}
@@ -109,7 +109,7 @@ const InputSpace = ({
       );
     default:
       return (
-        <div className='button-space'>
+        <div className="button-space">
           <AddButton addHandler={addHandler} />
         </div>
       );

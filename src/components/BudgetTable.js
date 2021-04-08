@@ -51,8 +51,12 @@ const BudgetTable = () => {
     setPriceInput(record.price);
   };
 
-  const recordClickHandler = (id) => {
-    // history.push(`/expenses/${id}`);
+
+  const recordClickHandler = (event, id) => {
+    if (event.target.tagName !== "TD") {
+      return;
+    }
+    history.push(`/expenses/${id}`);
   };
 
   return (
@@ -80,7 +84,7 @@ const BudgetTable = () => {
               return (
                 <tr
                   key={record.id}
-                  onClick={() => recordClickHandler(record.id)}
+                  onClick={(event) => recordClickHandler(event, record.id)}
                 >
                   <td>{record.id}</td>
                   <td>{record.category}</td>

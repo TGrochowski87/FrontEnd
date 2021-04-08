@@ -18,7 +18,7 @@ const Login = ({ setNickName }) => {
   return (
     <div className="login-form">
       <GoogleLogin
-        clientId="547678833320-vj5q760o37pk3btpm4jdqkh7febjbpoc.apps.googleusercontent.com"
+        clientId="547678833320-c51cue6q8t1q7mc1mrjfihpq5gk6ji30.apps.googleusercontent.com"
         buttonText="Sign in with Google"
         onSuccess={successHandler}
         onFailure={failureHandler}

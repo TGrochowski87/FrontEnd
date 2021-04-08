@@ -1,14 +1,34 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusSquare, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import {
+  faPlusSquare,
+  faWindowClose,
+} from "@fortawesome/free-regular-svg-icons";
 
-const CategoryBlock = () => {
+const CategoryBlock = ({
+  category,
+  deleteHandler,
+  postSubHandler,
+  setAddActive,
+}) => {
   return (
-    <div className="category-block">
-      <FontAwesomeIcon icon={faTrashAlt} className="delete-category" />
-      <p>Placeholder</p>
-      <FontAwesomeIcon icon={faPlusSquare} className="add-category" />
-    </div>
+    <button className="category-block">
+      <FontAwesomeIcon
+        icon={faWindowClose}
+        className="delete-category"
+        onClick={() => {
+          deleteHandler(category.id);
+        }}
+      />
+      <p>{category.name}</p>
+      <FontAwesomeIcon
+        className="close-icon add-category"
+        icon={faPlusSquare}
+        onClick={() => {
+          setAddActive(true);
+        }}
+      />
+    </button>
   );
 };
 
