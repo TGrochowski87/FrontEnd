@@ -14,22 +14,27 @@ const InputSpace = ({
   setStartDate,
   categoryInput,
   setCategoryInput,
-  amountInput,
-  setAmountInput,
+  priceInput,
+  setPriceInput,
 }) => {
   const postHandler = async (event) => {
     event.preventDefault();
-    setInputStatus("button");
+    setInputStatus('button');
 
-    fetch("https://webhomebudget.azurewebsites.net/api/expenses", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        date: startDate.toJSON(),
-        categoryId: categoryInput,
-        amount: amountInput,
-        budgetId: 1,
-      }),
+    const data = {
+      date: startDate.toJSON(),
+      categoryId: categoryInput,
+      price: priceInput,
+      budgetId: 1,
+    };
+
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(data));
+    // formData.append('files', "FILE HERE");
+
+    fetch('https://webhomebudget.azurewebsites.net/api/expenses', {
+      method: 'POST',
+      body: formData,
     })
       .then(() => {
         loadingData();
@@ -41,18 +46,20 @@ const InputSpace = ({
 
   const putHandler = async (event) => {
     event.preventDefault();
-    setInputStatus("button");
-    console.log(categoryInput);
+    setInputStatus('button');
+
+    const data = {
+      id: recordId,
+      date: startDate.toJSON(),
+      categoryId: categoryInput,
+      price: priceInput,
+      budgetId: 1,
+    };
 
     fetch(`https://webhomebudget.azurewebsites.net/api/expenses/${recordId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        date: startDate.toJSON(),
-        categoryId: categoryInput,
-        amount: amountInput,
-        budgetId: 1,
-      }),
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     })
       .then(() => {
         loadingData();
@@ -68,26 +75,24 @@ const InputSpace = ({
 
   const cancelHandler = () => {
     setStartDate(new Date());
-    setCategoryInput("");
-    setAmountInput("");
-    setInputStatus("button");
+    setCategoryInput('');
+    setPriceInput('');
+    setInputStatus('button');
   };
 
   switch (inputStatus) {
     case "add":
       return (
-        <div className="form-space">
-          <ExpenseForm
-            submitHandler={postHandler}
-            cancelHandler={cancelHandler}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            categoryInput={categoryInput}
-            setCategoryInput={setCategoryInput}
-            amountInput={amountInput}
-            setAmountInput={setAmountInput}
-          />
-        </div>
+        <ExpenseForm
+          submitHandler={postHandler}
+          cancelHandler={cancelHandler}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          categoryInput={categoryInput}
+          setCategoryInput={setCategoryInput}
+          priceInput={priceInput}
+          setPriceInput={setPriceInput}
+        />
       );
     case "edit":
       return (
@@ -98,8 +103,8 @@ const InputSpace = ({
           setStartDate={setStartDate}
           categoryInput={categoryInput}
           setCategoryInput={setCategoryInput}
-          amountInput={amountInput}
-          setAmountInput={setAmountInput}
+          priceInput={priceInput}
+          setPriceInput={setPriceInput}
         />
       );
     default:
