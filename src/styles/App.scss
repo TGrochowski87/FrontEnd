@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: rgb(224, 224, 224);
+  background-color: rgb(40, 43, 51);
 }
 
 @import "./Jumbotron";
@@ -14,6 +14,5 @@ body {
 @import "./FormSpace";
 @import "./NavigationBar";
 @import "./Login";
-@import "./CategoryTable";
 @import "./BudgetPage";
-@import "./CategoryBlock";
+@import "./CategoryPage";

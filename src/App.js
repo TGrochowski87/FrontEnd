@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Jumbotron from "./components/Jumbotron";
 import NavigationBar from "./components/NavigationBar";
 import BudgetPage from "./components/BudgetPage";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import CategoryPage from "./components/categories/CategoryPage";
 import ExpenseDetails from "./components/ExpenseDetails";
 import useSessionStorageState from "./SessionStorageState";
 import "./styles/App.scss";
@@ -15,7 +15,6 @@ function App() {
   return (
     <div className="App">
       <NavigationBar nickName={nickName} setNickName={setNickName} />
-      <Jumbotron />
       <Router>
         <Switch>
           <Route exact path="/" component={BudgetPage} />
@@ -25,6 +24,7 @@ function App() {
           />
           <Route path="/expenses/:id" component={ExpenseDetails} />
           <Route path="/register" component={Register} />
+          <Route path="/categories" component={CategoryPage} />
         </Switch>
       </Router>
     </div>

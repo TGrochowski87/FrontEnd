@@ -1,6 +1,7 @@
 import React from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useHistory } from "react-router";
+import icon from "../assets/icon.png";
 
 const NavigationBar = ({ nickName, setNickName }) => {
   const history = useHistory();
@@ -12,12 +13,15 @@ const NavigationBar = ({ nickName, setNickName }) => {
 
   return (
     <Navbar expand="lg">
-      <Navbar.Brand href="/">BUDGET</Navbar.Brand>
+      <Navbar.Brand href="/">
+        <img src={icon} width="50px" alt="Home" />
+        <h2>Home Budget Planner</h2>
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
           <Nav.Item>
-            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/categories">Categories</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             {nickName !== "" ? (

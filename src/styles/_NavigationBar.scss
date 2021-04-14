@@ -1,8 +1,23 @@
 .navbar {
-  background-color: #358b77; //#3FA78E
+  background-color: #355f77;
 
   .navbar-brand {
-    color: #bbb;
+    display: flex;
+    flex-direction: row;
+
+    margin: 0;
+    padding: 0;
+    color: rgb(226, 226, 226);
+
+    @media screen and (max-width: 500px) {
+      h2 {
+        display: none;
+      }
+    }
+
+    img {
+      margin-right: 0.5rem;
+    }
 
     &:hover {
       color: white;
@@ -11,7 +26,7 @@
 
   .navbar-collapse {
     .nav-link {
-      color: #bbb;
+      color: rgb(226, 226, 226);
 
       &:hover {
         color: white;
