@@ -56,23 +56,18 @@ const CategoryList = ({ categories, fetchCategories }) => {
     });
   };
 
-  const categoryList = [];
-  for (let i = 0; i < categories.length; i++) {
-    categoryList.push(
-      <CategoryCard
-        key={categories[i].id}
-        category={categories[i]}
-        color={colors[i % colors.length]}
-        addSubCategory={addSubCategory}
-        deleteHandler={deleteHandler}
-      />
-    );
-  }
-
   return (
     <div className="category-list">
       <CategoryPlus categories={categories} addCategory={addCategory} />
-      {categoryList}
+      {categories.map((cat, index) => (
+        <CategoryCard
+          key={cat.id}
+          category={cat}
+          color={colors[index % colors.length]}
+          addSubCategory={addSubCategory}
+          deleteHandler={deleteHandler}
+        />
+      ))}
     </div>
   );
 };

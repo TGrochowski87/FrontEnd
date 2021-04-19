@@ -21,6 +21,9 @@ const NavigationBar = ({ nickName, setNickName }) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
           <Nav.Item>
+            <Nav.Link href="/expenses">Expenses</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
             <Nav.Link href="/categories">Categories</Nav.Link>
           </Nav.Item>
           <Nav.Item>

@@ -7,8 +7,7 @@ import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
 import InputSpace from "./InputSpace";
 
-const BudgetTable = () => {
-  const [data, setData] = useState([]);
+const BudgetTable = ({ setData, filteredData, setFilteredData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [recordId, setRecordId] = useState(null);
 
@@ -28,12 +27,14 @@ const BudgetTable = () => {
       })
       .then((response) => {
         setData(response);
+        setFilteredData(response);
         setIsLoading(false);
       });
   };
 
   useEffect(() => {
     loadingData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const deleteHandler = async (id) => {
@@ -78,7 +79,7 @@ const BudgetTable = () => {
               </td>
             </tr>
           ) : (
-            data.map((record) => {
+            filteredData.map((record) => {
               let today = new Date(record.date);
 
               return (

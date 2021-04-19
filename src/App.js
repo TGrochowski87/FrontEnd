@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import BudgetPage from "./components/BudgetPage";
@@ -7,24 +7,73 @@ import Register from "./components/Register";
 import CategoryPage from "./components/categories/CategoryPage";
 import ExpenseDetails from "./components/ExpenseDetails";
 import useSessionStorageState from "./SessionStorageState";
+import HomePage from "./components/HomePage";
 import "./styles/App.scss";
 
 function App() {
   const [nickName, setNickName] = useSessionStorageState("", "name");
+
+  //Categories
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchCategories = async () => {
+    const supCategories = await fetch(
+      "https://webhomebudget.azurewebsites.net/api/category/base/over"
+    ).then((response) => response.json());
+
+    const fetchSubcategories = async () => {
+      const newCategoriesData = [];
+      for (const sup of supCategories) {
+        const subcategories = await fetch(
+          `https://webhomebudget.azurewebsites.net/api/category/base/sub/${sup.id}`
+        ).then((response) => response.json());
+        const dataItem = { ...sup, subcategories };
+        newCategoriesData.push(dataItem);
+      }
+
+      setCategories(newCategoriesData);
+      setIsLoading(false);
+    };
+    await fetchSubcategories();
+  };
+  //
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchCategories();
+  }, []);
 
   return (
     <div className="App">
       <NavigationBar nickName={nickName} setNickName={setNickName} />
       <Router>
         <Switch>
-          <Route exact path="/" component={BudgetPage} />
+          <Route exact path="/" component={HomePage} />
+          <Route
+            exact
+            path="/expenses"
+            render={(props) => (
+              <BudgetPage {...props} categories={categories} />
+            )}
+          />
           <Route
             path="/login"
             render={(props) => <Login {...props} setNickName={setNickName} />}
           />
           <Route path="/expenses/:id" component={ExpenseDetails} />
           <Route path="/register" component={Register} />
-          <Route path="/categories" component={CategoryPage} />
+          <Route
+            path="/categories"
+            render={(props) => (
+              <CategoryPage
+                {...props}
+                categories={categories}
+                fetchCategories={fetchCategories}
+                isLoading={isLoading}
+              />
+            )}
+          />
         </Switch>
       </Router>
     </div>
