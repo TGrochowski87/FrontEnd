@@ -5,7 +5,7 @@ import {
   PersonAddOutlined,
 } from '@material-ui/icons';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Container, Spinner } from 'react-bootstrap';
 
@@ -27,9 +27,9 @@ const ExpensesPage = () => {
 
   const {
     get,
-    post,
-    put,
-    del,
+    // post,
+    // put,
+    // del,
     loading: expensesLoading,
     error: expensesError,
     response,
@@ -39,14 +39,10 @@ const ExpensesPage = () => {
     // },
   });
 
-  useEffect(() => {
-    expenseGet();
-  }, []);
-
-  const expenseGet = async () => {
+  const expenseGet = useCallback(async () => {
     const newExpenses = await get();
     if (response.ok) setExpenses(newExpenses);
-  };
+  }, [response, get, setExpenses]); // dodany callback - moze sie wysypac
 
   const expensePost = async (formData) => {
     for (var p of formData) {
@@ -65,9 +61,9 @@ const ExpensesPage = () => {
 
     const fd = new FormData();
     fd.append('data', JSON.stringify(data));
-    for (var p of fd) {
-      console.log(p);
-    }
+    // for (var p of fd) {
+    //   console.log(p);
+    // }
 
     fetch('https://webhomebudget.azurewebsites.net/api/expenses', {
       method: 'POST',
@@ -81,8 +77,12 @@ const ExpensesPage = () => {
       });
   };
 
-  const expensePut = async (params) => {};
-  const expenseDelete = async (params) => {};
+  useEffect(() => {
+    expenseGet();
+  }, [expenseGet]);
+
+  // const expensePut = async (params) => {};
+  // const expenseDelete = async (params) => {};
 
   const onFetchErrorComponent = <div>Data fetching error</div>;
   const onFetchLoadingComponent = <Spinner animation='border' />;
