@@ -8,9 +8,8 @@ import Login from './components/Login';
 import NavigationBar from './components/NavigationBar';
 import Register from './components/Register';
 import './styles/App.scss';
-import BudgetPage from './components/budget/BudgetPage';
 import CategoryPage from './components/categories/CategoryPage';
-import ExpenseDetails from './components/expense/ExpenseDetails';
+import ExpensesPage from './components/expenses/ExpensesPage';
 
 function App() {
   const [nickName, setNickName] = useSessionStorageState('', 'name');
@@ -20,12 +19,11 @@ function App() {
       <NavigationBar nickName={nickName} setNickName={setNickName} />
       <Router>
         <Switch>
-          <Route exact path='/' component={BudgetPage} />
+          <Route exact path='/' component={ExpensesPage} />
           <Route
             path='/login'
             render={(props) => <Login {...props} setNickName={setNickName} />}
           />
-          <Route path='/expenses/:id' component={ExpenseDetails} />
           <Route path='/register' component={Register} />
           <Route path='/categories' component={CategoryPage} />
         </Switch>

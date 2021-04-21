@@ -1,0 +1,15 @@
+.image-carosuel {
+  background-color: #282b33;
+
+  img {
+    cursor: zoom-in;
+  }
+
+  .cursor-transparent-caption {
+    pointer-events: none;
+
+    > * {
+      pointer-events: auto;
+    }
+  }
+}

@@ -2,7 +2,7 @@ import React from 'react';
 
 import NumberFormat from 'react-number-format';
 
-const BudgetTabEntryItemPrice = ({ data }) => {
+const ExpensesTabEntryItemPrice = ({ data }) => {
   if (data) {
     return (
       <NumberFormat
@@ -18,4 +18,4 @@ const BudgetTabEntryItemPrice = ({ data }) => {
   return <span>No data</span>;
 };
 
-export default BudgetTabEntryItemPrice;
+export default ExpensesTabEntryItemPrice;

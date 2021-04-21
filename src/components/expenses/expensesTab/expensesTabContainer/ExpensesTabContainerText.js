@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Card } from 'react-bootstrap';
 
-const BudgetTabContainerText = ({ children }) => {
+const ExpensesTabContainerText = ({ children }) => {
   return <Card.Text>{children}</Card.Text>;
 };
-export default BudgetTabContainerText;
+export default ExpensesTabContainerText;
