@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
-import BudgetPage from "./components/BudgetPage";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import CategoryPage from "./components/categories/CategoryPage";
-import ExpenseDetails from "./components/ExpenseDetails";
 import useSessionStorageState from "./SessionStorageState";
 import HomePage from "./components/HomePage";
+import ExpensesPage from './components/expenses/ExpensesPage';
 import "./styles/App.scss";
 
 function App() {
-  const [nickName, setNickName] = useSessionStorageState("", "name");
+  const [nickName, setNickName] = useSessionStorageState('', 'name');
 
   //Categories
   const [categories, setCategories] = useState([]);
@@ -45,23 +44,16 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className='App'>
       <NavigationBar nickName={nickName} setNickName={setNickName} />
       <Router>
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route exact path='/expenses' component={ExpensesPage} />
           <Route
-            exact
-            path="/expenses"
-            render={(props) => (
-              <BudgetPage {...props} categories={categories} />
-            )}
-          />
-          <Route
-            path="/login"
+            path='/login'
             render={(props) => <Login {...props} setNickName={setNickName} />}
           />
-          <Route path="/expenses/:id" component={ExpenseDetails} />
           <Route path="/register" component={Register} />
           <Route
             path="/categories"

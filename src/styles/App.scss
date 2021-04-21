@@ -11,12 +11,15 @@ body {
   background-color: rgb(40, 43, 51);
 }
 
-@import "./Jumbotron";
-@import "./BudgetTable";
-@import "./FormSpace";
-@import "./NavigationBar";
-@import "./Login";
-@import "./BudgetPage";
-@import "./CategoryPage";
+@import './Jumbotron';
+@import './BudgetTable';
+@import './FormSpace';
+@import './NavigationBar';
+@import './Login';
+@import './BudgetPage';
+@import './CategoryPage';
+@import './DatePicker';
+@import './ImagePicker';
+@import './ImageCarousel';
 @import "./FilterPanel";
 @import "./Dropdown";
