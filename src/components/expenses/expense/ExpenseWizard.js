@@ -1,28 +1,28 @@
-import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import { Form, Button, Col, FormControl } from "react-bootstrap";
+import { Form, Button, Col, FormControl } from 'react-bootstrap';
 
-import CurrencyInput from "react-currency-input-field";
+import CurrencyInput from 'react-currency-input-field';
 
-import { Typeahead } from "react-bootstrap-typeahead";
+import { Typeahead } from 'react-bootstrap-typeahead';
 
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-import useFetch from "use-http";
+import useFetch from 'use-http';
 
-import ImageCarousel from "./../../utils/ImageCarousel";
-import ImagePicker from "./../../utils/ImagePicker";
+import ImageCarousel from './../../utils/ImageCarousel';
+import ImagePicker from './../../utils/ImagePicker';
 
 const ExpenseWizard = ({ expensePost }) => {
   const [category, setCategory] = useState([]);
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState('');
   const [date, setDate] = useState(new Date());
   const [images, setImages] = useState([]);
   const [categoryPlaceholder, setCategoryPlaceholder] = useState(
-    "Loading categories"
+    'Loading categories'
   );
 
   const {
@@ -30,10 +30,10 @@ const ExpenseWizard = ({ expensePost }) => {
     error: categoriesError,
     data: categoryOptions = [],
   } = useFetch(
-    "https://webhomebudget.azurewebsites.net/api/category",
+    'https://webhomebudget.azurewebsites.net/api/category',
     {
       headers: {
-        Authorization: "Bearer " + sessionStorage.getItem("userToken"),
+        Authorization: 'Bearer ' + sessionStorage.getItem('userToken'),
       },
     },
     []
@@ -41,9 +41,9 @@ const ExpenseWizard = ({ expensePost }) => {
 
   // should be actually in separeate component for typeahead
   useEffect(() => {
-    if (categoriesError) setCategoryPlaceholder("Error occured");
-    else if (categoriesLoading) setCategoryPlaceholder("Loading categories");
-    else setCategoryPlaceholder("Start typing category name...");
+    if (categoriesError) setCategoryPlaceholder('Error occured');
+    else if (categoriesLoading) setCategoryPlaceholder('Loading categories');
+    else setCategoryPlaceholder('Start typing category name...');
   }, [categoriesLoading, categoriesError]);
 
   const handleSubmit = (e) => {
@@ -55,55 +55,65 @@ const ExpenseWizard = ({ expensePost }) => {
       budgetId: 1,
     };
     const formData = new FormData();
-    formData.append("data", JSON.stringify(dataPost));
-    // formData.append('files', images);
+    formData.append('data', JSON.stringify(dataPost));
+    images.forEach((img) => {
+      formData.append('files', img);
+    });
+
     expensePost(formData);
   };
-  console.log(categoryOptions);
+
+  const clearWizard = () => {
+    setCategory([]);
+    setPrice('');
+    setDate(new Date());
+    setImages([]);
+    setCategoryPlaceholder('Start typing category name...');
+  };
 
   return (
     <Form
-      className="text-left"
+      className='text-left'
       onSubmit={(e) => {
         handleSubmit(e);
       }}
     >
       <Form.Row>
-        <Form.Group as={Col} md={4} controlId="formGroupCategory">
+        <Form.Group as={Col} md={4} controlId='formGroupCategory'>
           <Form.Label>Category</Form.Label>
           <Typeahead
             disabled={categoriesError || categoriesLoading}
             as={FormControl}
-            id="inputCategory"
-            labelKey="name"
+            id='inputCategory'
+            labelKey='name'
             onChange={(selected) => setCategory(selected)}
             options={categoryOptions}
             placeholder={categoryPlaceholder}
             selected={category}
           />
         </Form.Group>
-        <Form.Group as={Col} md={4} controlId="formGroupPrice">
+        <Form.Group as={Col} md={4} controlId='formGroupPrice'>
           <Form.Label>Price</Form.Label>
           <CurrencyInput
             as={FormControl}
-            className="form-control"
-            id="inputPrice"
-            name="inputPrice"
-            placeholder="Please enter a value"
+            className='form-control'
+            id='inputPrice'
+            name='inputPrice'
+            placeholder='Please enter a value'
             defaultValue={price}
             decimalsLimit={2}
             decimalScale={2}
-            prefix="$"
+            prefix='$'
             onValueChange={setPrice}
           />
         </Form.Group>
-        <Form.Group as={Col} md={4} controlId="formGroupDate">
+        <Form.Group as={Col} md={4} controlId='formGroupDate'>
           <Form.Label>Date</Form.Label>
           <DatePicker
             as={FormControl}
-            className="form-control"
-            id="inputDate"
-            name="inputDate"
+            className='form-control'
+            id='inputDate'
+            name='inputDate'
             onChange={(date) => setDate(date)}
             selected={date}
           />
@@ -113,8 +123,8 @@ const ExpenseWizard = ({ expensePost }) => {
         <Form.Group
           as={Col}
           md={4}
-          className="d-flex align-items-center"
-          controlId="formGroupImagesList"
+          className='d-flex align-items-center'
+          controlId='formGroupImagesList'
         >
           <Form.Label srOnly>Images</Form.Label>
           <ImageCarousel
@@ -125,17 +135,30 @@ const ExpenseWizard = ({ expensePost }) => {
               });
               setImages(newImages);
             }}
-            carouselHeight="125px"
+            carouselHeight='125px'
             buttonIcon={<DeleteForeverOutlinedIcon />}
           />
         </Form.Group>
-        <Form.Group as={Col} md={8} controlId="formGroupImagesPicker">
+        <Form.Group as={Col} md={8} controlId='formGroupImagesPicker'>
           <Form.Label srOnly>Images</Form.Label>
           <ImagePicker images={images} onNewImages={setImages} />
         </Form.Group>
       </Form.Row>
-      <Form.Row className="justify-content-center">
-        <Button variant="dark" type="submit">
+      <Form.Row className='justify-content-center'>
+        <Button
+          variant='dark'
+          className='mx-1'
+          style={{ minWidth: '7rem' }}
+          onClick={clearWizard}
+        >
+          Clear
+        </Button>
+        <Button
+          variant='dark'
+          className='mx-1'
+          style={{ minWidth: '7rem' }}
+          type='submit'
+        >
           Submit
         </Button>
       </Form.Row>

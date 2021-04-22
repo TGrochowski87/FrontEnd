@@ -3,33 +3,33 @@ import {
   EventOutlined,
   MonetizationOnOutlined,
   PersonAddOutlined,
-} from "@material-ui/icons";
+} from '@material-ui/icons';
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { Container, Spinner } from "react-bootstrap";
+import { Container, Spinner, Button } from 'react-bootstrap';
 
-import useFetch from "use-http";
+import useFetch from 'use-http';
 
-import ConatinerWithHeader from "./ConatinerWithHeader";
+import ConatinerWithHeader from './ConatinerWithHeader';
 
-import ExpenseWizard from "./expense/ExpenseWizard";
-import ExpensesTab from "./expensesTab/ExpensesTab";
-
-import FilterPanel from "../filters/FilterPanel";
+import ExpenseWizard from './expense/ExpenseWizard';
+import ExpensesTab from './expensesTab/ExpensesTab';
 
 const ExpensesPage = () => {
   const [expenses, setExpenses] = useState([]);
+  const [getPage, setGetPage] = useState(1);
+
   const icons = {
-    category: <CategoryOutlined fontSize="small" />,
-    price: <MonetizationOnOutlined fontSize="small" />,
-    date: <EventOutlined fontSize="small" />,
-    author: <PersonAddOutlined fontSize="small" />,
+    category: <CategoryOutlined fontSize='small' />,
+    price: <MonetizationOnOutlined fontSize='small' />,
+    date: <EventOutlined fontSize='small' />,
+    author: <PersonAddOutlined fontSize='small' />,
   };
 
   const {
     get,
-    // post,
+    post,
     // put,
     // del,
     loading: expensesLoading,
@@ -37,68 +37,89 @@ const ExpensesPage = () => {
     response,
   } = useFetch(`https://webhomebudget.azurewebsites.net/api/budget/expenses`, {
     headers: {
-      Authorization: "Bearer " + sessionStorage.getItem("userToken"),
+      Authorization: 'Bearer ' + sessionStorage.getItem('userToken'),
     },
+    cachePolicy: 'no-cache',
   });
 
-  const expenseGet = useCallback(async () => {
-    const newExpenses = await get();
-    if (response.ok) setExpenses(newExpenses);
-  }, [response, get, setExpenses]); // dodany callback - moze sie wysypac
+  // const expenseGet = useCallback(async () => {
+  //   const newExpenses = await get(`/page/${getPage}`);
+  //   if (response.ok) {
+  //     if (newExpenses.length < entriesPerPage) return;
+  //     setExpenses([...expenses, ...newExpenses]);
+  //     setGetPage(getPage + 1);
+  //     console.log(getPage);
+  //     console.log(newExpenses);
+  //   }
+  // }, [get, setExpenses, response]);
 
-  const expensePost = async (formData) => {
-    for (var p of formData) {
-      console.log(p);
-    }
-    // const newExpenses = await post(formData);
-    // if (response.ok) expenseGet();
-
-    const data = {
-      date: new Date().toJSON(),
-      categoryId: 1,
-      price: 1234,
-      budgetId: 1,
-      userid: 1,
-    };
-
-    const fd = new FormData();
-    fd.append("data", JSON.stringify(data));
-    // for (var p of fd) {
-    //   console.log(p);
-    // }
-
-    fetch("https://webhomebudget.azurewebsites.net/api/budget/expenses", {
-      method: "POST",
-      body: fd,
-    })
-      .then(() => {
-        expenseGet();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const expenseGet = async () => {
+    const newExpenses = await get(`/page/${getPage}`);
+    if (response.ok)
+      if (newExpenses.length !== 0) {
+        setGetPage(getPage + 1);
+        setExpenses([...expenses, ...newExpenses]);
+        console.log('getset');
+      }
+    // console.log(getPage);
+    // console.log(newExpenses);
   };
 
-  useEffect(() => {
-    console.log(sessionStorage.getItem("userToken"));
-    expenseGet();
-  }, [expenseGet]);
+  const expensePost = async (formData) => {
+    await post(formData);
+    if (response.ok) expenseGet();
+  };
 
-  // const expensePut = async (params) => {};
-  // const expenseDelete = async (params) => {};
+  // const expensePut = async (id, formData) => {
+  //   await put()
+  // };
+
+  // const expenseDelete = async (id) => {
+  //   await del(`/${id}`);
+  // };
+
+  useEffect(() => {
+    console.log(expenses);
+  }, [expenses]);
 
   const onFetchErrorComponent = <div>Data fetching error</div>;
-  const onFetchLoadingComponent = <Spinner animation="border" />;
+  const onFetchLoadingComponent = <Spinner animation='border' />;
   const onFetchLoadedComponent = (
     <>
-      <ExpensesTab title="Today" entries={expenses} icons={icons} />
-      <ExpensesTab title="Yesterday" entries={null} icons={icons} />
-      <ExpensesTab title="Earlier" entries={null} icons={icons} />
+      <Button
+        className='my-2'
+        onClick={(e) => {
+          e.preventDefault();
+          expenseGet();
+        }}
+      >
+        GET 5 MORE
+      </Button>
+      <ExpensesTab
+        title='Today'
+        expensesData={expenses?.filter((expense) => {
+          const expenseDate = new Date(expense?.date).toDateString();
+          const yesterdayDate = new Date().toDateString();
+          return expenseDate === yesterdayDate;
+        })}
+        icons={icons}
+      />
+      <ExpensesTab
+        title='Yesterday'
+        expensesData={expenses?.filter((expense) => {
+          const expenseDate = new Date(expense?.date).toDateString();
+          const yesterdayDate = new Date(Date.now() - 86400000).toDateString();
+          return expenseDate === yesterdayDate;
+        })}
+        expenses={null}
+        icons={icons}
+      />
+      <ExpensesTab title='All' expensesData={expenses} icons={icons} />
     </>
   );
 
   return (
-    <Container className="my-5">
+    <Container className='my-5'>
       <ConatinerWithHeader>
         {{
           header: <h4>Add new expense</h4>,

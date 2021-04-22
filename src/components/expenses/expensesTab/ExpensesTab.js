@@ -4,46 +4,27 @@ import ExpensesTabContainer from './expensesTabContainer/ExpensesTabContainer';
 import ExpensesTabEntry from './expensesTabEntry/ExpensesTabEntry';
 import ExpensesTabEntryItem from './expensesTabEntry/expensesTabEntryItem/ExpensesTabEntryItem';
 
-const ExpensesTab = ({ title, entries, icons }) => {
+const ExpensesTab = ({ title, expensesData, icons }) => {
   let childComponent;
-  if (entries) {
-    childComponent =
-      // <InfiniteScroll
-      //   dataLength={10} //This is important field to render the next data
-      //   next={() => {
-      //     console.log('next');
-      //   }}
-      //   hasMore={true}
-      //   // loader={<Spinner animation='border' />}
-      //   loader={<p>Loading...</p>}
-      //   endMessage={<p>End</p>}
-      // >
-      entries.map((entry) => {
-        return (
-          <ExpensesTabEntry
-            key={entry.id}
-            entry={entry}
-            icons={icons}
-            onClick={() => {
-              console.log('ENTRY DETAILS: ' + JSON.stringify(entry));
-            }}
-          >
-            <ExpensesTabEntry.Item itemIcon={icons.category}>
-              <ExpensesTabEntryItem.Text data={entry.category} />
-            </ExpensesTabEntry.Item>
-            <ExpensesTabEntry.Item itemIcon={icons.price}>
-              <ExpensesTabEntryItem.Price data={entry.price} />
-            </ExpensesTabEntry.Item>
-            <ExpensesTabEntry.Item itemIcon={icons.date}>
-              <ExpensesTabEntryItem.Date data={entry.date} />
-            </ExpensesTabEntry.Item>
-            <ExpensesTabEntry.Item itemIcon={icons.author}>
-              <ExpensesTabEntryItem.Text data={entry.author} />
-            </ExpensesTabEntry.Item>
-          </ExpensesTabEntry>
-        );
-      });
-    // </InfiniteScroll>
+  if (expensesData && expensesData?.length !== 0) {
+    childComponent = expensesData.map((expenseData, index) => {
+      return (
+        <ExpensesTabEntry key={index} expenseData={expenseData} icons={icons}>
+          <ExpensesTabEntry.Item itemIcon={icons.category}>
+            <ExpensesTabEntryItem.Text data={expenseData.category} />
+          </ExpensesTabEntry.Item>
+          <ExpensesTabEntry.Item itemIcon={icons.price}>
+            <ExpensesTabEntryItem.Price data={expenseData.price} />
+          </ExpensesTabEntry.Item>
+          <ExpensesTabEntry.Item itemIcon={icons.date}>
+            <ExpensesTabEntryItem.Date data={expenseData.date} />
+          </ExpensesTabEntry.Item>
+          <ExpensesTabEntry.Item itemIcon={icons.author}>
+            <ExpensesTabEntryItem.Text data={expenseData.author} />
+          </ExpensesTabEntry.Item>
+        </ExpensesTabEntry>
+      );
+    });
   } else {
     childComponent = (
       <ExpensesTabContainer.Text>

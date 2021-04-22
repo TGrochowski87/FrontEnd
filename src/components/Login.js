@@ -1,13 +1,17 @@
-import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
-import { GoogleLogin } from "react-google-login";
-import { useHistory } from "react-router-dom";
-import useFetch from "use-http";
+import React, { useState } from 'react';
+
+import { Form, Button } from 'react-bootstrap';
+
+import { GoogleLogin } from 'react-google-login';
+
+import { useHistory } from 'react-router-dom';
+
+import useFetch from 'use-http';
 
 const Login = ({ setNickName }) => {
-  const [loginInput, setLoginInput] = useState("");
-  const [emailInput, setEmailInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
+  const [loginInput, setLoginInput] = useState('');
+  const [emailInput, setEmailInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
 
   const {
     post,
@@ -20,7 +24,7 @@ const Login = ({ setNickName }) => {
 
   const successHandler = (response) => {
     setNickName(response.profileObj.name);
-    history.push("/");
+    history.push('/');
   };
 
   const failureHandler = (response) => {
@@ -29,52 +33,51 @@ const Login = ({ setNickName }) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    const token = await post("", {
+    const res = await post('', {
       email: emailInput,
       password: passwordInput,
     });
     if (response.ok) {
-      console.log(token.result.acess_Token);
-      console.log(response);
-      sessionStorage.setItem("userToken", token.result.acess_Token);
+      console.log(res.result.access_Token);
+      sessionStorage.setItem('userToken', res.result.access_Token);
     }
   };
 
   return (
-    <div className="login-form">
+    <div className='login-form'>
       <GoogleLogin
-        clientId="547678833320-c51cue6q8t1q7mc1mrjfihpq5gk6ji30.apps.googleusercontent.com"
-        buttonText="Sign in with Google"
+        clientId='547678833320-c51cue6q8t1q7mc1mrjfihpq5gk6ji30.apps.googleusercontent.com'
+        buttonText='Sign in with Google'
         onSuccess={successHandler}
         onFailure={failureHandler}
-        cookiePolicy={"single_host_origin"}
+        cookiePolicy={'single_host_origin'}
       />
-      <Form style={{ marginTop: "1rem" }} onSubmit={submitHandler}>
-        <Form.Group controlId="formBasicLogin">
+      <Form style={{ marginTop: '1rem' }} onSubmit={submitHandler}>
+        <Form.Group controlId='formBasicLogin'>
           <Form.Label>Login</Form.Label>
           <Form.Control
-            type="text"
-            placeholder="Login"
+            type='text'
+            placeholder='Login'
             value={loginInput}
             onChange={(event) => setLoginInput(event.target.value)}
           />
         </Form.Group>
 
-        <Form.Group controlId="formBasicEmail">
+        <Form.Group controlId='formBasicEmail'>
           <Form.Label>Email</Form.Label>
           <Form.Control
-            type="email"
-            placeholder="Email"
+            type='email'
+            placeholder='Email'
             value={emailInput}
             onChange={(event) => setEmailInput(event.target.value)}
           />
         </Form.Group>
 
-        <Form.Group controlId="formBasicPassword">
+        <Form.Group controlId='formBasicPassword'>
           <Form.Label>Password</Form.Label>
           <Form.Control
-            type="password"
-            placeholder="Password"
+            type='password'
+            placeholder='Password'
             value={passwordInput}
             onChange={(event) => setPasswordInput(event.target.value)}
           />
@@ -83,10 +86,10 @@ const Login = ({ setNickName }) => {
         {/* <Form.Group controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Keep me signed in" />
         </Form.Group> */}
-        <Button variant="primary" type="submit">
+        <Button variant='primary' type='submit'>
           Sign in
         </Button>
-        <Button variant="link" href="/register">
+        <Button variant='link' href='/register'>
           Register new account
         </Button>
       </Form>
