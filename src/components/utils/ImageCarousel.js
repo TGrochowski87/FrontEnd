@@ -21,7 +21,7 @@ const ImageCarousel = ({
     setActiveImage(images?.[0]);
     if (images.length === 0) setActiveIndex(0);
     else if (activeIndex >= images.length) setActiveIndex(images.length - 1);
-  }, [images, activeIndex]); // dodany activeIndex - moze nie wyjebie
+  }, [images, activeIndex]);
 
   const handleButtonClick = (selectedImage) => {
     if (onButtonClick) onButtonClick(selectedImage);

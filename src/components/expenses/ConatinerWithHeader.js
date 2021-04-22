@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Card } from 'react-bootstrap';
 
-const ConatinerWithHeader = ({ headerJustify, contentJustify, children }) => {
+const ConatinerWithHeader = ({ children }) => {
   return (
     <Card className='text-center mb-5'>
       <Card.Header>{children.header}</Card.Header>
