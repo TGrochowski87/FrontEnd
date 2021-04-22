@@ -56,8 +56,19 @@ const ExpenseWizard = ({ expensePost }) => {
     };
     const formData = new FormData();
     formData.append("data", JSON.stringify(dataPost));
-    // formData.append('files', images);
+    images.forEach((img) => {
+      formData.append("files", img);
+    });
+
     expensePost(formData);
+  };
+
+  const clearWizard = () => {
+    setCategory([]);
+    setPrice("");
+    setDate(new Date());
+    setImages([]);
+    setCategoryPlaceholder("Start typing category name...");
   };
 
   return (
@@ -134,7 +145,20 @@ const ExpenseWizard = ({ expensePost }) => {
         </Form.Group>
       </Form.Row>
       <Form.Row className="justify-content-center">
-        <Button variant="dark" type="submit">
+        <Button
+          variant="dark"
+          className="mx-1"
+          style={{ minWidth: "7rem" }}
+          onClick={clearWizard}
+        >
+          Clear
+        </Button>
+        <Button
+          variant="dark"
+          className="mx-1"
+          style={{ minWidth: "7rem" }}
+          type="submit"
+        >
           Submit
         </Button>
       </Form.Row>
