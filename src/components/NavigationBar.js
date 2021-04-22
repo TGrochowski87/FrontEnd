@@ -3,11 +3,12 @@ import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useHistory } from "react-router";
 import icon from "../assets/icon.png";
 
-const NavigationBar = ({ nickName, setNickName }) => {
+const NavigationBar = ({ userName, setUserName }) => {
   const history = useHistory();
 
   const logoutHandler = async () => {
-    setNickName("");
+    setUserName("");
+    sessionStorage.clear();
     history.push("/");
   };
 
@@ -20,33 +21,35 @@ const NavigationBar = ({ nickName, setNickName }) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
-          <Nav.Item>
-            <Nav.Link href="/expenses">Expenses</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="/categories">Categories</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            {nickName !== "" ? (
-              <NavDropdown title={nickName} id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">
-                  My account
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Budget analysis
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Manage budget
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="/" onClick={logoutHandler}>
-                  Log out
-                </NavDropdown.Item>
-              </NavDropdown>
-            ) : (
-              <Nav.Link href="/login">Sign in</Nav.Link>
-            )}
-          </Nav.Item>
+          {userName ? (
+            <>
+              <Nav.Item>
+                <Nav.Link href="/expenses">Expenses</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link href="/categories">Categories</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <NavDropdown title={userName} id="collasible-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">
+                    My account
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">
+                    Budget analysis
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.3">
+                    Manage budget
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/" onClick={logoutHandler}>
+                    Log out
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav.Item>
+            </>
+          ) : (
+            <Nav.Link href="/login">Sign in</Nav.Link>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

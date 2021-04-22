@@ -1,70 +1,82 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Login from "./components/login/Login";
+import Register from "./components/login/Register";
 import CategoryPage from "./components/categories/CategoryPage";
 import useSessionStorageState from "./SessionStorageState";
 import HomePage from "./components/HomePage";
-import ExpensesPage from './components/expenses/ExpensesPage';
+import ExpensesPage from "./components/expenses/ExpensesPage";
 import "./styles/App.scss";
 
 function App() {
-  const [nickName, setNickName] = useSessionStorageState('', 'name');
-
-  //Categories
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const fetchCategories = async () => {
-    const supCategories = await fetch(
-      "https://webhomebudget.azurewebsites.net/api/category/base/over"
-    ).then((response) => response.json());
-
-    const fetchSubcategories = async () => {
-      const newCategoriesData = [];
-      for (const sup of supCategories) {
-        const subcategories = await fetch(
-          `https://webhomebudget.azurewebsites.net/api/category/base/sub/${sup.id}`
-        ).then((response) => response.json());
-        const dataItem = { ...sup, subcategories };
-        newCategoriesData.push(dataItem);
-      }
-
-      setCategories(newCategoriesData);
-      setIsLoading(false);
-    };
-    await fetchSubcategories();
-  };
-  //
-
-  useEffect(() => {
-    setIsLoading(true);
-    fetchCategories();
-  }, []);
+  const [userName, setUserName] = useSessionStorageState("", "userName");
 
   return (
-    <div className='App'>
-      <NavigationBar nickName={nickName} setNickName={setNickName} />
+    <div className="App">
+      {/* <button
+        onClick={() => {
+          console.log(sessionStorage.getItem("isAuthenticated"));
+        }}
+      >
+        isAuthenticated
+      </button>
+      <button
+        onClick={() => {
+          console.log(sessionStorage.getItem("userToken"));
+        }}
+      >
+        token
+      </button>
+      <button
+        onClick={() => {
+          console.log(sessionStorage.getItem("userName"));
+        }}
+      >
+        user name
+      </button>
+      <button
+        onClick={() => {
+          console.log(userName);
+        }}
+      >
+        name from hook
+      </button> */}
+      <NavigationBar userName={userName} setUserName={setUserName} />
       <Router>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path='/expenses' component={ExpensesPage} />
           <Route
-            path='/login'
-            render={(props) => <Login {...props} setNickName={setNickName} />}
+            exact
+            path="/expenses"
+            render={(props) =>
+              sessionStorage.getItem("isAuthenticated") ? (
+                <ExpensesPage {...props} />
+              ) : (
+                <Redirect to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/login"
+            render={(props) => <Login {...props} setUserName={setUserName} />}
           />
           <Route path="/register" component={Register} />
           <Route
+            exact
             path="/categories"
-            render={(props) => (
-              <CategoryPage
-                {...props}
-                categories={categories}
-                fetchCategories={fetchCategories}
-                isLoading={isLoading}
-              />
-            )}
+            render={(props) =>
+              sessionStorage.getItem("isAuthenticated") ? (
+                <CategoryPage {...props} />
+              ) : (
+                <Redirect to="/login" />
+              )
+            }
           />
         </Switch>
       </Router>

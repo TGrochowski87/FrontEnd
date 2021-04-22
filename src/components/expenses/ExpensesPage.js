@@ -20,6 +20,19 @@ import FilterPanel from "../filters/FilterPanel";
 
 const ExpensesPage = () => {
   const [expenses, setExpenses] = useState([]);
+  const [filteredExpenses, setFilteredExpenses] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  window.addEventListener("scroll", (event) => {
+    if (window.scrollY / window.screenY > 0.13) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  });
+
   const icons = {
     category: <CategoryOutlined fontSize="small" />,
     price: <MonetizationOnOutlined fontSize="small" />,
@@ -29,60 +42,51 @@ const ExpensesPage = () => {
 
   const {
     get,
-    // post,
-    // put,
-    // del,
+    post,
     loading: expensesLoading,
     error: expensesError,
     response,
-  } = useFetch(`https://webhomebudget.azurewebsites.net/api/budget/expenses`, {
+  } = useFetch(`https://webhomebudget.azurewebsites.net/api`, {
     headers: {
       Authorization: "Bearer " + sessionStorage.getItem("userToken"),
     },
   });
 
+  const categoryGet = async () => {
+    const categories = await get("/category/over");
+    if (response.ok) {
+      let newCategoriesData = [];
+      for (let cat of categories) {
+        const subcategories = await get(`/category/sub/${cat.id}`);
+        if (response.ok) {
+          newCategoriesData.push({ ...cat, subcategories });
+        }
+      }
+      setCategories(newCategoriesData);
+    }
+  };
+
   const expenseGet = useCallback(async () => {
-    const newExpenses = await get();
-    if (response.ok) setExpenses(newExpenses);
+    const newExpenses = await get("/budget/expenses");
+    if (response.ok) {
+      setExpenses(newExpenses);
+      setFilteredExpenses(newExpenses);
+    }
   }, [response, get, setExpenses]); // dodany callback - moze sie wysypac
 
   const expensePost = async (formData) => {
-    for (var p of formData) {
-      console.log(p);
-    }
-    // const newExpenses = await post(formData);
-    // if (response.ok) expenseGet();
-
-    const data = {
-      date: new Date().toJSON(),
-      categoryId: 1,
-      price: 1234,
-      budgetId: 1,
-      userid: 1,
-    };
-
-    const fd = new FormData();
-    fd.append("data", JSON.stringify(data));
-    // for (var p of fd) {
-    //   console.log(p);
-    // }
-
-    fetch("https://webhomebudget.azurewebsites.net/api/budget/expenses", {
-      method: "POST",
-      body: fd,
-    })
-      .then(() => {
-        expenseGet();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await post("/budget/expenses", formData);
+    if (response.ok) expenseGet();
   };
 
   useEffect(() => {
-    console.log(sessionStorage.getItem("userToken"));
     expenseGet();
   }, [expenseGet]);
+
+  useEffect(() => {
+    categoryGet();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // const expensePut = async (params) => {};
   // const expenseDelete = async (params) => {};
@@ -91,34 +95,42 @@ const ExpensesPage = () => {
   const onFetchLoadingComponent = <Spinner animation="border" />;
   const onFetchLoadedComponent = (
     <>
-      <ExpensesTab title="Today" entries={expenses} icons={icons} />
+      <ExpensesTab title="Today" entries={filteredExpenses} icons={icons} />
       <ExpensesTab title="Yesterday" entries={null} icons={icons} />
       <ExpensesTab title="Earlier" entries={null} icons={icons} />
     </>
   );
 
   return (
-    <Container className="my-5">
-      <ConatinerWithHeader>
-        {{
-          header: <h4>Add new expense</h4>,
-          body: <ExpenseWizard expensePost={expensePost} />,
-        }}
-      </ConatinerWithHeader>
-      <ConatinerWithHeader>
-        {expensesError
-          ? {
-              header: <h4>Error</h4>,
-              body: onFetchErrorComponent,
-            }
-          : expensesLoading
-          ? {
-              header: <h4>Loading expenses list</h4>,
-              body: onFetchLoadingComponent,
-            }
-          : { header: <h4>Expenses list</h4>, body: onFetchLoadedComponent }}
-      </ConatinerWithHeader>
-    </Container>
+    <>
+      <FilterPanel
+        categories={categories}
+        isScrolled={isScrolled}
+        expenses={expenses}
+        setFilteredExpenses={setFilteredExpenses}
+      />
+      <Container className="my-5">
+        <ConatinerWithHeader>
+          {{
+            header: <h4>Add new expense</h4>,
+            body: <ExpenseWizard expensePost={expensePost} />,
+          }}
+        </ConatinerWithHeader>
+        <ConatinerWithHeader>
+          {expensesError
+            ? {
+                header: <h4>Error</h4>,
+                body: onFetchErrorComponent,
+              }
+            : expensesLoading
+            ? {
+                header: <h4>Loading expenses list</h4>,
+                body: onFetchLoadingComponent,
+              }
+            : { header: <h4>Expenses list</h4>, body: onFetchLoadedComponent }}
+        </ConatinerWithHeader>
+      </Container>
+    </>
   );
 };
 

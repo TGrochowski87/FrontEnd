@@ -1,72 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import useFetch from "use-http";
 
-import CategoryCard from './CategoryCard';
-import CategoryPlus from './CategoryPlus';
+import CategoryCard from "./CategoryCard";
+import CategoryPlus from "./CategoryPlus";
 
-const CategoryList = ({ categories, fetchCategories }) => {
+const CategoryList = ({ categories, categoryGet }) => {
   const [colors] = useState([
-    '#F2BA22',
-    '#DA4A4A',
-    '#0066CC',
-    '#00CCCC',
-    '#0066CC',
-    '#DA4A4A',
-    '#F2BA22',
+    "#F2BA22",
+    "#DA4A4A",
+    "#0066CC",
+    "#00CCCC",
+    "#0066CC",
+    "#DA4A4A",
+    "#F2BA22",
   ]);
 
-  const addSubCategory = (newSubcategory) => {
-    const { name, categoryId } = newSubcategory;
+  const { post, del, response } = useFetch(
+    `https://webhomebudget.azurewebsites.net/api/category`,
+    {
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("userToken"),
+      },
+      cachePolicy: "no-cache",
+    }
+  );
 
-    fetch('https://webhomebudget.azurewebsites.net/api/category/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: name,
-        categoryId: categoryId,
-      }),
-    })
-      .then(() => {
-        fetchCategories();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const subcategoryPost = async (newSubcategory) => {
+    await post("", newSubcategory);
+    if (response.ok) {
+      categoryGet();
+    }
   };
 
-  const addCategory = (name) => {
-    fetch('https://webhomebudget.azurewebsites.net/api/category/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: name,
-      }),
-    })
-      .then(() => {
-        fetchCategories();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const categoryPost = async (name) => {
+    await post("", { name: name });
+    if (response.ok) {
+      categoryGet();
+    }
   };
 
-  const deleteHandler = (id) => {
-    fetch(`https://webhomebudget.azurewebsites.net/api/category/${id}`, {
-      method: 'DELETE',
-    }).then(() => {
-      fetchCategories();
-    });
+  const categoryDelete = async (id) => {
+    await del(`/${id}`);
+    if (response.ok) {
+      categoryGet();
+    }
   };
 
   return (
-    <div className='category-list'>
-      <CategoryPlus categories={categories} addCategory={addCategory} />
+    <div className="category-list">
+      <CategoryPlus categories={categories} categoryPost={categoryPost} />
       {categories.map((cat, index) => (
         <CategoryCard
           key={cat.id}
           category={cat}
           color={colors[index % colors.length]}
-          addSubCategory={addSubCategory}
-          deleteHandler={deleteHandler}
+          subcategoryPost={subcategoryPost}
+          categoryDelete={categoryDelete}
         />
       ))}
     </div>

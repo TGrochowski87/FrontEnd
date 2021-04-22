@@ -2,21 +2,23 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const CategoryPlus = ({ categories, addCategory }) => {
+const CategoryPlus = ({ categories, categoryPost }) => {
   const [inputActive, setInputActive] = useState(false);
   const [newCatInput, setNewCatInput] = useState("");
 
   const submitHandler = (event) => {
-    for (const cat of categories) {
-      if (cat.name === newCatInput) {
-        alert("Category already exists!");
-        return;
+    if (event.key === "Enter") {
+      for (const cat of categories) {
+        if (cat.name === newCatInput) {
+          alert("Category already exists!");
+          return;
+        }
       }
-    }
 
-    if (newCatInput !== "" && event.key === "Enter") {
-      setInputActive(false);
-      addCategory(newCatInput);
+      if (newCatInput !== "") {
+        setInputActive(false);
+        categoryPost(newCatInput);
+      }
     }
   };
 

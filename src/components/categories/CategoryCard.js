@@ -3,23 +3,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Badge } from "react-bootstrap";
 
-const CategoryCard = ({ category, color, addSubCategory, deleteHandler }) => {
+const CategoryCard = ({ category, color, subcategoryPost, categoryDelete }) => {
   const [newSubInput, setNewSubInput] = useState("");
 
   const submitHandler = (event) => {
-    for (const sub of category.subcategories) {
-      if (sub.name === newSubInput) {
-        alert("Subcategory already exists!");
-        return;
+    if (event.key === "Enter") {
+      for (const sub of category.subcategories) {
+        if (sub.name === newSubInput) {
+          alert("Subcategory already exists!");
+          return;
+        }
       }
-    }
 
-    if (newSubInput !== "" && event.key === "Enter") {
-      const newCategory = {
-        name: newSubInput,
-        categoryId: category.id,
-      };
-      addSubCategory(newCategory);
+      if (newSubInput !== "") {
+        const newCategory = {
+          name: newSubInput,
+          categoryId: category.id,
+        };
+        setNewSubInput("");
+        subcategoryPost(newCategory);
+      }
     }
   };
 
@@ -30,7 +33,7 @@ const CategoryCard = ({ category, color, addSubCategory, deleteHandler }) => {
         <FontAwesomeIcon
           icon={faTimes}
           onClick={() => {
-            deleteHandler(category.id);
+            categoryDelete(category.id);
           }}
         />
       </div>
@@ -55,7 +58,7 @@ const CategoryCard = ({ category, color, addSubCategory, deleteHandler }) => {
             <FontAwesomeIcon
               icon={faTimes}
               onClick={() => {
-                deleteHandler(sub.id);
+                categoryDelete(sub.id);
               }}
             />
           </Badge>

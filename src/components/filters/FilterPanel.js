@@ -8,13 +8,13 @@ function valuetext(value) {
 }
 
 const FilterPanel = ({
-  filterTabStatus,
-  setFilterTabStatus,
   isScrolled,
   categories,
-  data,
-  setFilteredData,
+  expenses,
+  setFilteredExpenses,
 }) => {
+  const [filterTabStatus, setFilterTabStatus] = useState(false);
+
   const [category, setCategory] = useState([]);
   const [price, setPrice] = useState([0.0, 10000.0]);
   const [date, setDate] = useState([new Date(2021, 1, 1), new Date()]);
@@ -25,15 +25,15 @@ const FilterPanel = ({
   const [dateFilterActive, setDateFilterActive] = useState(false);
 
   useEffect(() => {
-    if (data === undefined) {
+    if (expenses === undefined) {
       return;
     }
 
     let newArray = [];
 
-    for (let record of data) {
-      if (categoryFilterActive && category !== undefined) {
-        if (record.category.name !== category) {
+    for (let record of expenses) {
+      if (categoryFilterActive && category.length !== 0) {
+        if (record.category !== category[0]) {
           continue;
         }
       }
@@ -60,7 +60,7 @@ const FilterPanel = ({
       newArray.push(record);
     }
 
-    setFilteredData(newArray);
+    setFilteredExpenses(newArray);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     category,
@@ -69,7 +69,7 @@ const FilterPanel = ({
     categoryFilterActive,
     priceFilterActive,
     dateFilterActive,
-    data,
+    expenses,
   ]);
 
   const clearHandler = () => {

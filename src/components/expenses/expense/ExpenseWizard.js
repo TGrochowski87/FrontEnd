@@ -59,7 +59,6 @@ const ExpenseWizard = ({ expensePost }) => {
     // formData.append('files', images);
     expensePost(formData);
   };
-  console.log(categoryOptions);
 
   return (
     <Form
