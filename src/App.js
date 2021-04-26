@@ -47,8 +47,8 @@ function App() {
       >
         name from hook
       </button> */}
-      <NavigationBar userName={userName} setUserName={setUserName} />
       <Router>
+        <NavigationBar userName={userName} setUserName={setUserName} />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route

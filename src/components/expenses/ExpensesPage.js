@@ -16,6 +16,8 @@ import ConatinerWithHeader from "./ConatinerWithHeader";
 import ExpenseWizard from "./expense/ExpenseWizard";
 import ExpensesTab from "./expensesTab/ExpensesTab";
 
+import FilterPanel from "../filters/FilterPanel";
+
 const ExpensesPage = () => {
   const [expenses, setExpenses] = useState([]);
   const [filteredExpenses, setFilteredExpenses] = useState([]);
@@ -75,10 +77,6 @@ const ExpensesPage = () => {
   };
 
   useEffect(() => {
-    expenseGet();
-  }, [expenseGet]);
-
-  useEffect(() => {
     categoryGet();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -115,7 +113,7 @@ const ExpensesPage = () => {
       </Button>
       <ExpensesTab
         title="Today"
-        expensesData={expenses?.filter((expense) => {
+        expensesData={filteredExpenses?.filter((expense) => {
           const expenseDate = new Date(expense?.date).toDateString();
           const yesterdayDate = new Date().toDateString();
           return expenseDate === yesterdayDate;
@@ -124,14 +122,14 @@ const ExpensesPage = () => {
       />
       <ExpensesTab
         title="Yesterday"
-        expensesData={expenses?.filter((expense) => {
+        expensesData={filteredExpenses?.filter((expense) => {
           const expenseDate = new Date(expense?.date).toDateString();
           const yesterdayDate = new Date(Date.now() - 86400000).toDateString();
           return expenseDate === yesterdayDate;
         })}
         icons={icons}
       />
-      <ExpensesTab title="All" expensesData={expenses} icons={icons} />
+      <ExpensesTab title="All" expensesData={filteredExpenses} icons={icons} />
     </>
   );
 

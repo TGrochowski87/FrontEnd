@@ -1,6 +1,7 @@
 import React from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import icon from "../assets/icon.png";
 
 const NavigationBar = ({ userName, setUserName }) => {
@@ -24,10 +25,14 @@ const NavigationBar = ({ userName, setUserName }) => {
           {userName ? (
             <>
               <Nav.Item>
-                <Nav.Link href="/expenses">Expenses</Nav.Link>
+                <Nav.Link as={Link} to="/expenses">
+                  Expenses
+                </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="/categories">Categories</Nav.Link>
+                <Nav.Link as={Link} to="/categories">
+                  Categories
+                </Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <NavDropdown title={userName} id="collasible-nav-dropdown">
@@ -41,14 +46,16 @@ const NavigationBar = ({ userName, setUserName }) => {
                     Manage budget
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="/" onClick={logoutHandler}>
+                  <NavDropdown.Item as={Link} to="/" onClick={logoutHandler}>
                     Log out
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav.Item>
             </>
           ) : (
-            <Nav.Link href="/login">Sign in</Nav.Link>
+            <Nav.Link as={Link} to="/login">
+              Sign in
+            </Nav.Link>
           )}
         </Nav>
       </Navbar.Collapse>

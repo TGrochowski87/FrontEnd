@@ -3,6 +3,14 @@
         {
             "route": "/login",
             "allowedRoles": ["anonymous"]
+        },
+        {
+            "route": "/expenses",
+            "allowedRoles": ["anonymous"]
+        },
+        {
+            "route": "/categories",
+            "allowedRoles": ["anonymous"]
         }
     ],
     "navigationFallback": {
