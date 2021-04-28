@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+  FormControl,
+} from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import Slider from "@material-ui/core/Slider";
+import DatePicker from "react-datepicker";
 
 function valuetext(value) {
   return `${value}°C`;
@@ -99,7 +107,179 @@ const FilterPanel = ({
         <p>FILTER</p>
       </div>
 
-      <div className="filter-panel">
+      <Container className="filter-panel">
+        <Form.Group>
+          <Row style={{ marginTop: "1rem" }}>
+            <Form.Label>
+              Categories
+              <input
+                type="checkbox"
+                checked={categoryFilterActive}
+                onChange={(event) => {
+                  setCategoryFilterActive(event.target.checked);
+                }}
+              />
+            </Form.Label>
+          </Row>
+          <Row>
+            <Col>
+              <Typeahead
+                id="basic-typeahead-single"
+                labelKey="name"
+                onChange={setCategory}
+                options={categories.map((cat) => cat.name)}
+                placeholder="Choose a category"
+                selected={category}
+              />
+            </Col>
+          </Row>
+        </Form.Group>
+
+        <Form.Group>
+          <Row>
+            <Form.Label>
+              Price
+              <input
+                type="checkbox"
+                checked={priceFilterActive}
+                onChange={(event) => {
+                  setPriceFilterActive(event.target.checked);
+                }}
+              />
+            </Form.Label>
+          </Row>
+          <Row>
+            <Col xs={2} style={{ padding: "0 0 0 10px", textAlign: "right" }}>
+              {/* <p>{price[0]}</p> */}
+              {/* <input type="number" /> */}
+              <Form.Control
+                className="slider-side-input"
+                type="number"
+                value={price[0]}
+                onChange={(event) => setPrice([event.target.value, price[1]])}
+              />
+            </Col>
+            <Col>
+              <Slider
+                className="slider"
+                min={0.0}
+                max={1000}
+                value={price}
+                onChange={(event, newValue) => {
+                  setPrice([newValue[0], newValue[1]]);
+                }}
+                valueLabelDisplay="auto"
+                aria-labelledby="range-slider"
+                getAriaValueText={valuetext}
+              />
+            </Col>
+            <Col xs={2} style={{ padding: "0 10px 0 0", textAlign: "left" }}>
+              <Form.Control
+                className="slider-side-input"
+                type="number"
+                value={price[1]}
+                onChange={(event) => setPrice([price[0], event.target.value])}
+              />
+            </Col>
+          </Row>
+        </Form.Group>
+
+        <Form.Group>
+          <Row>
+            <Form.Label>
+              User
+              <input
+                type="checkbox"
+                checked={userFilterActive}
+                onChange={(event) => {
+                  setUserFilterActive(event.target.checked);
+                }}
+              />
+            </Form.Label>
+          </Row>
+          <Row>
+            <Col>
+              <Typeahead
+                id="basic-typeahead-single"
+                labelKey="name"
+                onChange={setCategory}
+                options={categories}
+                placeholder="Choose a category"
+                selected={category}
+              />
+            </Col>
+          </Row>
+        </Form.Group>
+
+        <Form.Group>
+          <Row>
+            <Form.Label>
+              Date
+              <input
+                type="checkbox"
+                checked={dateFilterActive}
+                onChange={(event) => {
+                  setDateFilterActive(event.target.checked);
+                }}
+              />
+            </Form.Label>
+          </Row>
+          <Row>
+            <Col xs={2} style={{ padding: "0", textAlign: "right" }}>
+              {/* <p>{date[0].toLocaleDateString().toString()}</p> */}
+              <DatePicker
+                as={FormControl}
+                className="form-control slider-side-input"
+                id="inputDate"
+                name="inputDate"
+                onChange={(newDate) => {
+                  setDate([newDate, date[1]]);
+                  //console.log(newDate);
+                  //console.log(date);
+                }}
+                selected={date[0]}
+              />
+            </Col>
+            <Col xs={8}>
+              <Slider
+                className="slider"
+                min={new Date(2021, 1, 1).getTime()}
+                max={new Date().getTime()}
+                value={[date[0].getTime(), date[1].getTime()]}
+                onChange={(event, newValue) => {
+                  setDate([new Date(newValue[0]), new Date(newValue[1])]);
+                }}
+                aria-labelledby="range-slider"
+                getAriaValueText={valuetext}
+              />
+            </Col>
+            <Col xs={2} style={{ padding: "0", textAlign: "left" }}>
+              {/* <p>{date[1].toLocaleDateString().toString()}</p> */}
+              <DatePicker
+                as={FormControl}
+                className="form-control slider-side-input"
+                id="inputDate"
+                name="inputDate"
+                onChange={(newDate) => {
+                  setDate([date[0], newDate]);
+                  //console.log(newDate);
+                  //console.log(date);
+                }}
+                selected={date[1]}
+              />
+            </Col>
+          </Row>
+        </Form.Group>
+
+        <Row style={{ textAlign: "center", marginTop: "3rem" }}>
+          <Col>
+            <Form.Group>
+              <Button onClick={clearHandler}>Clear filters</Button>
+            </Form.Group>
+          </Col>
+        </Row>
+      </Container>
+      {/* <div className="filter-panel">
         <Form.Group>
           <Form.Label>
             Categories{" "}
@@ -202,7 +382,7 @@ const FilterPanel = ({
         <Form.Group>
           <Button onClick={clearHandler}>Clear filters</Button>
         </Form.Group>
-      </div>
+      </div> */}
     </div>
   );
 };

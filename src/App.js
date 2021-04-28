@@ -12,6 +12,7 @@ import CategoryPage from "./components/categories/CategoryPage";
 import useSessionStorageState from "./SessionStorageState";
 import HomePage from "./components/HomePage";
 import ExpensesPage from "./components/expenses/ExpensesPage";
+import PlanningPage from "./components/planning/PlanningPage";
 import "./styles/App.scss";
 
 function App() {
@@ -19,40 +20,11 @@ function App() {
 
   return (
     <div className="App">
-      {/* <button
-        onClick={() => {
-          console.log(sessionStorage.getItem("isAuthenticated"));
-        }}
-      >
-        isAuthenticated
-      </button>
-      <button
-        onClick={() => {
-          console.log(sessionStorage.getItem("userToken"));
-        }}
-      >
-        token
-      </button>
-      <button
-        onClick={() => {
-          console.log(sessionStorage.getItem("userName"));
-        }}
-      >
-        user name
-      </button>
-      <button
-        onClick={() => {
-          console.log(userName);
-        }}
-      >
-        name from hook
-      </button> */}
       <Router>
         <NavigationBar userName={userName} setUserName={setUserName} />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route
-            exact
             path="/expenses"
             render={(props) =>
               sessionStorage.getItem("isAuthenticated") ? (
@@ -68,11 +40,20 @@ function App() {
           />
           <Route path="/register" component={Register} />
           <Route
-            exact
             path="/categories"
             render={(props) =>
               sessionStorage.getItem("isAuthenticated") ? (
                 <CategoryPage {...props} />
+              ) : (
+                <Redirect to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/planning"
+            render={(props) =>
+              sessionStorage.getItem("isAuthenticated") ? (
+                <PlanningPage {...props} />
               ) : (
                 <Redirect to="/login" />
               )

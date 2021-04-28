@@ -30,6 +30,11 @@ const NavigationBar = ({ userName, setUserName }) => {
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
+                <Nav.Link as={Link} to="/planning">
+                  Plan future expenses
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
                 <Nav.Link as={Link} to="/categories">
                   Categories
                 </Nav.Link>
