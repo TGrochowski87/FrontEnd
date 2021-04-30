@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Row } from 'react-bootstrap';
 
-const ExpensesTabContainerHeader = ({ headerText, icons }) => {
+const ExpensesListHeader = ({ children, icons }) => {
   return (
     <>
-      <h5>{headerText}</h5>
+      {children}
       <Row noGutters className='d-none d-sm-flex justify-content-around'>
         {icons.category}
         {icons.price}
@@ -16,4 +16,4 @@ const ExpensesTabContainerHeader = ({ headerText, icons }) => {
   );
 };
 
-export default ExpensesTabContainerHeader;
+export default ExpensesListHeader;

@@ -50,6 +50,7 @@ const ImagePicker = ({ images, onNewImages }) => {
         onDropAccepted={(acceptedFiles) => handleDropAccepted(acceptedFiles)}
         onDropRejected={() => handleDropRejected()}
         accept='image/jpeg, image/png'
+        maxSize={5242880} // 5mb per one image
       >
         {({ getRootProps, getInputProps }) => (
           <Container
@@ -68,9 +69,9 @@ const ImagePicker = ({ images, onNewImages }) => {
           </Container>
         )}
       </Dropzone>
-      <Modal show={showModal} onHide={handleCloseModal} animation={false}>
+      <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Error</Modal.Title>
+          <Modal.Title>Something went wrong...</Modal.Title>
         </Modal.Header>
         <Modal.Body>You picked wrong files :(</Modal.Body>
         <Modal.Footer>
