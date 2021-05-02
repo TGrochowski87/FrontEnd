@@ -9,7 +9,8 @@ const NavigationBar = ({ userName, setUserName }) => {
 
   const logoutHandler = async () => {
     setUserName("");
-    sessionStorage.clear();
+    sessionStorage.removeItem("isAuthenticated");
+    sessionStorage.removeItem("userToken");
     history.push("/");
   };
 
@@ -31,7 +32,7 @@ const NavigationBar = ({ userName, setUserName }) => {
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link as={Link} to="/planning">
-                  Plan future expenses
+                  Plan ahead
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>

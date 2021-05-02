@@ -30,10 +30,11 @@
     "react-responsive-carousel": "^3.2.18",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "uuid": "^8.3.2",
-    "web-vitals": "^1.1.1",
+    "react-scroll": "^1.8.2",
     "react-tag-input": "^6.5.2",
     "use-http": "^1.0.20",
+    "uuid": "^8.3.2",
+    "web-vitals": "^1.1.1",
     "yup": "^0.32.9"
   },
   "scripts": {
