@@ -10,7 +10,6 @@
     margin: 5% 5%;
     padding: 0;
     width: 90%;
-    height: 90%;
     max-height: 800px;
     //background-color: yellow;
 
@@ -21,9 +20,20 @@
     align-items: flex-start;
     align-content: flex-start;
 
-    overflow: scroll;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    // overflow: scroll;
+    // -ms-overflow-style: none; /* IE and Edge */
+    // scrollbar-width: none; /* Firefox */
+
+    .list-header {
+      width: 100%;
+      margin-top: 1.5rem;
+      border-bottom: whitesmoke solid 2px;
+      margin-bottom: 1rem;
+
+      h2 {
+        color: whitesmoke;
+      }
+    }
 
     .plus-card {
       padding: 1rem;
@@ -54,7 +64,6 @@
 
     .category-card {
       border: solid 1px; //rgb(83, 172, 83);
-      //border-color: grey;
       border-radius: 5px;
       overflow: hidden;
       width: 18rem;
@@ -109,7 +118,7 @@
     }
   }
 
-  .category-list::-webkit-scrollbar {
-    display: none;
-  }
+  // .category-list::-webkit-scrollbar {
+  //   display: none;
+  // }
 }

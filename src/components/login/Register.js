@@ -13,7 +13,7 @@ const Register = () => {
   const [show, setShow] = useState(false);
 
   const { post } = useFetch(
-    "https://webhomebudget.azurewebsites.net/api/UserLogin/Register"
+    "https://webhomebudget.azurewebsites.net/api/register"
   );
 
   const submitHandler = async (event) => {
@@ -38,7 +38,7 @@ const Register = () => {
       <Container className="my-5 w-50 login-space">
         <Row xs={1}>
           <Col>
-            <RegisterGoogle />
+            <RegisterGoogle setShow={setShow} />
           </Col>
         </Row>
         <Row>

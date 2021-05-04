@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import useFetch from "use-http";
-import { useHistory } from "react-router-dom";
 
 import LoginGoogle from "./LoginGoogle";
 import LoginInfoModal from "./LoginInfoModal";
 
-const Login = ({ setUserName }) => {
+const Login = ({ setUserName, setLogoutShow }) => {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
 
   const [show, setShow] = useState(false);
 
-  const history = useHistory();
-
   const { post, response } = useFetch(
-    `https://webhomebudget.azurewebsites.net/api/UserLogin/Login`
+    `https://webhomebudget.azurewebsites.net/api/login`
   );
 
   const submitHandler = async (event) => {
@@ -24,8 +21,6 @@ const Login = ({ setUserName }) => {
       email: emailInput,
       password: passwordInput,
     }).then((res) => {
-      //console.log("logged in");
-      //console.log(response);
       if (response.ok) {
         sessionStorage.setItem("userToken", res.result.access_Token);
         setUserName(res.result.userName);
@@ -35,22 +30,13 @@ const Login = ({ setUserName }) => {
           sessionStorage.removeItem("isAuthenticated");
           sessionStorage.removeItem("userToken");
           setUserName("");
-          history.push("/");
+
+          setLogoutShow(true);
         }, 10800000);
 
         setShow(true);
       }
-      // sessionStorage.setItem("userToken", res.result.access_Token);
-      // setUserName(res.result.userName);
-      // sessionStorage.setItem("isAuthenticated", true);
-      // setShow(true);
     });
-    // if (response.ok) {
-    //   sessionStorage.setItem("userToken", token.result.access_Token);
-    //   setUserName(token.result.userName);
-    //   sessionStorage.setItem("isAuthenticated", true);
-    //   setShow(true);
-    // }
   };
 
   return (
@@ -59,7 +45,11 @@ const Login = ({ setUserName }) => {
       <Container className="my-5 w-50 login-space">
         <Row xs={1}>
           <Col>
-            <LoginGoogle setUserName={setUserName} />
+            <LoginGoogle
+              setUserName={setUserName}
+              setShow={setShow}
+              setLogoutShow={setLogoutShow}
+            />
           </Col>
         </Row>
         <Row>

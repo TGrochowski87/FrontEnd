@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,14 +13,22 @@ import useSessionStorageState from "./SessionStorageState";
 import HomePage from "./components/HomePage";
 import ExpensesPage from "./components/expenses/ExpensesPage";
 import PlanningPage from "./components/planning/PlanningPage";
+import LogoutInfoModal from "./components/utils/LogoutInfoModal";
+
 import "./styles/App.scss";
 
 function App() {
   const [userName, setUserName] = useSessionStorageState("", "userName");
 
+  const [logoutShow, setLogoutShow] = useState(false);
+
   return (
     <div className="App">
       <Router>
+        <LogoutInfoModal
+          logoutShow={logoutShow}
+          setLogoutShow={setLogoutShow}
+        />
         <NavigationBar userName={userName} setUserName={setUserName} />
         <Switch>
           <Route exact path="/" component={HomePage} />
@@ -36,7 +44,13 @@ function App() {
           />
           <Route
             path="/login"
-            render={(props) => <Login {...props} setUserName={setUserName} />}
+            render={(props) => (
+              <Login
+                {...props}
+                setUserName={setUserName}
+                setLogoutShow={setLogoutShow}
+              />
+            )}
           />
           <Route path="/register" component={Register} />
           <Route

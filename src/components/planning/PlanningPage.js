@@ -6,7 +6,7 @@ import PlanningNav from "./planningNav/PlanningNav";
 import PlanningListSpace from "./planningList/PlanningListSpace";
 
 const PlanningPage = () => {
-  const [categories, setCategories] = useState([]);
+  const [plans, setPlans] = useState([]);
   const [monthNames] = useState([
     "January",
     "February",
@@ -24,7 +24,7 @@ const PlanningPage = () => {
   const [monthPlans, setMonthPlans] = useState([]);
 
   const { get, loading, response } = useFetch(
-    `https://webhomebudget.azurewebsites.net/api/category`,
+    `https://webhomebudget.azurewebsites.net/api/category/expense`,
     {
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("userToken"),

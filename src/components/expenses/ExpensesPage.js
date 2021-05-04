@@ -58,11 +58,11 @@ const ExpensesPage = () => {
   });
 
   const categoryGet = async () => {
-    const categories = await get("/category/over");
+    const categories = await get("/category/expense/over");
     if (response.ok) {
       let newCategoriesData = [];
       for (let cat of categories) {
-        const subcategories = await get(`/category/sub/${cat.id}`);
+        const subcategories = await get(`/category/expense/sub/${cat.id}`);
         if (response.ok) {
           newCategoriesData.push({ ...cat, subcategories });
         }

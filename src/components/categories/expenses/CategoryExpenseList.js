@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import useFetch from "use-http";
 
-import CategoryCard from "./CategoryCard";
-import CategoryPlus from "./CategoryPlus";
+import CategoryExpenseCard from "./CategoryExpenseCard";
+import CategoryPlus from "../CategoryPlus";
 
-const CategoryList = ({ categories, categoryGet }) => {
+const CategoryExpenseList = ({ categories, categoryGet }) => {
   const [colors] = useState([
     "#F2BA22",
     "#DA4A4A",
@@ -16,7 +16,7 @@ const CategoryList = ({ categories, categoryGet }) => {
   ]);
 
   const { post, del, response } = useFetch(
-    `https://webhomebudget.azurewebsites.net/api/category`,
+    `https://webhomebudget.azurewebsites.net/api/category/expense`,
     {
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("userToken"),
@@ -48,9 +48,12 @@ const CategoryList = ({ categories, categoryGet }) => {
 
   return (
     <div className="category-list">
+      <div className="list-header">
+        <h2>Expense</h2>
+      </div>
       <CategoryPlus categories={categories} categoryPost={categoryPost} />
       {categories.map((cat, index) => (
-        <CategoryCard
+        <CategoryExpenseCard
           key={cat.id}
           category={cat}
           color={colors[index % colors.length]}
@@ -62,4 +65,4 @@ const CategoryList = ({ categories, categoryGet }) => {
   );
 };
 
-export default CategoryList;
+export default CategoryExpenseList;

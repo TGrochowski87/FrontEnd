@@ -149,9 +149,7 @@ const FilterPanel = ({
             </Form.Label>
           </Row>
           <Row>
-            <Col xs={2} style={{ padding: "0 0 0 10px", textAlign: "right" }}>
-              {/* <p>{price[0]}</p> */}
-              {/* <input type="number" /> */}
+            <Col xs={3} style={{ padding: "0 1rem", textAlign: "right" }}>
               <Form.Control
                 className="slider-side-input"
                 type="number"
@@ -159,7 +157,19 @@ const FilterPanel = ({
                 onChange={(event) => setPrice([event.target.value, price[1]])}
               />
             </Col>
-            <Col>
+            <Col xs={6}></Col>
+            <Col xs={3} style={{ padding: "0 1rem", textAlign: "left" }}>
+              <Form.Control
+                className="slider-side-input"
+                type="number"
+                value={price[1]}
+                onChange={(event) => setPrice([price[0], event.target.value])}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={2}></Col>
+            <Col xs={8}>
               <Slider
                 className="slider"
                 min={0.0}
@@ -173,14 +183,7 @@ const FilterPanel = ({
                 getAriaValueText={valuetext}
               />
             </Col>
-            <Col xs={2} style={{ padding: "0 10px 0 0", textAlign: "left" }}>
-              <Form.Control
-                className="slider-side-input"
-                type="number"
-                value={price[1]}
-                onChange={(event) => setPrice([price[0], event.target.value])}
-              />
-            </Col>
+            <Col xs={2}></Col>
           </Row>
         </Form.Group>
 
@@ -225,8 +228,7 @@ const FilterPanel = ({
             </Form.Label>
           </Row>
           <Row>
-            <Col xs={2} style={{ padding: "0", textAlign: "right" }}>
-              {/* <p>{date[0].toLocaleDateString().toString()}</p> */}
+            <Col xs={3} style={{ padding: "0 0.6rem", textAlign: "right" }}>
               <DatePicker
                 as={FormControl}
                 className="form-control slider-side-input"
@@ -234,12 +236,26 @@ const FilterPanel = ({
                 name="inputDate"
                 onChange={(newDate) => {
                   setDate([newDate, date[1]]);
-                  //console.log(newDate);
-                  //console.log(date);
                 }}
                 selected={date[0]}
               />
             </Col>
+            <Col xs={6}></Col>
+            <Col xs={3} style={{ padding: "0 0.6rem", textAlign: "left" }}>
+              <DatePicker
+                as={FormControl}
+                className="form-control slider-side-input"
+                id="inputDate"
+                name="inputDate"
+                onChange={(newDate) => {
+                  setDate([date[0], newDate]);
+                }}
+                selected={date[1]}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={2}></Col>
             <Col xs={8}>
               <Slider
                 className="slider"
@@ -253,21 +269,7 @@ const FilterPanel = ({
                 getAriaValueText={valuetext}
               />
             </Col>
-            <Col xs={2} style={{ padding: "0", textAlign: "left" }}>
-              {/* <p>{date[1].toLocaleDateString().toString()}</p> */}
-              <DatePicker
-                as={FormControl}
-                className="form-control slider-side-input"
-                id="inputDate"
-                name="inputDate"
-                onChange={(newDate) => {
-                  setDate([date[0], newDate]);
-                  //console.log(newDate);
-                  //console.log(date);
-                }}
-                selected={date[1]}
-              />
-            </Col>
+            <Col xs={2}></Col>
           </Row>
         </Form.Group>
 
