@@ -12,7 +12,15 @@ const RegisterGoogle = ({ setShow }) => {
   );
 
   const googlePost = async (token) => {
-    await post("", token);
+    console.log(token);
+    const registerData = {
+      token: token,
+      provider: "google",
+    };
+    console.log(JSON.stringify(registerData));
+
+    await post("", JSON.stringify(registerData));
+    console.log(response);
     if (response.ok) {
       console.log("registered");
       setShow(true);
@@ -20,7 +28,7 @@ const RegisterGoogle = ({ setShow }) => {
   };
 
   const successHandler = (response) => {
-    //console.log(response.tokenId);
+    console.log(response);
     googlePost(response.tokenId);
   };
 

@@ -6,7 +6,7 @@ import PlanningNav from "./planningNav/PlanningNav";
 import PlanningListSpace from "./planningList/PlanningListSpace";
 
 const PlanningPage = () => {
-  const [plans, setPlans] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [monthNames] = useState([
     "January",
     "February",

@@ -13,8 +13,10 @@ const LoginGoogle = ({ setUserName, setShow, setLogoutShow }) => {
       provider: "google",
     };
 
-    const token = await post("", JSON.stringify(loginData));
+    const token = await post("", loginData);
+    console.log(response);
     if (response.ok) {
+      console.log(token);
       sessionStorage.setItem("userToken", token.result.access_Token);
       setUserName(token.result.userName);
       sessionStorage.setItem("isAuthenticated", true);

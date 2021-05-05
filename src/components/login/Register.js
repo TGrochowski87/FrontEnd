@@ -12,7 +12,7 @@ const Register = () => {
 
   const [show, setShow] = useState(false);
 
-  const { post } = useFetch(
+  const { post, response } = useFetch(
     "https://webhomebudget.azurewebsites.net/api/register"
   );
 
@@ -29,7 +29,10 @@ const Register = () => {
     fd.append("user", JSON.stringify(data));
 
     await post("", fd);
-    setShow(true);
+
+    if (response.ok) {
+      setShow(true);
+    }
   };
 
   return (

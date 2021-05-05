@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useFetch from "use-http";
 
 import CategoryIncomeCard from "./CategoryIncomeCard";
 import CategoryPlus from "../CategoryPlus";
 
-const CategoryIncomeList = ({ categories, categoryGet }) => {
+const CategoryIncomeList = () => {
+  const [categories, setCategories] = useState([]);
   const [colors] = useState([
     "#F2BA22",
     "#DA4A4A",
@@ -15,7 +16,7 @@ const CategoryIncomeList = ({ categories, categoryGet }) => {
     "#F2BA22",
   ]);
 
-  const { post, del, response } = useFetch(
+  const { get, post, del, response } = useFetch(
     `https://webhomebudget.azurewebsites.net/api/category/incomes`,
     {
       headers: {
@@ -24,6 +25,14 @@ const CategoryIncomeList = ({ categories, categoryGet }) => {
       cachePolicy: "no-cache",
     }
   );
+
+  const categoryGet = async () => {
+    const categories = await get("");
+    if (response.ok) {
+      console.log(categories);
+      setCategories(categories);
+    }
+  };
 
   const categoryPost = async (name) => {
     await post("", { name: name });
@@ -39,6 +48,11 @@ const CategoryIncomeList = ({ categories, categoryGet }) => {
       categoryGet();
     }
   };
+
+  useEffect(() => {
+    categoryGet();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="category-list">

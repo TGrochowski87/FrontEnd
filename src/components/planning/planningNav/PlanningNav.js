@@ -7,7 +7,6 @@ const PlanningNav = ({ monthPlans, addMonthPlan }) => {
   const [scrollY, setScrollY] = useState(window.scrollY);
 
   window.addEventListener("scroll", (event) => {
-    console.log(window.scrollY);
     setScrollY(window.scrollY);
   });
 

@@ -32,7 +32,7 @@ const Login = ({ setUserName, setLogoutShow }) => {
           setUserName("");
 
           setLogoutShow(true);
-        }, 10800000);
+        }, 10800000); //10800000
 
         setShow(true);
       }
