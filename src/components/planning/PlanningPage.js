@@ -23,7 +23,7 @@ const PlanningPage = () => {
   ]);
   const [monthPlans, setMonthPlans] = useState([]);
 
-  const { get, loading, response } = useFetch(
+  const { get } = useFetch(
     `https://webhomebudget.azurewebsites.net/api/plannedexpenses`,
     {
       headers: {
@@ -57,7 +57,7 @@ const PlanningPage = () => {
   //   ]);
   // };
 
-  useEffect(async () => {
+  useEffect(() => {
     console.log(plans);
     const monthArray = [];
 
@@ -84,7 +84,7 @@ const PlanningPage = () => {
         categories: plans
           .filter(
             (plan) =>
-              monthNames[new Date(plan.date).getMonth() - 1] == mplan.monthName
+              monthNames[new Date(plan.date).getMonth() - 1] === mplan.monthName
           )
           .map((plan) => {
             return {
@@ -126,6 +126,8 @@ const PlanningPage = () => {
     //     categories: plans.map((cat) => cat.name),
     //   },
     // ]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plans]);
 
   useEffect(() => {

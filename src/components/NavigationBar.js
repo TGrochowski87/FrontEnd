@@ -47,7 +47,6 @@ const NavigationBar = ({ userName, setUserName }) => {
               <Nav.Item>
                 <NavDropdown
                   alignRight
-                  flip
                   title={userName}
                   id="collasible-nav-dropdown"
                 >

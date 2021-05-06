@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
+import React from "react";
 import CategoryExpenseList from "./expenses/CategoryExpenseList";
 import CategoryIncomeList from "./incomes/CategoryIncomeList";
-import useFetch from "use-http";
 
 const CategoryPage = () => {
   return (

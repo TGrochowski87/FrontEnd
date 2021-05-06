@@ -232,7 +232,7 @@ const FilterPanel = ({
               <DatePicker
                 as={FormControl}
                 className="form-control slider-side-input"
-                id="inputDate"
+                id="inputDateFrom"
                 name="inputDate"
                 onChange={(newDate) => {
                   setDate([newDate, date[1]]);
@@ -245,7 +245,7 @@ const FilterPanel = ({
               <DatePicker
                 as={FormControl}
                 className="form-control slider-side-input"
-                id="inputDate"
+                id="inputDateTo"
                 name="inputDate"
                 onChange={(newDate) => {
                   setDate([date[0], newDate]);

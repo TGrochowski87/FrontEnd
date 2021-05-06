@@ -2,11 +2,7 @@ import React from "react";
 import { GoogleLogin } from "react-google-login";
 import useFetch from "use-http";
 
-import { useHistory } from "react-router-dom";
-
 const RegisterGoogle = ({ setShow }) => {
-  const history = useHistory();
-
   const { post, response } = useFetch(
     "https://webhomebudget.azurewebsites.net/api/register/provider"
   );
