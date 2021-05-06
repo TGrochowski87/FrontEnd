@@ -145,8 +145,8 @@ const ExpensesList = () => {
         setFilteredExpenses={setFilteredExpenses}
       />
       <ExpenseWizard title='New expense' onWizardSubmit={expensePost} />
-      <ContainerCard>
-        <ContainerCard.Header className='py-1'>
+      <ContainerCard className='mt-2'>
+        <ContainerCard.Header>
           <ExpensesListHeader icons={icons}>
             <h4 className='py-2'>Expenses</h4>
           </ExpensesListHeader>
@@ -182,13 +182,16 @@ const ExpensesList = () => {
                   return (
                     <React.Fragment key={index}>
                       {addSeparator && (
-                        <ExpensesListRecord className='py-2 text-muted'>
+                        <ExpensesListRecord className='py-2 text-muted record-separator'>
                           <ExpenseItem icon={icons?.date}>
                             <ExpenseItem.Date data={filteredExpense?.date} />
                           </ExpenseItem>
                         </ExpensesListRecord>
                       )}
-                      <ExpensesListRecord key={filteredExpense.id}>
+                      <ExpensesListRecord
+                        key={filteredExpense.id}
+                        className='record-expense'
+                      >
                         <Expense
                           expenseData={filteredExpense}
                           icons={icons}

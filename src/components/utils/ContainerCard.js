@@ -8,7 +8,9 @@ const ContainerCard = ({ children, className }) => {
 
 ContainerCard.Header = ({ children, className }) => {
   return (
-    <Card.Header className={`p-0 m-0 ${className}`}>{children}</Card.Header>
+    <Card.Header className={`p-0 m-0 container-header ${className}`}>
+      {children}
+    </Card.Header>
   );
 };
 

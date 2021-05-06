@@ -6,7 +6,7 @@ const ExpensesListHeader = ({ children, icons }) => {
   return (
     <>
       {children}
-      <Row noGutters className='d-none d-sm-flex justify-content-around'>
+      <Row noGutters className='mb-1 d-none d-sm-flex justify-content-around'>
         {icons?.category}
         {icons?.price}
         {icons?.user}
