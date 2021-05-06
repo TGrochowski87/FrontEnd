@@ -50,7 +50,7 @@ const ExpenseWizard = ({ onWizardSubmit, title }) => {
   };
 
   return (
-    <ContainerCollapse className='container-overflow-visible'>
+    <ContainerCollapse className='mt-3 container-overflow-visible'>
       <ContainerCollapse.StaticHeader className='py-3'>
         <h4>{title}</h4>
       </ContainerCollapse.StaticHeader>

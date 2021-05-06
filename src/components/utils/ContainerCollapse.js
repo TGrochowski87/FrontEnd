@@ -15,7 +15,7 @@ ContainerCollapse.StaticHeader = ({ children, className }) => {
     <Accordion.Toggle
       as={Card.Header}
       eventKey='0'
-      className={`p-0 m-0 container-collapse-header ${className}`}
+      className={`p-0 m-0 container-header container-collapse-header ${className}`}
     >
       {children}
     </Accordion.Toggle>

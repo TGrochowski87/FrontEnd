@@ -11,19 +11,16 @@ body {
   background-color: rgb(40, 43, 51);
 }
 
-@import "./Jumbotron";
-@import "./BudgetTable";
-@import "./FormSpace";
-@import "./NavigationBar";
-@import "./Login";
-@import "./BudgetPage";
-@import "./CategoryPage";
-@import "./DatePicker";
-@import "./ImagePicker";
-@import "./ImageCarousel";
-@import "./FilterPanel";
-@import "./Dropdown";
-@import "./ExpenseDetails";
+@import './Jumbotron';
+@import './NavigationBar';
+@import './Login';
+@import './CategoryPage';
+@import './DatePicker';
+@import './ImagePicker';
+@import './ImageCarousel';
+@import './FilterPanel';
+@import './Dropdown';
+@import './ContainerCollapse';
+@import './NoScrollbar';
 @import "./PlanningPage";
-@import "./ContainerCollapse";
-@import "./NoScrollbar";
+@import './ExpensesPage';

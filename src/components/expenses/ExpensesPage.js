@@ -6,7 +6,7 @@ import ExpensesList from "./expensesList/ExpensesList";
 
 const ExpensesPage = () => {
   return (
-    <Container className="my-3">
+    <Container className='my-3 expenses-page'>
       <ExpensesList />
     </Container>
   );

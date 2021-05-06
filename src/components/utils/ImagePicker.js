@@ -60,7 +60,10 @@ const ImagePicker = ({ images, onNewImages }) => {
             <input className='d-none' {...getInputProps()} />
             <Row className='text-center'>
               <Col xs={12} className='px-2 pt-2 pb-1'>
-                <PublishOutlinedIcon fontSize='large' />
+                <PublishOutlinedIcon
+                  fontSize='large'
+                  style={{ color: 'darkgray' }}
+                />
               </Col>
               <Col xs={12}>
                 <div className='text-muted px-2 pt-1 pb-2'>{caption}</div>
