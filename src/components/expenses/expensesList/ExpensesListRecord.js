@@ -2,9 +2,12 @@ import React from 'react';
 
 import { Row } from 'react-bootstrap';
 
-const ExpensesListRecord = ({ children }) => {
+const ExpensesListRecord = ({ children, className }) => {
   return (
-    <Row noGutters className='justify-content-center text-center w-100'>
+    <Row
+      noGutters
+      className={`justify-content-center text-center w-100 ${className}`}
+    >
       {children}
     </Row>
   );

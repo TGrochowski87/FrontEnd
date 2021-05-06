@@ -7,10 +7,9 @@ const ExpensesListHeader = ({ children, icons }) => {
     <>
       {children}
       <Row noGutters className='d-none d-sm-flex justify-content-around'>
-        {icons.category}
-        {icons.price}
-        {icons.date}
-        {icons.author}
+        {icons?.category}
+        {icons?.price}
+        {icons?.user}
       </Row>
     </>
   );
