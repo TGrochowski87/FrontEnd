@@ -17,12 +17,21 @@
       margin-bottom: 1rem;
     }
 
-    .planning-list-item {
-      background-color: #355f77;
-      padding: 10px 30px;
-      margin-bottom: 0.6rem;
+    .list-body {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      column-gap: 10px;
+      row-gap: 15px;
 
-      border-radius: 30px;
+      .planning-list-item {
+        display: flex;
+        justify-content: space-between;
+        background-color: #355f77;
+        padding: 10px 30px;
+        margin-bottom: 0.6rem;
+
+        border-radius: 30px;
+      }
     }
   }
 }
@@ -41,6 +50,10 @@
   overflow: auto;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 
   .planning-nav-header {
     margin: 20px 0;
@@ -93,4 +106,15 @@
 
 .planning-nav::-webkit-scrollbar {
   display: none;
+}
+
+@media screen and (max-width: 500px) {
+  .planning-nav {
+    display: none;
+  }
+
+  .planning-space {
+    width: 100%;
+    left: 0;
+  }
 }

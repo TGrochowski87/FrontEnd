@@ -6,7 +6,7 @@ import PlanningNav from "./planningNav/PlanningNav";
 import PlanningListSpace from "./planningList/PlanningListSpace";
 
 const PlanningPage = () => {
-  const [categories, setCategories] = useState([]);
+  const [plans, setPlans] = useState([]); //TODO: ARCHIVED
   const [monthNames] = useState([
     "January",
     "February",
@@ -24,7 +24,7 @@ const PlanningPage = () => {
   const [monthPlans, setMonthPlans] = useState([]);
 
   const { get, loading, response } = useFetch(
-    `https://webhomebudget.azurewebsites.net/api/category/expense`,
+    `https://webhomebudget.azurewebsites.net/api/plannedexpenses`,
     {
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("userToken"),
@@ -33,49 +33,110 @@ const PlanningPage = () => {
     }
   );
 
-  const categoryGet = async () => {
-    await get("/over").then((res) => {
-      setCategories(res);
+  const plansGet = async () => {
+    await get("").then((res) => {
+      setPlans(res);
     });
     // if (response.ok) {
     //   setCategories(categories);
     // }
   };
 
-  const addMonthPlan = () => {
-    const indexOfLastMonth = monthNames.indexOf(
-      monthPlans[monthPlans.length - 1].month
-    );
-    const nextMonth = monthNames[(indexOfLastMonth + 1) % 12];
-    setMonthPlans([
-      ...monthPlans,
-      {
+  // const addMonthPlan = () => {
+  //   const indexOfLastMonth = monthNames.indexOf(
+  //     monthPlans[monthPlans.length - 1].month
+  //   );
+  //   const nextMonth = monthNames[(indexOfLastMonth + 1) % 12];
+  //   setMonthPlans([
+  //     ...monthPlans,
+  //     {
+  //       id: uuidv4(),
+  //       month: nextMonth,
+  //       categories: plans.map((cat) => cat.name),
+  //     },
+  //   ]);
+  // };
+
+  useEffect(async () => {
+    console.log(plans);
+    const monthArray = [];
+
+    for (const plan of plans) {
+      const month = monthNames[new Date(plan.date).getMonth() - 1];
+      if (!monthArray.includes(month)) {
+        monthArray.push(month);
+      }
+    }
+    console.log(monthArray);
+
+    let mPlans = monthArray.map((month) => {
+      return {
+        monthName: month,
+        categories: [],
+      };
+    });
+    console.log(mPlans);
+
+    mPlans = mPlans.map((mplan) => {
+      return {
         id: uuidv4(),
-        month: nextMonth,
-        categories: categories.map((cat) => cat.name),
-      },
-    ]);
-  };
+        monthName: mplan.monthName,
+        categories: plans
+          .filter(
+            (plan) =>
+              monthNames[new Date(plan.date).getMonth() - 1] == mplan.monthName
+          )
+          .map((plan) => {
+            return {
+              id: plan.id,
+              name: plan.category,
+              price: plan.price,
+            };
+          }),
+      };
+    });
+
+    console.log(mPlans);
+
+    setMonthPlans(mPlans);
+
+    // for (let i = 0; i < mPlans.length; i++) {
+    //   //const month = monthNames[new Date(plan.date).getMonth() - 1];
+    //   mPlans = mPlans.map(mplan => {
+    //     return {
+    //       monthName: mplan.monthName,
+    //       categories:
+    //     };
+    //   })
+    // }
+
+    // await setMonthPlans(
+    //   monthArray.map((month) => {
+    //     return {
+    //       monthName: month,
+    //       categories: [],
+    //     };
+    //   })
+    // );
+
+    // setMonthPlans([
+    //   {
+    //     id: uuidv4(),
+    //     month: monthNames[new Date().getMonth()],
+    //     categories: plans.map((cat) => cat.name),
+    //   },
+    // ]);
+  }, [plans]);
 
   useEffect(() => {
-    setMonthPlans([
-      {
-        id: uuidv4(),
-        month: monthNames[new Date().getMonth()],
-        categories: categories.map((cat) => cat.name),
-      },
-    ]);
-  }, [categories]);
-
-  useEffect(() => {
-    categoryGet();
+    plansGet();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="planning-page">
-      <PlanningNav monthPlans={monthPlans} addMonthPlan={addMonthPlan} />
+      <PlanningNav monthPlans={monthPlans} />
       <PlanningListSpace monthPlans={monthPlans} />
     </div>
   );
