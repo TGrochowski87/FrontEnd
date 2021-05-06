@@ -27,7 +27,7 @@ const CategoryIncomeList = () => {
   );
 
   const categoryGet = async () => {
-    const categories = await get("");
+    const categories = await get("/notarchived");
     if (response.ok) {
       console.log(categories);
       setCategories(categories);

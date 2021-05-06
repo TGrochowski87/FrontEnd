@@ -27,11 +27,11 @@ const CategoryExpenseList = () => {
   );
 
   const categoryGet = async () => {
-    const categories = await get("/over");
+    const categories = await get("/over/notarchived");
     if (response.ok) {
       let newCategoriesData = [];
       for (let cat of categories) {
-        const subcategories = await get(`/sub/${cat.id}`);
+        const subcategories = await get(`/sub/notarchived/${cat.id}`);
         if (response.ok) {
           newCategoriesData.push({ ...cat, subcategories });
         }
@@ -64,6 +64,7 @@ const CategoryExpenseList = () => {
 
   useEffect(() => {
     categoryGet();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
