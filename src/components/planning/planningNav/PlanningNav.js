@@ -5,6 +5,7 @@ import PlanningNavItem from "./PlanningNavItem";
 
 const PlanningNav = ({ monthPlans }) => {
   const [scrollY, setScrollY] = useState(window.scrollY);
+  const [activeForMobile, setActiveForMobile] = useState(false);
 
   window.addEventListener("scroll", (event) => {
     setScrollY(window.scrollY);
@@ -12,13 +13,26 @@ const PlanningNav = ({ monthPlans }) => {
 
   return (
     <div
-      className="planning-nav-space"
+      className={`planning-nav-space ${
+        activeForMobile ? "mobile-active-panel" : ""
+      }`}
       style={
         scrollY > 66.357
           ? { position: "fixed", top: "0" }
-          : { position: "absolute", top: "66.357px" }
+          : { position: "absolute", top: "68.359px" }
       }
     >
+      <div
+        // className="roll-out-button"
+        onClick={() => {
+          setActiveForMobile(!activeForMobile);
+        }}
+        className={`roll-out-button ${
+          activeForMobile ? "mobile-active-button" : ""
+        }`}
+      >
+        <p>NAVIGATE</p>
+      </div>
       <div
         className="planning-nav"
 
