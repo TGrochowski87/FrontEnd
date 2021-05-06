@@ -18,7 +18,7 @@ const Login = ({ setNickName }) => {
     loading: expensesLoading,
     error: expensesError,
     response,
-  } = useFetch(`https://webhomebudget.azurewebsites.net/api/UserLogin/Login`);
+  } = useFetch(`https://webhomebudget.azurewebsites.net/api/login`);
 
   const history = useHistory();
 

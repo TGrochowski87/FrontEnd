@@ -10,6 +10,12 @@
   transform: translateX(80%);
   transition: all 0.5s ease, top 0.4s ease;
 
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+  }
+
   .panel-name {
     position: absolute;
     cursor: pointer;
@@ -53,6 +59,7 @@
     }
 
     input[type="checkbox"] {
+      cursor: pointer;
       margin-left: 0.4rem;
     }
 

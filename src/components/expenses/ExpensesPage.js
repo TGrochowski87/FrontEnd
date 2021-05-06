@@ -1,24 +1,11 @@
-import {
-  CategoryOutlined,
-  EventOutlined,
-  MonetizationOnOutlined,
-  PersonAddOutlined,
-} from "@material-ui/icons";
+import React, { useState } from 'react';
 
-import React, { useEffect, useState } from "react";
+import { Container } from 'react-bootstrap';
 
-import { Container, Spinner, Button } from "react-bootstrap";
-
-import useFetch from "use-http";
-
-import ConatinerWithHeader from "./ConatinerWithHeader";
-
-import ExpenseWizard from "./expense/ExpenseWizard";
-import ExpensesTab from "./expensesTab/ExpensesTab";
-
-import FilterPanel from "../filters/FilterPanel";
+import ExpensesList from './expensesList/ExpensesList';
 
 const ExpensesPage = () => {
+<<<<<<< HEAD
   const [expenses, setExpenses] = useState([]);
   const [filteredExpenses, setFilteredExpenses] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -133,36 +120,12 @@ const ExpensesPage = () => {
     </>
   );
 
+=======
+>>>>>>> 923026603ac52993809d7f71be88c93c564b7d3d
   return (
-    <>
-      <FilterPanel
-        categories={categories}
-        isScrolled={isScrolled}
-        expenses={expenses}
-        setFilteredExpenses={setFilteredExpenses}
-      />
-      <Container className="my-5">
-        <ConatinerWithHeader>
-          {{
-            header: <h4>Add new expense</h4>,
-            body: <ExpenseWizard expensePost={expensePost} />,
-          }}
-        </ConatinerWithHeader>
-        <ConatinerWithHeader>
-          {expensesError
-            ? {
-                header: <h4>Error</h4>,
-                body: onFetchErrorComponent,
-              }
-            : expensesLoading
-            ? {
-                header: <h4>Loading expenses list</h4>,
-                body: onFetchLoadingComponent,
-              }
-            : { header: <h4>Expenses list</h4>, body: onFetchLoadedComponent }}
-        </ConatinerWithHeader>
-      </Container>
-    </>
+    <Container className='my-3'>
+      <ExpensesList />
+    </Container>
   );
 };
 

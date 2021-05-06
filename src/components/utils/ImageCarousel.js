@@ -6,7 +6,6 @@ const ImageCarousel = ({
   images,
   onButtonClick,
   onImageClick,
-  onSelectClick,
   carouselHeight,
   buttonIcon,
 }) => {
@@ -18,10 +17,16 @@ const ImageCarousel = ({
   const handleShowModal = () => setShowModal(true);
 
   useEffect(() => {
-    setActiveImage(images?.[0]);
-    if (images.length === 0) setActiveIndex(0);
-    else if (activeIndex >= images.length) setActiveIndex(images.length - 1);
+    setActiveImage(images?.[activeIndex]);
   }, [images, activeIndex]);
+
+  useEffect(() => {
+    if (images.length === 0 && activeIndex !== 0) {
+      setActiveIndex(0);
+    } else if (images.length > 0 && activeIndex >= images.length) {
+      setActiveIndex(images.length - 1);
+    }
+  }, [images]);
 
   const handleButtonClick = (selectedImage) => {
     if (onButtonClick) onButtonClick(selectedImage);
@@ -34,10 +39,7 @@ const ImageCarousel = ({
   };
 
   const handleCarouselSelect = (index) => {
-    if (onSelectClick) onSelectClick(images?.[index]);
-
     setActiveIndex(index);
-    setActiveImage(images?.[index]);
   };
 
   if (!images || images?.length === 0) {
@@ -60,13 +62,14 @@ const ImageCarousel = ({
         onSelect={handleCarouselSelect}
       >
         {images.map((image, index) => {
-          const imageURL = URL.createObjectURL(image);
+          const imageURL =
+            image instanceof File ? URL.createObjectURL(image) : image;
           return (
             <Carousel.Item key={index}>
               <div className='d-flex justify-content-center align-items-center h-100'>
                 <img
                   className='d-block mw-100'
-                  style={{ maxHeight: carouselHeight }}
+                  style={{ maxHeight: `calc(${carouselHeight} - 4px)` }}
                   onClick={() => {
                     handleImageClick(activeImage);
                   }}
@@ -98,14 +101,22 @@ const ImageCarousel = ({
           centered
           dialogClassName='modal-lg'
         >
-          <Modal.Header closeButton>
-            <Modal.Title>{activeImage?.name || 'No name'}</Modal.Title>
-          </Modal.Header>
+          {activeImage?.name && (
+            <Modal.Header closeButton>
+              <Modal.Title className='text-muted' style={{ fontSize: '1rem' }}>
+                {activeImage.name}
+              </Modal.Title>
+            </Modal.Header>
+          )}
           <Modal.Body className='p-1 d-flex justify-content-center'>
             <Image
               className='mw-100'
               style={{ maxHeight: '444px' }}
-              src={URL.createObjectURL(activeImage)}
+              src={
+                activeImage instanceof File
+                  ? URL.createObjectURL(activeImage)
+                  : activeImage
+              }
             />
           </Modal.Body>
         </Modal>

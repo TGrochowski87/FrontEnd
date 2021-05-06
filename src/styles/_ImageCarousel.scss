@@ -1,5 +1,8 @@
 .image-carosuel {
-  background-color: #282b33;
+  background-color: #ced4da;
+  background-clip: padding-box;
+  border: 2px solid #ced4da;
+  border-radius: 0.25rem;
 
   img {
     cursor: zoom-in;
