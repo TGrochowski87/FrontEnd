@@ -12,8 +12,8 @@ const Register = () => {
 
   const [show, setShow] = useState(false);
 
-  const { post } = useFetch(
-    "https://webhomebudget.azurewebsites.net/api/UserLogin/Register"
+  const { post, response } = useFetch(
+    "https://webhomebudget.azurewebsites.net/api/register"
   );
 
   const submitHandler = async (event) => {
@@ -29,7 +29,10 @@ const Register = () => {
     fd.append("user", JSON.stringify(data));
 
     await post("", fd);
-    setShow(true);
+
+    if (response.ok) {
+      setShow(true);
+    }
   };
 
   return (
@@ -38,7 +41,7 @@ const Register = () => {
       <Container className="my-5 w-50 login-space">
         <Row xs={1}>
           <Col>
-            <RegisterGoogle />
+            <RegisterGoogle setShow={setShow} />
           </Col>
         </Row>
         <Row>

@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { Container } from 'react-bootstrap';
+import { Container } from "react-bootstrap";
 
-import ExpensesList from './expensesList/ExpensesList';
+import ExpensesList from "./expensesList/ExpensesList";
 
 const ExpensesPage = () => {
   return (

@@ -4,45 +4,45 @@ import {
   MonetizationOnOutlined,
   PersonAddOutlined,
   DescriptionOutlined,
-} from '@material-ui/icons';
+} from "@material-ui/icons";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { Spinner } from 'react-bootstrap';
+import { Spinner } from "react-bootstrap";
 
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import useFetch from 'use-http';
+import useFetch from "use-http";
 
-import Expense from './../expense/Expense';
-import ExpenseItem from './../expense/ExpenseItem';
-import ExpenseWizard from '../expense/ExpenseWizard';
-import FilterPanel from '../../filters/FilterPanel';
-import ContainerCard from '../../utils/ContainerCard';
+import Expense from "./../expense/Expense";
+import ExpenseItem from "./../expense/ExpenseItem";
+import ExpenseWizard from "../expense/ExpenseWizard";
+import FilterPanel from "../../filters/FilterPanel";
+import ContainerCard from "../../utils/ContainerCard";
 
-import ExpensesListHeader from './ExpensesListHeader';
-import ExpensesListRecord from './ExpensesListRecord';
+import ExpensesListHeader from "./ExpensesListHeader";
+import ExpensesListRecord from "./ExpensesListRecord";
 
 const ExpensesList = () => {
-  const [categories, setCategories] = useState([]);
+  const [categories] = useState([]);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const [expenses, setExpenses] = useState([]);
   const [filteredExpenses, setFilteredExpenses] = useState([]);
 
   const [expensesPage, setExpensesPage] = useState(1);
-  const [expensesPerPage, setExpensesPerPage] = useState(30);
+  const [expensesPerPage] = useState(30);
   const [hasMoreExpensesToFetch, setHasMoreExpensesToFetch] = useState(true);
 
   const icons = {
-    category: <CategoryOutlined fontSize='small' />,
-    price: <MonetizationOnOutlined fontSize='small' />,
-    date: <EventOutlined fontSize='small' />,
-    user: <PersonAddOutlined fontSize='small' />,
-    description: <DescriptionOutlined fontSize='small' />,
+    category: <CategoryOutlined fontSize="small" />,
+    price: <MonetizationOnOutlined fontSize="small" />,
+    date: <EventOutlined fontSize="small" />,
+    user: <PersonAddOutlined fontSize="small" />,
+    description: <DescriptionOutlined fontSize="small" />,
   };
 
-  window.addEventListener('scroll', (event) => {
+  window.addEventListener("scroll", (event) => {
     if (window.scrollY / window.screenY > 0.13) {
       setIsScrolled(true);
     } else {
@@ -50,13 +50,13 @@ const ExpensesList = () => {
     }
   });
 
-  const { get, post, put, del, response } = useFetch(
+  const { get, post, del, response } = useFetch(
     `https://webhomebudget.azurewebsites.net/api`,
     {
       headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('userToken'),
+        Authorization: "Bearer " + sessionStorage.getItem("userToken"),
       },
-      cachePolicy: 'no-cache',
+      cachePolicy: "no-cache",
     }
   );
 
@@ -90,13 +90,13 @@ const ExpensesList = () => {
 
   const expensePost = async (formData) => {
     console.log(formData);
-    await post('/budget/expenses', formData);
+    await post("/budget/expenses", formData);
     if (response.ok) {
-      console.log('response ok, expense post should refresh expenses');
+      console.log("response ok, expense post should refresh expenses");
       expenseGetRefresh(expenses.length - 1);
     } else {
       console.log(
-        'response not ok, expense post should inform user about failure'
+        "response not ok, expense post should inform user about failure"
       );
     }
   };
@@ -105,7 +105,7 @@ const ExpensesList = () => {
     console.log(id);
     await del(`/budget/expenses/${id}`);
     if (response.ok) {
-      console.log('expense delete: ', id);
+      console.log("expense delete: ", id);
       expenseGetRefresh(expenses.length);
     }
   };
@@ -115,7 +115,7 @@ const ExpensesList = () => {
     //   if (response.ok) {
     //     onExpensePut();
     //   }
-    console.log('expense put: ', id);
+    console.log("expense put: ", id);
     expenseGetRefresh(expenses.length);
   };
 
@@ -124,16 +124,17 @@ const ExpensesList = () => {
       `/budget/expenses/page/1/${numberOfExpenses}`
     );
     if (response.ok) {
-      console.log('expense get respone ok, new expenses: ', newExpenses);
+      console.log("expense get respone ok, new expenses: ", newExpenses);
       setExpenses([...newExpenses.expensesOnPage]);
     } else {
-      console.log('expense get respone not ok, new expenses: ', newExpenses);
+      console.log("expense get respone not ok, new expenses: ", newExpenses);
     }
   };
 
   useEffect(() => {
     categoryGet();
     expenseGet();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -148,25 +149,25 @@ const ExpensesList = () => {
       <ContainerCard className='mt-2'>
         <ContainerCard.Header>
           <ExpensesListHeader icons={icons}>
-            <h4 className='py-2'>Expenses</h4>
+            <h4 className="py-2">Expenses</h4>
           </ExpensesListHeader>
         </ContainerCard.Header>
         <ContainerCard.Body>
           <InfiniteScroll
-            className='no-scrollbar'
+            className="no-scrollbar"
             height={window.innerHeight * 0.75}
             dataLength={filteredExpenses.length}
             next={expenseGet}
             hasMore={hasMoreExpensesToFetch}
             scrollThreshold={1.0}
             loader={
-              <ExpensesListRecord className='py-1'>
-                <Spinner animation='border' />
+              <ExpensesListRecord className="py-1">
+                <Spinner animation="border" />
               </ExpensesListRecord>
             }
             endMessage={
-              <ExpensesListRecord className='py-2'>
-                <p className='text-muted font-italic'>No more records</p>
+              <ExpensesListRecord className="py-2">
+                <p className="text-muted font-italic">No more records</p>
               </ExpensesListRecord>
             }
           >
@@ -204,7 +205,7 @@ const ExpensesList = () => {
                 });
               })()
             ) : (
-              <ExpensesListRecord className='py-2'>
+              <ExpensesListRecord className="py-2">
                 <h5>No records</h5>
               </ExpensesListRecord>
             )}

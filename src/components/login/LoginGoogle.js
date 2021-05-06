@@ -1,27 +1,39 @@
 import React from "react";
 import { GoogleLogin } from "react-google-login";
 import useFetch from "use-http";
-import { useHistory } from "react-router-dom";
 
-const LoginGoogle = ({ setUserName }) => {
-  const history = useHistory();
-
+const LoginGoogle = ({ setUserName, setShow, setLogoutShow }) => {
   const { post, response } = useFetch(
-    "https://webhomebudget.azurewebsites.net/api/Google/Login"
+    "https://webhomebudget.azurewebsites.net/api/login/provider"
   );
 
   const googlePost = async (tokenId) => {
-    const token = await post("", tokenId);
+    const loginData = {
+      token: tokenId,
+      provider: "google",
+    };
+
+    const token = await post("", loginData);
+    console.log(response);
     if (response.ok) {
+      console.log(token);
       sessionStorage.setItem("userToken", token.result.access_Token);
       setUserName(token.result.userName);
       sessionStorage.setItem("isAuthenticated", true);
+
+      setTimeout(() => {
+        sessionStorage.removeItem("isAuthenticated");
+        sessionStorage.removeItem("userToken");
+        setUserName("");
+
+        setLogoutShow(true);
+      }, 10800000);
     }
   };
 
   const successHandler = (response) => {
     googlePost(response.tokenId).then(() => {
-      history.push("/");
+      setShow(true);
     });
   };
 

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { Button, Carousel, Image, Modal } from 'react-bootstrap';
+import { Button, Carousel, Image, Modal } from "react-bootstrap";
 
 const ImageCarousel = ({
   images,
@@ -26,6 +26,7 @@ const ImageCarousel = ({
     } else if (images.length > 0 && activeIndex >= images.length) {
       setActiveIndex(images.length - 1);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images]);
 
   const handleButtonClick = (selectedImage) => {
@@ -44,7 +45,7 @@ const ImageCarousel = ({
 
   if (!images || images?.length === 0) {
     return (
-      <div className='d-flex justify-content-center align-items-center w-100 h-100 text-muted'>
+      <div className="d-flex justify-content-center align-items-center w-100 h-100 text-muted">
         No images to display
       </div>
     );
@@ -53,7 +54,7 @@ const ImageCarousel = ({
   return (
     <>
       <Carousel
-        className='image-carosuel w-100'
+        className="image-carosuel w-100"
         style={{ height: carouselHeight }}
         slide={false}
         interval={null}
@@ -66,22 +67,22 @@ const ImageCarousel = ({
             image instanceof File ? URL.createObjectURL(image) : image;
           return (
             <Carousel.Item key={index}>
-              <div className='d-flex justify-content-center align-items-center h-100'>
+              <div className="d-flex justify-content-center align-items-center h-100">
                 <img
-                  className='d-block mw-100'
+                  className="d-block mw-100"
                   style={{ maxHeight: `calc(${carouselHeight} - 4px)` }}
                   onClick={() => {
                     handleImageClick(activeImage);
                   }}
                   src={imageURL}
-                  alt='uploaded'
+                  alt="uploaded"
                 />
               </div>
-              <Carousel.Caption className='cursor-transparent-caption'>
+              <Carousel.Caption className="cursor-transparent-caption">
                 <Button
-                  className='p-0'
-                  variant='outline-dark'
-                  type='button'
+                  className="p-0"
+                  variant="outline-dark"
+                  type="button"
                   onClick={() => {
                     handleButtonClick(activeImage);
                   }}
@@ -99,19 +100,19 @@ const ImageCarousel = ({
           onHide={handleCloseModal}
           animation={false}
           centered
-          dialogClassName='modal-lg'
+          dialogClassName="modal-lg"
         >
           {activeImage?.name && (
             <Modal.Header closeButton>
-              <Modal.Title className='text-muted' style={{ fontSize: '1rem' }}>
+              <Modal.Title className="text-muted" style={{ fontSize: "1rem" }}>
                 {activeImage.name}
               </Modal.Title>
             </Modal.Header>
           )}
-          <Modal.Body className='p-1 d-flex justify-content-center'>
+          <Modal.Body className="p-1 d-flex justify-content-center">
             <Image
-              className='mw-100'
-              style={{ maxHeight: '444px' }}
+              className="mw-100"
+              style={{ maxHeight: "444px" }}
               src={
                 activeImage instanceof File
                   ? URL.createObjectURL(activeImage)

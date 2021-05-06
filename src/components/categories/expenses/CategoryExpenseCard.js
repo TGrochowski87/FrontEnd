@@ -3,7 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Badge } from "react-bootstrap";
 
-const CategoryCard = ({ category, color, subcategoryPost, categoryDelete }) => {
+const CategoryExpenseCard = ({
+  category,
+  color,
+  subcategoryPost,
+  categoryDelete,
+}) => {
   const [newSubInput, setNewSubInput] = useState("");
 
   const submitHandler = (event) => {
@@ -68,4 +73,4 @@ const CategoryCard = ({ category, color, subcategoryPost, categoryDelete }) => {
   );
 };
 
-export default CategoryCard;
+export default CategoryExpenseCard;

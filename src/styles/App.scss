@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
-@import '~bootstrap/scss/bootstrap';
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap");
+@import "~bootstrap/scss/bootstrap";
 
 * {
   box-sizing: border-box;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: 400;
 }
 
@@ -22,4 +22,5 @@ body {
 @import './Dropdown';
 @import './ContainerCollapse';
 @import './NoScrollbar';
+@import "./PlanningPage";
 @import './ExpensesPage';

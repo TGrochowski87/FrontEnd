@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useFetch from "use-http";
 
-import CategoryCard from "./CategoryCard";
-import CategoryPlus from "./CategoryPlus";
+import CategoryIncomeCard from "./CategoryIncomeCard";
+import CategoryPlus from "../CategoryPlus";
 
-const CategoryList = ({ categories, categoryGet }) => {
+const CategoryIncomeList = () => {
+  const [categories, setCategories] = useState([]);
   const [colors] = useState([
     "#F2BA22",
     "#DA4A4A",
@@ -15,8 +16,8 @@ const CategoryList = ({ categories, categoryGet }) => {
     "#F2BA22",
   ]);
 
-  const { post, del, response } = useFetch(
-    `https://webhomebudget.azurewebsites.net/api/category`,
+  const { get, post, del, response } = useFetch(
+    `https://webhomebudget.azurewebsites.net/api/category/incomes`,
     {
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("userToken"),
@@ -25,10 +26,11 @@ const CategoryList = ({ categories, categoryGet }) => {
     }
   );
 
-  const subcategoryPost = async (newSubcategory) => {
-    await post("", newSubcategory);
+  const categoryGet = async () => {
+    const categories = await get("/notarchived");
     if (response.ok) {
-      categoryGet();
+      console.log(categories);
+      setCategories(categories);
     }
   };
 
@@ -40,21 +42,29 @@ const CategoryList = ({ categories, categoryGet }) => {
   };
 
   const categoryDelete = async (id) => {
+    console.log(id);
     await del(`/${id}`);
     if (response.ok) {
       categoryGet();
     }
   };
 
+  useEffect(() => {
+    categoryGet();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="category-list">
+      <div className="list-header">
+        <h2>Incomes</h2>
+      </div>
       <CategoryPlus categories={categories} categoryPost={categoryPost} />
       {categories.map((cat, index) => (
-        <CategoryCard
+        <CategoryIncomeCard
           key={cat.id}
           category={cat}
           color={colors[index % colors.length]}
-          subcategoryPost={subcategoryPost}
           categoryDelete={categoryDelete}
         />
       ))}
@@ -62,4 +72,4 @@ const CategoryList = ({ categories, categoryGet }) => {
   );
 };
 
-export default CategoryList;
+export default CategoryIncomeList;

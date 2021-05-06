@@ -2,27 +2,30 @@ import React from "react";
 import { GoogleLogin } from "react-google-login";
 import useFetch from "use-http";
 
-import { useHistory } from "react-router-dom";
-
-const RegisterGoogle = () => {
-  const history = useHistory();
-
+const RegisterGoogle = ({ setShow }) => {
   const { post, response } = useFetch(
-    "https://webhomebudget.azurewebsites.net/api/Google/Register"
+    "https://webhomebudget.azurewebsites.net/api/register/provider"
   );
 
   const googlePost = async (token) => {
-    await post("", token);
+    console.log(token);
+    const registerData = {
+      token: token,
+      provider: "google",
+    };
+    console.log(JSON.stringify(registerData));
+
+    await post("", JSON.stringify(registerData));
+    console.log(response);
     if (response.ok) {
       console.log("registered");
+      setShow(true);
     }
   };
 
   const successHandler = (response) => {
-    console.log(response.tokenId);
-    googlePost(response.tokenId).then(() => {
-      history.push("/login");
-    });
+    console.log(response);
+    googlePost(response.tokenId);
   };
 
   const failureHandler = (response) => {

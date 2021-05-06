@@ -10,8 +10,6 @@
     margin: 5% 5%;
     padding: 0;
     width: 90%;
-    height: 90%;
-    max-height: 800px;
     //background-color: yellow;
 
     display: flex;
@@ -21,9 +19,20 @@
     align-items: flex-start;
     align-content: flex-start;
 
-    overflow: scroll;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    // overflow: scroll;
+    // -ms-overflow-style: none; /* IE and Edge */
+    // scrollbar-width: none; /* Firefox */
+
+    .list-header {
+      width: 100%;
+      margin-top: 1.5rem;
+      border-bottom: whitesmoke solid 2px;
+      margin-bottom: 1rem;
+
+      h2 {
+        color: whitesmoke;
+      }
+    }
 
     .plus-card {
       padding: 1rem;
@@ -53,8 +62,8 @@
     }
 
     .category-card {
+      position: relative;
       border: solid 1px; //rgb(83, 172, 83);
-      //border-color: grey;
       border-radius: 5px;
       overflow: hidden;
       width: 18rem;
@@ -78,10 +87,12 @@
       }
 
       .card-body {
+        position: relative;
         background-color: rgb(213, 222, 238);
         padding: 1.3rem 1.5rem;
         width: 100%;
-        height: 100%;
+        height: 75%;
+        max-height: 100%;
         overflow-y: auto;
 
         -ms-overflow-style: none; /* IE and Edge */
@@ -109,7 +120,7 @@
     }
   }
 
-  .category-list::-webkit-scrollbar {
-    display: none;
-  }
+  // .category-list::-webkit-scrollbar {
+  //   display: none;
+  // }
 }

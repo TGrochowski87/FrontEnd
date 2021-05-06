@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,47 +12,27 @@ import CategoryPage from "./components/categories/CategoryPage";
 import useSessionStorageState from "./SessionStorageState";
 import HomePage from "./components/HomePage";
 import ExpensesPage from "./components/expenses/ExpensesPage";
+import PlanningPage from "./components/planning/PlanningPage";
+import LogoutInfoModal from "./components/utils/LogoutInfoModal";
+
 import "./styles/App.scss";
 
 function App() {
   const [userName, setUserName] = useSessionStorageState("", "userName");
 
+  const [logoutShow, setLogoutShow] = useState(false);
+
   return (
     <div className="App">
-      {/* <button
-        onClick={() => {
-          console.log(sessionStorage.getItem("isAuthenticated"));
-        }}
-      >
-        isAuthenticated
-      </button>
-      <button
-        onClick={() => {
-          console.log(sessionStorage.getItem("userToken"));
-        }}
-      >
-        token
-      </button>
-      <button
-        onClick={() => {
-          console.log(sessionStorage.getItem("userName"));
-        }}
-      >
-        user name
-      </button>
-      <button
-        onClick={() => {
-          console.log(userName);
-        }}
-      >
-        name from hook
-      </button> */}
       <Router>
+        <LogoutInfoModal
+          logoutShow={logoutShow}
+          setLogoutShow={setLogoutShow}
+        />
         <NavigationBar userName={userName} setUserName={setUserName} />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route
-            exact
             path="/expenses"
             render={(props) =>
               sessionStorage.getItem("isAuthenticated") ? (
@@ -64,15 +44,30 @@ function App() {
           />
           <Route
             path="/login"
-            render={(props) => <Login {...props} setUserName={setUserName} />}
+            render={(props) => (
+              <Login
+                {...props}
+                setUserName={setUserName}
+                setLogoutShow={setLogoutShow}
+              />
+            )}
           />
           <Route path="/register" component={Register} />
           <Route
-            exact
             path="/categories"
             render={(props) =>
               sessionStorage.getItem("isAuthenticated") ? (
                 <CategoryPage {...props} />
+              ) : (
+                <Redirect to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/planning"
+            render={(props) =>
+              sessionStorage.getItem("isAuthenticated") ? (
+                <PlanningPage {...props} />
               ) : (
                 <Redirect to="/login" />
               )
