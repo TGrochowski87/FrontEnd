@@ -10,70 +10,152 @@ import {
 import { Typeahead } from "react-bootstrap-typeahead";
 import Slider from "@material-ui/core/Slider";
 import DatePicker from "react-datepicker";
+import useFetch from "use-http";
 
 function valuetext(value) {
   return `${value}°C`;
 }
 
-const FilterPanel = ({
-  isScrolled,
-  categories,
-  expenses,
-  setFilteredExpenses,
-}) => {
+const FilterPanel = ({ isScrolled, expenses, setFilteredExpenses }) => {
   const [filterTabStatus, setFilterTabStatus] = useState(false);
 
-  const [category, setCategory] = useState([]);
-  const [price, setPrice] = useState([0.0, 10000.0]);
-  const [date, setDate] = useState([new Date(2021, 1, 1), new Date()]);
+  const [filterCategory, setFilterCategory] = useState([]);
+  const [filterUser, setFilterUser] = useState([]);
+  const [filterPrice, setFilterPrice] = useState([0.0, 10000.0]);
+  const [filterDate, setFilterDate] = useState([
+    new Date(2021, 1, 1),
+    new Date(),
+  ]);
 
   const [categoryFilterActive, setCategoryFilterActive] = useState(false);
   const [priceFilterActive, setPriceFilterActive] = useState(false);
   const [userFilterActive, setUserFilterActive] = useState(false);
   const [dateFilterActive, setDateFilterActive] = useState(false);
 
+  const [categories, setCategories] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [filterProperties, setFilterProperties] = useState({
+    maxPrice: 0,
+    minDate: new Date(2021, 1, 1),
+    maxDate: new Date(),
+  });
+
+  const { get } = useFetch(`https://webhomebudget.azurewebsites.net/api`, {
+    headers: {
+      Authorization: "Bearer " + sessionStorage.getItem("userToken"),
+    },
+    cachePolicy: "no-cache",
+  });
+
+  const categoryGet = async () => {
+    await get("/category/expense/over/notarchived").then((response) =>
+      setCategories(response.map((cat) => cat.name))
+    );
+    //setCategories(categoriesTemp.map((cat) => cat.name));
+  };
+
+  const userGet = async () => {
+    await get("/users").then((response) => {
+      setUsers(response.map((user) => user.data.name));
+    });
+    //setUsers(usersTemp.map((user) => user.data.name));
+  };
+
+  const getProperties = async () => {
+    await get("/budget/expenses/properties").then((response) => {
+      setFilterProperties({
+        maxPrice: response.maxPrice,
+        maxDate: new Date(response.maxDate),
+        minDate: new Date(response.minDate),
+      });
+    });
+    // setFilterProperties({
+    //   maxPrice: propertiesTemp.maxPrice,
+    //   maxDate: new Date(propertiesTemp.maxDate),
+    //   minDate: new Date(propertiesTemp.minDate),
+    // });
+  };
+
+  useEffect(() => {
+    setFilterPrice([0.0, filterProperties.maxPrice]);
+    setFilterDate([filterProperties.minDate, filterProperties.maxDate]);
+  }, [filterProperties]);
+
+  useEffect(() => {
+    categoryGet();
+    userGet();
+    getProperties();
+  }, []);
+
   useEffect(() => {
     if (expenses === undefined) {
       return;
     }
 
-    let newArray = [];
+    let newArray = [...expenses];
 
-    for (let record of expenses) {
-      if (categoryFilterActive && category.length !== 0) {
-        if (record.category !== category[0]) {
-          continue;
-        }
-      }
-
-      if (priceFilterActive) {
-        if (record.price < price[0] || record.price > price[1]) {
-          continue;
-        }
-      }
-
-      // if(userFilterActive && user !== undefined){
-      //   if(record.user !== user){
-      //     continue;
-      //   }
-      // }
-
-      if (dateFilterActive) {
-        let recordDate = new Date(record.date).getTime();
-        if (recordDate < date[0].getTime() || recordDate > date[1].getTime()) {
-          continue;
-        }
-      }
-
-      newArray.push(record);
+    if (categoryFilterActive) {
+      newArray = newArray.filter(
+        (record) => record.category == filterCategory[0]
+      );
     }
+    if (priceFilterActive) {
+      newArray = newArray.filter(
+        (record) =>
+          record.price >= filterPrice[0] && record.price <= filterPrice[1]
+      );
+    }
+    if (userFilterActive) {
+      newArray = newArray.filter((record) => record.user == filterUser[0]);
+    }
+    if (dateFilterActive) {
+      newArray = newArray.filter(
+        (record) =>
+          new Date(record.date) >= filterDate[0] &&
+          new Date(record.date) <= filterDate[1]
+      );
+    }
+
+    //let newArray = [];
+
+    // for (let record of expenses) {
+    //   if (categoryFilterActive && filterCategory.length !== 0) {
+    //     if (record.category !== filterCategory[0]) {
+    //       continue;
+    //     }
+    //   }
+
+    //   if (priceFilterActive) {
+    //     if (record.price < filterPrice[0] || record.price > filterPrice[1]) {
+    //       continue;
+    //     }
+    //   }
+
+    //   // if(userFilterActive && user !== undefined){
+    //   //   if(record.user !== user){
+    //   //     continue;
+    //   //   }
+    //   // }
+
+    //   if (dateFilterActive) {
+    //     let recordDate = new Date(record.date).getTime();
+    //     if (
+    //       recordDate < filterDate[0].getTime() ||
+    //       recordDate > filterDate[1].getTime()
+    //     ) {
+    //       continue;
+    //     }
+    //   }
+
+    //   newArray.push(record);
+    // }
 
     setFilteredExpenses(newArray);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    category,
-    price,
-    date,
+    filterCategory,
+    filterPrice,
+    filterDate,
     categoryFilterActive,
     priceFilterActive,
     dateFilterActive,
@@ -86,10 +168,10 @@ const FilterPanel = ({
     setUserFilterActive(false);
     setDateFilterActive(false);
 
-    setCategory([]);
-    setPrice([0.0, 10000.0]);
-    //setUser()
-    setDate([new Date(2021, 1, 1), new Date()]);
+    setFilterCategory([]);
+    setFilterUser([]);
+    setFilterPrice([0.0, filterProperties.maxPrice]);
+    setFilterDate([filterProperties.minDate, filterProperties.maxDate]);
   };
 
   return (
@@ -126,10 +208,10 @@ const FilterPanel = ({
               <Typeahead
                 id="basic-typeahead-single"
                 labelKey="name"
-                onChange={setCategory}
-                options={categories.map((cat) => cat.name)}
+                onChange={setFilterCategory}
+                options={categories}
                 placeholder="Choose a category"
-                selected={category}
+                selected={filterCategory}
               />
             </Col>
           </Row>
@@ -153,8 +235,16 @@ const FilterPanel = ({
               <Form.Control
                 className="slider-side-input"
                 type="number"
-                value={price[0]}
-                onChange={(event) => setPrice([event.target.value, price[1]])}
+                value={filterPrice[0]}
+                onChange={(event) => {
+                  if (event.target.value < 0.0) {
+                    setFilterPrice([0.0, filterPrice[1]]);
+                  } else if (event.target.value > filterProperties.maxPrice) {
+                    setFilterPrice([filterProperties.maxPrice, filterPrice[1]]);
+                  } else {
+                    setFilterPrice([event.target.value, filterPrice[1]]);
+                  }
+                }}
               />
             </Col>
             <Col xs={6}></Col>
@@ -162,8 +252,16 @@ const FilterPanel = ({
               <Form.Control
                 className="slider-side-input"
                 type="number"
-                value={price[1]}
-                onChange={(event) => setPrice([price[0], event.target.value])}
+                value={filterPrice[1]}
+                onChange={(event) => {
+                  if (event.target.value < 0.0) {
+                    setFilterPrice([filterPrice[0], 0.0]);
+                  } else if (event.target.value > filterProperties.maxPrice) {
+                    setFilterPrice([filterPrice[0], filterProperties.maxPrice]);
+                  } else {
+                    setFilterPrice([filterPrice[0], event.target.value]);
+                  }
+                }}
               />
             </Col>
           </Row>
@@ -173,12 +271,11 @@ const FilterPanel = ({
               <Slider
                 className="slider"
                 min={0.0}
-                max={1000}
-                value={price}
+                max={filterProperties.maxPrice}
+                value={filterPrice}
                 onChange={(event, newValue) => {
-                  setPrice([newValue[0], newValue[1]]);
+                  setFilterPrice([newValue[0], newValue[1]]);
                 }}
-                valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
                 getAriaValueText={valuetext}
               />
@@ -205,10 +302,10 @@ const FilterPanel = ({
               <Typeahead
                 id="basic-typeahead-single"
                 labelKey="name"
-                onChange={setCategory}
-                options={categories}
-                placeholder="Choose a category"
-                selected={category}
+                onChange={setFilterUser}
+                options={users}
+                placeholder="Choose an entry creator"
+                selected={filterUser}
               />
             </Col>
           </Row>
@@ -230,27 +327,47 @@ const FilterPanel = ({
           <Row>
             <Col xs={3} style={{ padding: "0 0.6rem", textAlign: "right" }}>
               <DatePicker
+                popperPlacement="top-start"
+                closeOnScroll={true}
+                minDate={filterProperties.minDate}
+                maxDate={filterProperties.maxDate}
                 as={FormControl}
                 className="form-control slider-side-input"
                 id="inputDateFrom"
                 name="inputDate"
                 onChange={(newDate) => {
-                  setDate([newDate, date[1]]);
+                  if (newDate < filterProperties.minDate) {
+                    setFilterDate([filterProperties.minDate, filterDate[1]]);
+                  } else if (newDate > filterProperties.maxDate) {
+                    setFilterDate([filterProperties.maxDate, filterDate[1]]);
+                  } else {
+                    setFilterDate([newDate, filterDate[1]]);
+                  }
                 }}
-                selected={date[0]}
+                selected={filterDate[0]}
               />
             </Col>
             <Col xs={6}></Col>
             <Col xs={3} style={{ padding: "0 0.6rem", textAlign: "left" }}>
               <DatePicker
+                popperPlacement="top-end"
+                closeOnScroll={true}
+                minDate={filterProperties.minDate}
+                maxDate={filterProperties.maxDate}
                 as={FormControl}
                 className="form-control slider-side-input"
                 id="inputDateTo"
                 name="inputDate"
                 onChange={(newDate) => {
-                  setDate([date[0], newDate]);
+                  if (newDate < filterProperties.minDate) {
+                    setFilterDate([filterDate[0], filterProperties.minDate]);
+                  } else if (newDate > filterProperties.maxDate) {
+                    setFilterDate([filterDate[0], filterProperties.maxDate]);
+                  } else {
+                    setFilterDate([filterDate[0], newDate]);
+                  }
                 }}
-                selected={date[1]}
+                selected={filterDate[1]}
               />
             </Col>
           </Row>
@@ -259,11 +376,11 @@ const FilterPanel = ({
             <Col xs={8}>
               <Slider
                 className="slider"
-                min={new Date(2021, 1, 1).getTime()}
-                max={new Date().getTime()}
-                value={[date[0].getTime(), date[1].getTime()]}
+                min={filterProperties.minDate.getTime()}
+                max={filterProperties.maxDate.getTime()}
+                value={[filterDate[0].getTime(), filterDate[1].getTime()]}
                 onChange={(event, newValue) => {
-                  setDate([new Date(newValue[0]), new Date(newValue[1])]);
+                  setFilterDate([new Date(newValue[0]), new Date(newValue[1])]);
                 }}
                 aria-labelledby="range-slider"
                 getAriaValueText={valuetext}
@@ -281,110 +398,6 @@ const FilterPanel = ({
           </Col>
         </Row>
       </Container>
-      {/* <div className="filter-panel">
-        <Form.Group>
-          <Form.Label>
-            Categories{" "}
-            <input
-              type="checkbox"
-              checked={categoryFilterActive}
-              onChange={(event) => {
-                setCategoryFilterActive(event.target.checked);
-              }}
-            />
-          </Form.Label>
-          <Typeahead
-            id="basic-typeahead-single"
-            labelKey="name"
-            onChange={setCategory}
-            options={categories.map((cat) => cat.name)}
-            placeholder="Choose a category"
-            selected={category}
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label>
-            Price
-            <input
-              type="checkbox"
-              checked={priceFilterActive}
-              onChange={(event) => {
-                setPriceFilterActive(event.target.checked);
-              }}
-            />
-          </Form.Label>
-          <div className="slider-space">
-            <p>{price[0]}</p>
-            <Slider
-              className="slider"
-              min={0.0}
-              max={10000.0}
-              value={price}
-              onChange={(event, newValue) => {
-                setPrice([newValue[0], newValue[1]]);
-              }}
-              valueLabelDisplay="auto"
-              aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
-            />
-            <p>{price[1]}</p>
-          </div>
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label>
-            User
-            <input
-              type="checkbox"
-              checked={userFilterActive}
-              onChange={(event) => {
-                setUserFilterActive(event.target.checked);
-              }}
-            />
-          </Form.Label>
-          <Typeahead
-            id="basic-typeahead-single"
-            labelKey="name"
-            onChange={setCategory}
-            options={categories}
-            placeholder="Choose a category"
-            selected={category}
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label>
-            Date
-            <input
-              type="checkbox"
-              checked={dateFilterActive}
-              onChange={(event) => {
-                setDateFilterActive(event.target.checked);
-              }}
-            />
-          </Form.Label>
-          <div className="slider-space">
-            <p>{date[0].toLocaleDateString().toString()}</p>
-            <Slider
-              className="slider"
-              min={new Date(2021, 1, 1).getTime()}
-              max={new Date().getTime()}
-              value={[date[0].getTime(), date[1].getTime()]}
-              onChange={(event, newValue) => {
-                setDate([new Date(newValue[0]), new Date(newValue[1])]);
-              }}
-              aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
-            />
-            <p>{date[1].toLocaleDateString().toString()}</p>
-          </div>
-        </Form.Group>
-
-        <Form.Group>
-          <Button onClick={clearHandler}>Clear filters</Button>
-        </Form.Group>
-      </div> */}
     </div>
   );
 };

@@ -54,6 +54,12 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 
+    .react-datepicker-popper {
+      display: block !important;
+      overflow: visible !important;
+      visibility: visible !important;
+    }
+
     p {
       font-size: 0.6rem;
     }
