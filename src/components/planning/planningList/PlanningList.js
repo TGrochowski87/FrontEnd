@@ -12,35 +12,11 @@ const PlanningList = ({
   copyPlan,
   editPlan,
 }) => {
-  //const [plans, setPlans] = useState([]);
-
-  // const { get } = useFetch(
-  //   `https://webhomebudget.azurewebsites.net/api/plannedexpenses`,
-  //   {
-  //     headers: {
-  //       Authorization: "Bearer " + sessionStorage.getItem("userToken"),
-  //     },
-  //     cachePolicy: "no-cache",
-  //   }
-  // );
-
-  // const plansGet = async () => {
-  //   await get("").then((res) => {
-  //     console.log(res);
-  //     setPlans(res);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   plansGet();
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   return (
     <div className="planning-list" id={PlanId}>
       <div className="item-header">
         <h2>{monthNames[new Date(plan.date).getMonth()]}</h2>
+        <h2>{new Date(plan.date).getFullYear()}</h2>
         <DropdownButton
           //as={ButtonGroup}
           id={`dropdown-button-drop-down`}
@@ -48,8 +24,6 @@ const PlanningList = ({
           variant="secondary"
           title="Copy from"
         >
-          <Dropdown.Item eventKey="1">Previous</Dropdown.Item>
-          <Dropdown.Divider />
           {archivedPlans.map((archived) => (
             <Dropdown.Item
               key={archived.date}
@@ -57,7 +31,8 @@ const PlanningList = ({
                 copyPlan(archived.date, plan.date);
               }}
             >
-              {monthNames[new Date(archived.date).getMonth()]}
+              <p>{monthNames[new Date(archived.date).getMonth()]}</p>
+              <p>{new Date(archived.date).getFullYear()}</p>
             </Dropdown.Item>
           ))}
         </DropdownButton>

@@ -26,6 +26,7 @@ const CategoryPlan = ({ plan, editPlan }) => {
       <p>{plan.category}</p>
       {editActive ? (
         <input
+          autoFocus
           type="number"
           value={inputPrice}
           onBlur={() => {

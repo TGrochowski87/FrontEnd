@@ -4,11 +4,12 @@
   top: 120px;
 
   height: 75%;
+  max-height: 650px;
   width: 23rem;
   z-index: 500;
 
   transform: translateX(80%);
-  transition: all 0.5s ease, top 0.4s ease;
+  transition: transform 0.5s ease, top 0.3s ease;
 
   pointer-events: none;
 
@@ -24,7 +25,7 @@
     align-items: center;
     justify-content: center;
 
-    background-color: rgb(158, 178, 212);
+    background-color: rgb(122, 140, 172);
     width: 20%;
     height: 40%;
     min-height: 150px;
@@ -46,7 +47,7 @@
     right: 0;
     width: 80%;
     height: 100%;
-    background-color: rgb(207, 217, 235);
+    background-color: rgb(174, 187, 211);
     z-index: 3;
     border-radius: 0 0 0 10px;
     box-shadow: 0px 0px 9px 3px rgba($color: #a1a1a1, $alpha: 0.5);
@@ -99,69 +100,12 @@
 
     .btn {
       width: 80%;
-      background-color: #9eb2d4;
+      background-color: rgb(122, 140, 172);
+      font-size: 1.2rem;
       color: black;
       border: none;
     }
   }
-
-  // .filter-panel {
-  //   position: absolute;
-
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: space-around; //tempers with scrolling
-
-  //   right: 0;
-  //   width: 80%;
-  //   height: 100%;
-  //   padding: 1rem 1rem 5rem 1rem;
-  //   z-index: 3;
-  //   background-color: rgb(207, 217, 235);
-
-  //   border-radius: 0 0 0 10px;
-  //   box-shadow: 0px 0px 9px 3px rgba($color: #a1a1a1, $alpha: 0.5);
-
-  //   overflow: auto;
-
-  //   -ms-overflow-style: none; /* IE and Edge */
-  //   scrollbar-width: none; /* Firefox */
-
-  //   .btn {
-  //     position: relative;
-  //     background-color: #9eb2d4;
-  //     color: black;
-  //     border: none;
-  //     width: 80%;
-  //     margin: 0 10%;
-  //   }
-
-  //   input[type="checkbox"] {
-  //     cursor: pointer;
-  //     margin-left: 0.4rem;
-  //   }
-
-  //   .slider-space {
-  //     position: relative;
-  //     display: flex;
-  //     flex-direction: row;
-  //     justify-content: space-between;
-  //     text-align: center;
-
-  //     width: 95%;
-
-  //     .slider {
-  //       position: absolute;
-  //       margin: 0.5rem 0 0 1rem;
-  //       width: 11.5rem;
-  //     }
-
-  //     p {
-  //       width: 2rem;
-  //       font-size: 0.6rem;
-  //     }
-  //   }
-  // }
 
   .filter-panel::-webkit-scrollbar {
     display: none;
@@ -174,12 +118,25 @@
     height: 100%;
     top: 0;
   }
+
+  .at-top {
+    top: 68.359px;
+  }
+
+  .tab-active {
+    background-color: rgb(174, 187, 211);
+
+    .panel-name {
+      height: 100%;
+      border-radius: 0 10px 10px 0;
+    }
+
+    .filter-panel {
+      box-shadow: none;
+    }
+  }
 }
 
 .tab-active {
   transform: translateX(0%);
-}
-
-.scrolled {
-  top: 10%;
 }

@@ -25,7 +25,6 @@ import ExpensesListRecord from "./ExpensesListRecord";
 
 const ExpensesList = () => {
   const [categories] = useState([]);
-  const [isScrolled, setIsScrolled] = useState(false);
 
   const [expenses, setExpenses] = useState([]);
   const [filteredExpenses, setFilteredExpenses] = useState([]);
@@ -42,14 +41,6 @@ const ExpensesList = () => {
     description: <DescriptionOutlined fontSize="small" />,
   };
 
-  window.addEventListener("scroll", (event) => {
-    if (window.scrollY / window.screenY > 0.13) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
-  });
-
   const { get, post, del, response } = useFetch(
     `https://webhomebudget.azurewebsites.net/api`,
     {
@@ -59,20 +50,6 @@ const ExpensesList = () => {
       cachePolicy: "no-cache",
     }
   );
-
-  const categoryGet = async () => {
-    // const categories = await get('/category/over');
-    // if (response.ok) {
-    //   let newCategoriesData = [];
-    //   for (let cat of categories) {
-    //     const subcategories = await get(`/category/sub/${cat.id}`);
-    //     if (response.ok) {
-    //       newCategoriesData.push({ ...cat, subcategories });
-    //     }
-    //   }
-    //   setCategories(newCategoriesData);
-    // }
-  };
 
   const expenseGet = async () => {
     const newExpenses = await get(
@@ -111,11 +88,6 @@ const ExpensesList = () => {
   };
 
   const expensePut = async (id) => {
-    //   await put(`/budget/expenses/${id}`);
-    //   if (response.ok) {
-    //     onExpensePut();
-    //   }
-    console.log("expense put: ", id);
     expenseGetRefresh(expenses.length);
   };
 
@@ -132,7 +104,6 @@ const ExpensesList = () => {
   };
 
   useEffect(() => {
-    categoryGet();
     expenseGet();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -141,12 +112,11 @@ const ExpensesList = () => {
     <>
       <FilterPanel
         categories={categories}
-        isScrolled={isScrolled}
         expenses={expenses}
         setFilteredExpenses={setFilteredExpenses}
       />
-      <ExpenseWizard title='New expense' onWizardSubmit={expensePost} />
-      <ContainerCard className='mt-2'>
+      <ExpenseWizard title="New expense" onWizardSubmit={expensePost} />
+      <ContainerCard className="mt-2">
         <ContainerCard.Header>
           <ExpensesListHeader icons={icons}>
             <h4 className="py-2">Expenses</h4>
@@ -183,7 +153,7 @@ const ExpensesList = () => {
                   return (
                     <React.Fragment key={index}>
                       {addSeparator && (
-                        <ExpensesListRecord className='py-2 text-muted record-separator'>
+                        <ExpensesListRecord className="py-2 text-muted record-separator">
                           <ExpenseItem icon={icons?.date}>
                             <ExpenseItem.Date data={filteredExpense?.date} />
                           </ExpenseItem>
@@ -191,7 +161,7 @@ const ExpensesList = () => {
                       )}
                       <ExpensesListRecord
                         key={filteredExpense.id}
-                        className='record-expense'
+                        className="record-expense"
                       >
                         <Expense
                           expenseData={filteredExpense}

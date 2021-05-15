@@ -16,7 +16,9 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-const FilterPanel = ({ isScrolled, expenses, setFilteredExpenses }) => {
+const FilterPanel = ({ expenses, setFilteredExpenses }) => {
+  const [scrollY, setScrollY] = useState(window.scrollY);
+
   const [filterTabStatus, setFilterTabStatus] = useState(false);
 
   const [filterCategory, setFilterCategory] = useState([]);
@@ -38,6 +40,10 @@ const FilterPanel = ({ isScrolled, expenses, setFilteredExpenses }) => {
     maxPrice: 0,
     minDate: new Date(2021, 1, 1),
     maxDate: new Date(),
+  });
+
+  window.addEventListener("scroll", (event) => {
+    setScrollY(window.scrollY);
   });
 
   const { get } = useFetch(`https://webhomebudget.azurewebsites.net/api`, {
@@ -85,6 +91,8 @@ const FilterPanel = ({ isScrolled, expenses, setFilteredExpenses }) => {
     categoryGet();
     userGet();
     getProperties();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -96,7 +104,7 @@ const FilterPanel = ({ isScrolled, expenses, setFilteredExpenses }) => {
 
     if (categoryFilterActive) {
       newArray = newArray.filter(
-        (record) => record.category == filterCategory[0]
+        (record) => record.category === filterCategory[0]
       );
     }
     if (priceFilterActive) {
@@ -106,7 +114,7 @@ const FilterPanel = ({ isScrolled, expenses, setFilteredExpenses }) => {
       );
     }
     if (userFilterActive) {
-      newArray = newArray.filter((record) => record.user == filterUser[0]);
+      newArray = newArray.filter((record) => record.user === filterUser[0]);
     }
     if (dateFilterActive) {
       newArray = newArray.filter(
@@ -115,40 +123,6 @@ const FilterPanel = ({ isScrolled, expenses, setFilteredExpenses }) => {
           new Date(record.date) <= filterDate[1]
       );
     }
-
-    //let newArray = [];
-
-    // for (let record of expenses) {
-    //   if (categoryFilterActive && filterCategory.length !== 0) {
-    //     if (record.category !== filterCategory[0]) {
-    //       continue;
-    //     }
-    //   }
-
-    //   if (priceFilterActive) {
-    //     if (record.price < filterPrice[0] || record.price > filterPrice[1]) {
-    //       continue;
-    //     }
-    //   }
-
-    //   // if(userFilterActive && user !== undefined){
-    //   //   if(record.user !== user){
-    //   //     continue;
-    //   //   }
-    //   // }
-
-    //   if (dateFilterActive) {
-    //     let recordDate = new Date(record.date).getTime();
-    //     if (
-    //       recordDate < filterDate[0].getTime() ||
-    //       recordDate > filterDate[1].getTime()
-    //     ) {
-    //       continue;
-    //     }
-    //   }
-
-    //   newArray.push(record);
-    // }
 
     setFilteredExpenses(newArray);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -177,7 +151,7 @@ const FilterPanel = ({ isScrolled, expenses, setFilteredExpenses }) => {
   return (
     <div
       className={`filter-space ${filterTabStatus ? "tab-active" : ""} ${
-        isScrolled ? "scrolled" : ""
+        scrollY > 66.357 ? "" : "at-top"
       }`}
     >
       <div

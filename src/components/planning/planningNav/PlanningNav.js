@@ -44,13 +44,18 @@ const PlanningNav = ({ plans, monthNames, addMonthPlan }) => {
           </>
         </div>
 
-        {plans.map((plan) => (
-          <PlanningNavItem
-            key={plan.date}
-            planId={plan.date}
-            name={monthNames[new Date(plan.date).getMonth()]}
-          />
-        ))}
+        <div className="nav-list">
+          {plans.map((plan) => (
+            <PlanningNavItem
+              key={plan.date}
+              planId={plan.date}
+              setActiveForMobile={setActiveForMobile}
+              year={new Date(plan.date).getFullYear()}
+              name={monthNames[new Date(plan.date).getMonth()]}
+            />
+          ))}
+        </div>
+
         <div
           className="new-plan"
           onClick={() => {
