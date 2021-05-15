@@ -1,8 +1,17 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
+import { DropdownButton, Dropdown } from "react-bootstrap";
 
 import PlanningListItem from "./PlanningListItem";
 
-const PlanningList = ({ plan, PlanId }) => {
+const PlanningList = ({
+  plan,
+  PlanId,
+  monthNames,
+  archivedPlans,
+  copyPlan,
+  editPlan,
+}) => {
   //const [plans, setPlans] = useState([]);
 
   // const { get } = useFetch(
@@ -30,18 +39,36 @@ const PlanningList = ({ plan, PlanId }) => {
 
   return (
     <div className="planning-list" id={PlanId}>
-      <div
-        className="item-header"
-        onClick={() => {
-          console.log(new Date(plan.date).getMonth());
-          console.log(plan.date);
-        }}
-      >
-        <h2>{plan.monthName}</h2>
+      <div className="item-header">
+        <h2>{monthNames[new Date(plan.date).getMonth()]}</h2>
+        <DropdownButton
+          //as={ButtonGroup}
+          id={`dropdown-button-drop-down`}
+          drop="down"
+          variant="secondary"
+          title="Copy from"
+        >
+          <Dropdown.Item eventKey="1">Previous</Dropdown.Item>
+          <Dropdown.Divider />
+          {archivedPlans.map((archived) => (
+            <Dropdown.Item
+              key={archived.date}
+              onClick={() => {
+                copyPlan(archived.date, plan.date);
+              }}
+            >
+              {monthNames[new Date(archived.date).getMonth()]}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
       </div>
       <div className="list-body">
-        {plan.categories.map((categoryPlan) => (
-          <PlanningListItem key={categoryPlan.id} categoryPlan={categoryPlan} />
+        {plan.plans.map((categoryPlan) => (
+          <PlanningListItem
+            key={uuidv4()}
+            categoryPlan={categoryPlan}
+            editPlan={editPlan}
+          />
         ))}
       </div>
     </div>

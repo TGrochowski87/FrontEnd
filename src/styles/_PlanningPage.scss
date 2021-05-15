@@ -12,25 +12,111 @@
 
   .planning-list {
     .item-header {
+      display: flex;
+      flex-direction: row;
+
       margin-top: 1.5rem;
       border-bottom: whitesmoke solid 2px;
       margin-bottom: 1rem;
+
+      .btn {
+        background-color: transparent;
+        border: none;
+        box-shadow: none !important;
+      }
     }
 
     .list-body {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       column-gap: 10px;
       row-gap: 15px;
 
-      .planning-list-item {
-        display: flex;
-        justify-content: space-between;
-        background-color: #355f77;
-        padding: 10px 30px;
-        margin-bottom: 0.6rem;
+      .planning-card {
+        position: relative;
+        justify-self: center;
+        border: solid 1px #355f77;
+        border-radius: 5px;
+        overflow: hidden;
+        width: 15rem;
+        height: 13rem;
+        margin: 0.5rem;
 
-        border-radius: 30px;
+        .card-header {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-content: center;
+          align-items: center;
+          background-color: #355f77;
+
+          border-bottom: solid rgb(63, 63, 63) 1px;
+          height: 25%;
+        }
+
+        .card-body {
+          position: relative;
+          background-color: rgba(35, 46, 56, 0.267);
+          padding: 0.8rem 1.3rem;
+          width: 100%;
+          height: 75%;
+          max-height: 100%;
+          overflow-y: auto;
+
+          -ms-overflow-style: none; /* IE and Edge */
+          scrollbar-width: none; /* Firefox */
+
+          .badge {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            align-content: center;
+
+            cursor: pointer;
+
+            width: 100%;
+            height: 1.3rem;
+            margin-bottom: 0.3rem;
+            padding-left: 1.2rem;
+            padding-right: 1.8rem;
+
+            font-size: 0.8rem;
+
+            background-color: #355f77;
+
+            input {
+              background-color: transparent;
+              color: rgb(226, 226, 226);
+
+              width: 20%;
+              padding: 0;
+              margin: 0;
+
+              font-size: 0.6rem;
+              text-align: end;
+              height: unset;
+
+              border: none;
+              border-radius: 0;
+              border-bottom: black solid 1px;
+              outline: none !important;
+              box-shadow: none !important;
+
+              -moz-appearance: textfield;
+            }
+
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+          }
+        }
+
+        .card-body::-webkit-scrollbar {
+          display: none;
+        }
       }
     }
   }
@@ -47,7 +133,7 @@
 
   z-index: 10;
 
-  transition: all 0.5s ease;
+  transition: transform 0.5s ease;
 
   .roll-out-button {
     position: inherit;

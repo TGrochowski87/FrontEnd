@@ -3,7 +3,7 @@ import AddIcon from "@material-ui/icons/Add";
 
 import PlanningNavItem from "./PlanningNavItem";
 
-const PlanningNav = ({ monthPlans }) => {
+const PlanningNav = ({ plans, monthNames, addMonthPlan }) => {
   const [scrollY, setScrollY] = useState(window.scrollY);
   const [activeForMobile, setActiveForMobile] = useState(false);
 
@@ -44,17 +44,17 @@ const PlanningNav = ({ monthPlans }) => {
           </>
         </div>
 
-        {monthPlans.map((plan) => (
+        {plans.map((plan) => (
           <PlanningNavItem
-            key={plan.id}
-            planId={plan.id}
-            name={plan.monthName}
+            key={plan.date}
+            planId={plan.date}
+            name={monthNames[new Date(plan.date).getMonth()]}
           />
         ))}
         <div
           className="new-plan"
           onClick={() => {
-            //addMonthPlan();
+            addMonthPlan();
           }}
         >
           <>
