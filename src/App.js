@@ -14,6 +14,7 @@ import './styles/App.scss';
 import CategoryPage from './components/categories/CategoryPage';
 import ExpensesPage from './components/expenses/ExpensesPage';
 import HomePage from './components/home/HomePage';
+import IncomesPage from './components/incomes/IncomesPage';
 import Login from './components/login/Login';
 import Register from './components/login/Register';
 import PlanningPage from './components/planning/PlanningPage';
@@ -34,6 +35,16 @@ function App() {
         <NavigationBar userName={userName} setUserName={setUserName} />
         <Switch>
           <Route exact path='/' component={HomePage} />
+          <Route
+            path='/incomes'
+            render={(props) =>
+              sessionStorage.getItem('isAuthenticated') ? (
+                <IncomesPage {...props} />
+              ) : (
+                <Redirect to='/login' />
+              )
+            }
+          />
           <Route
             path='/expenses'
             render={(props) =>
