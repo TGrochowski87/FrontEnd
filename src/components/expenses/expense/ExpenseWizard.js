@@ -74,6 +74,7 @@ const ExpenseWizard = ({ onWizardSubmit, title }) => {
                 id='inputPrice'
                 name='inputPrice'
                 placeholder='Please enter a value'
+                allowNegativeValue={false}
                 defaultValue={price}
                 value={price}
                 decimalsLimit={2}
