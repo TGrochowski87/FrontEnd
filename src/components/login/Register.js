@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { useHistory } from "react-router";
 import useFetch from "use-http";
 
 import RegisterGoogle from "./RegisterGoogle";
-import LoginInfoModal from "./LoginInfoModal";
 
 const Register = () => {
+  const history = useHistory();
+
   const [usernameInput, setUsernameInput] = useState("");
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
-
-  const [show, setShow] = useState(false);
 
   const { post, response } = useFetch(
     "https://webhomebudget.azurewebsites.net/api/register"
@@ -26,22 +26,21 @@ const Register = () => {
       email: emailInput,
       name: usernameInput,
     };
-    fd.append("user", JSON.stringify(data));
+    fd.append("user", data);
 
     await post("", fd);
 
     if (response.ok) {
-      setShow(true);
+      history.push("/");
     }
   };
 
   return (
     <>
-      <LoginInfoModal show={show} setShow={setShow} register={true} />
       <Container className="my-5 w-50 login-space">
         <Row xs={1}>
           <Col>
-            <RegisterGoogle setShow={setShow} />
+            <RegisterGoogle />
           </Col>
         </Row>
         <Row>

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { useHistory } from "react-router";
 
 import useFetch from "use-http";
 
 import LoginGoogle from "./LoginGoogle";
-import LoginInfoModal from "./LoginInfoModal";
 
 const Login = ({ setUserName, setLogoutShow }) => {
+  const history = useHistory();
+
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
-
-  const [show, setShow] = useState(false);
 
   const { post, response } = useFetch(
     `https://webhomebudget.azurewebsites.net/api/login`
@@ -19,37 +19,38 @@ const Login = ({ setUserName, setLogoutShow }) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+
     await post("", {
       email: emailInput,
       password: passwordInput,
-    }).then((res) => {
-      if (response.ok) {
-        sessionStorage.setItem("userToken", res.result.access_Token);
-        setUserName(res.result.userName);
-        sessionStorage.setItem("isAuthenticated", true);
+    })
+      .then((res) => {
+        if (response.ok) {
+          sessionStorage.setItem("userToken", res.result.access_Token);
+          setUserName(res.result.userName);
+          sessionStorage.setItem("isAuthenticated", true);
 
-        setTimeout(() => {
-          sessionStorage.removeItem("isAuthenticated");
-          sessionStorage.removeItem("userToken");
-          setUserName("");
+          setTimeout(() => {
+            sessionStorage.removeItem("isAuthenticated");
+            sessionStorage.removeItem("userToken");
+            setUserName("");
 
-          setLogoutShow(true);
-        }, 10800000); //10800000
-
-        setShow(true);
-      }
-    });
+            setLogoutShow(true);
+          }, 10800000); //10800000
+        }
+      })
+      .then(() => {
+        history.push("/");
+      });
   };
 
   return (
     <>
-      <LoginInfoModal show={show} setShow={setShow} register={false} />
       <Container className="my-5 w-50 login-space">
         <Row xs={1}>
           <Col>
             <LoginGoogle
               setUserName={setUserName}
-              setShow={setShow}
               setLogoutShow={setLogoutShow}
             />
           </Col>
