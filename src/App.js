@@ -12,7 +12,8 @@ import CategoryPage from "./components/categories/CategoryPage";
 import useSessionStorageState from "./SessionStorageState";
 import HomePage from "./components/HomePage";
 import ExpensesPage from "./components/expenses/ExpensesPage";
-import PlanningPage from "./components/planning/PlanningPage";
+import ExpensePlanningPage from "./components/planning/expenses/ExpensePlanningPage";
+import IncomePlanningPage from "./components/planning/incomes/IncomePlanningPage";
 import LogoutInfoModal from "./components/utils/LogoutInfoModal";
 
 import "./styles/App.scss";
@@ -64,10 +65,20 @@ function App() {
             }
           />
           <Route
-            path="/planning"
+            path="/planning/expense"
             render={(props) =>
               sessionStorage.getItem("isAuthenticated") ? (
-                <PlanningPage {...props} />
+                <ExpensePlanningPage {...props} />
+              ) : (
+                <Redirect to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/planning/income"
+            render={(props) =>
+              sessionStorage.getItem("isAuthenticated") ? (
+                <IncomePlanningPage {...props} />
               ) : (
                 <Redirect to="/login" />
               )

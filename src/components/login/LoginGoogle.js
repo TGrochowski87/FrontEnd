@@ -14,7 +14,7 @@ const LoginGoogle = ({ setUserName, setShow, setLogoutShow }) => {
     };
 
     const token = await post("", loginData);
-    console.log(response);
+
     if (response.ok) {
       console.log(token);
       sessionStorage.setItem("userToken", token.result.access_Token);

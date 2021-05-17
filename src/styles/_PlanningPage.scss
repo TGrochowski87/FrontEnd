@@ -73,7 +73,7 @@
           justify-content: space-between;
           align-content: center;
           align-items: center;
-          background-color: #355f77;
+          background-color: #355f77; //#355f77
 
           border-bottom: solid rgb(63, 63, 63) 1px;
           height: 25%;
@@ -151,159 +151,81 @@
   display: none;
 }
 
-.planning-nav-space {
-  height: 100%;
-  width: 25%;
-  color: rgb(226, 226, 226);
+.income-plan {
+  background-color: #355f77;
 
-  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem 2rem;
 
-  transition: transform 0.5s ease;
+  border-radius: 50px;
 
-  .roll-out-button {
-    position: inherit;
-    background-color: #343841;
-    cursor: pointer;
+  font-size: 1.7rem;
 
-    display: none;
-    align-items: center;
-    justify-content: center;
-
-    top: 15%;
-    left: 100%;
-
-    height: 12rem;
-    width: 10%;
-
-    border-radius: 0 10px 10px 0;
-
-    z-index: 50;
-
-    transition: all 0.5s ease;
-
-    p {
-      font-weight: 700;
-      font-size: 1.2rem;
-      letter-spacing: 0.4rem;
-      transform: rotate(90deg);
-    }
+  p {
+    margin: 0;
   }
 
-  .planning-nav {
-    background-color: #343841;
+  input {
+    background-color: transparent;
+    color: rgb(226, 226, 226);
 
-    height: 100%;
-    width: 90%;
+    width: 20%;
+    padding: 0;
+    margin: 0;
 
-    overflow: auto;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    text-align: end;
+    line-height: 0;
 
-    .nav-list {
-      max-height: 65%;
-      overflow: auto;
+    border: none;
+    border-radius: 0;
+    border-bottom: black solid 1px;
+    outline: none !important;
+    box-shadow: none !important;
 
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
-
-      .planning-nav-item {
-        margin-bottom: 5px;
-        padding: 0.3rem 1rem;
-        display: flex;
-
-        cursor: pointer;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        align-content: space-between;
-
-        transition: background 0.3s ease;
-
-        &:hover {
-          background-color: #515766;
-        }
-
-        @media screen and (min-width: 500px) and (max-width: 1000px) {
-          .year {
-            display: none;
-          }
-        }
-      }
-    }
-
-    .nav-list::-webkit-scrollbar {
-      display: none;
-    }
-
-    .planning-nav-header {
-      margin: 20px 0;
-      padding-bottom: 10px;
-      text-align: center;
-      border-bottom: whitesmoke solid 2px;
-    }
-
-    .new-plan {
-      position: relative;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-
-      margin: 20px 0;
-      padding-top: 10px;
-      text-align: center;
-      border-top: whitesmoke solid 2px;
-
-      cursor: pointer;
-
-      h5 {
-        margin-right: 15px;
-      }
-
-      &:hover {
-        background-color: #4d535f;
-      }
-    }
+    -moz-appearance: textfield;
   }
 
-  .planning-nav::-webkit-scrollbar {
-    display: none;
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .planning-nav-space {
-    transform: translateX(-100%);
-    width: 100%;
-
-    .planning-nav {
-      background-color: #343841;
-      width: 100%;
-
-      .year {
-        margin-right: 3rem;
-      }
-    }
-
-    .roll-out-button {
-      display: flex;
-    }
-  }
-
   .planning-space {
     width: 95%;
     left: 5%;
   }
 
-  .mobile-active-panel {
-    transform: translateX(0%);
-  }
-
   .mobile-active-button {
     background-color: #2e303a !important;
-    //transform: translateX(-200%);
     left: unset !important;
     right: 0;
 
     border-radius: 10px 0 0 10px !important;
   }
+}
+
+.separator {
+  position: relative;
+  text-align: center;
+  border-top: whitesmoke solid 2px;
+  margin: 5rem 0 6rem 0;
+
+  overflow: visible !important;
+
+  p {
+    font-size: 4rem;
+    position: relative;
+    margin: auto;
+    bottom: 1%;
+  }
+}
+
+.archive {
+  cursor: unset !important;
+  background-color: #5e6e77 !important;
 }
