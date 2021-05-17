@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
+import { Link } from "react-scroll";
 
 import PlanningNavItem from "./PlanningNavItem";
 
@@ -23,7 +24,6 @@ const PlanningNav = ({ plans, monthNames, addMonthPlan }) => {
       }
     >
       <div
-        // className="roll-out-button"
         onClick={() => {
           setActiveForMobile(!activeForMobile);
         }}
@@ -55,7 +55,11 @@ const PlanningNav = ({ plans, monthNames, addMonthPlan }) => {
             />
           ))}
         </div>
-
+        <Link to={0} smooth>
+          <div className="archive-nav">
+            <p>ARCHIVE</p>
+          </div>
+        </Link>
         <div
           className="new-plan"
           onClick={() => {

@@ -3,11 +3,6 @@ import CategoryPlan from "./CategoryPlan";
 
 const PlanningListItem = ({ categoryPlan, editPlan }) => {
   return (
-    // <div className="planning-list-item">
-    //   <h4>{categoryPlan.name}</h4>
-    //   <h4>{categoryPlan.price}</h4>
-    // </div>
-
     <div className="planning-card">
       <div className="card-header">
         <h3>{categoryPlan.categoryName}</h3>

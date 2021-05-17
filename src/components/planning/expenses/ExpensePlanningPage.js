@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "use-http";
 
-import PlanningNav from "./planningNav/PlanningNav";
-import PlanningListSpace from "./planningList/PlanningListSpace";
+import PlanningNav from "./ExpensePlanningNav/PlanningNav";
+import PlanningListSpace from "./PlanningListSpace";
 
-const PlanningPage = () => {
+const ExpensePlanningPage = () => {
   const [plans, setPlans] = useState([]);
   const [archivedPlans, setArchivedPlans] = useState([]);
   const [monthNames] = useState([
@@ -23,8 +23,8 @@ const PlanningPage = () => {
   ]);
   //const [monthPlans, setMonthPlans] = useState([]);
 
-  const { get, post, put } = useFetch(
-    `https://webhomebudget.azurewebsites.net/api/plannedexpenses`,
+  const { get, post, put, response } = useFetch(
+    `https://webhomebudget.azurewebsites.net/api/plan/expenses`,
     {
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("userToken"),
@@ -35,14 +35,18 @@ const PlanningPage = () => {
 
   const plansGet = async () => {
     await get("").then((res) => {
-      setArchivedPlans(res.filter((plan) => plan.archived === true));
-      setPlans(res.filter((plan) => plan.archived === false));
+      if (response.ok) {
+        setArchivedPlans(res.filter((plan) => plan.archived === true));
+        setPlans(res.filter((plan) => plan.archived === false));
+      }
     });
   };
 
   const addMonthPlan = async () => {
     await post("").then(() => {
-      plansGet();
+      if (response.ok) {
+        plansGet();
+      }
     });
   };
 
@@ -53,19 +57,22 @@ const PlanningPage = () => {
     };
 
     await put("", data).then(() => {
-      plansGet();
+      if (response.ok) {
+        plansGet();
+      }
     });
   };
 
   const copyPlan = async (from, to) => {
-    //console.log("==> " + from.toISOString());
     const data = {
       planningMonth: to,
       copyFromMonth: from,
     };
 
     await post("/copy", data).then(() => {
-      plansGet();
+      if (response.ok) {
+        plansGet();
+      }
     });
   };
 
@@ -93,4 +100,4 @@ const PlanningPage = () => {
   );
 };
 
-export default PlanningPage;
+export default ExpensePlanningPage;
