@@ -35,7 +35,7 @@ const PlanningList = ({
           ))}
         </DropdownButton>
       </div>
-      <div className="list-body">
+      <div className="list-body income-list">
         {plan.plans.map((categoryPlan) => (
           <PlanningListItem
             key={categoryPlan.id}
