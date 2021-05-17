@@ -14,6 +14,7 @@ import './styles/App.scss';
 import CategoryPage from './components/categories/CategoryPage';
 import ExpensesPage from './components/expenses/ExpensesPage';
 import HomePage from './components/home/HomePage';
+import IncomesPage from './components/incomes/IncomesPage';
 import Login from './components/login/Login';
 import Register from './components/login/Register';
 import LogoutInfoModal from './components/utils/LogoutInfoModal';
