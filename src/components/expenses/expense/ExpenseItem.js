@@ -57,6 +57,9 @@ ExpenseItem.Text = ({ data }) => {
 
 ExpenseItem.Price = ({ data }) => {
   if (data) {
+    if (data < 0) {
+      return <span className='text-muted font-italic'>Error</span>;
+    }
     return (
       <NumberFormat
         value={data}

@@ -1,15 +1,15 @@
 .image-picker-wrapper {
-  background-color: #fff;
+  color: white;
+  background-color: #343a40;
   background-clip: padding-box;
-  border: 2px dashed #ced4da;
+  border: 2px dashed #355f77;
   border-radius: 0.25rem;
 
-  &:hover,
+  &:hover {
+    background-color: #23272b;
+  }
+
   &:focus {
-    color: #495057;
-    background-color: #fff;
-    border-color: #80bdff;
-    outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
 }
