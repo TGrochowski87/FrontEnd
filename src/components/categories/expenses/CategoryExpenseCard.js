@@ -11,23 +11,21 @@ const CategoryExpenseCard = ({
 }) => {
   const [newSubInput, setNewSubInput] = useState("");
 
-  const submitHandler = (event) => {
-    if (event.key === "Enter") {
-      for (const sub of category.subcategories) {
-        if (sub.name === newSubInput) {
-          alert("Subcategory already exists!");
-          return;
-        }
+  const submitHandler = () => {
+    for (const sub of category.subcategories) {
+      if (sub.name === newSubInput) {
+        alert("Subcategory already exists!");
+        return;
       }
+    }
 
-      if (newSubInput !== "") {
-        const newCategory = {
-          name: newSubInput,
-          categoryId: category.id,
-        };
-        setNewSubInput("");
-        subcategoryPost(newCategory);
-      }
+    if (newSubInput !== "") {
+      const newCategory = {
+        name: newSubInput,
+        categoryId: category.id,
+      };
+      setNewSubInput("");
+      subcategoryPost(newCategory);
     }
   };
 
@@ -48,13 +46,15 @@ const CategoryExpenseCard = ({
           type="text"
           placeholder="New subcategory"
           value={newSubInput}
-          onBlur={() => {
-            setNewSubInput("");
-          }}
+          onBlur={submitHandler}
           onChange={(event) => {
             setNewSubInput(event.target.value);
           }}
-          onKeyDown={submitHandler}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              submitHandler();
+            }
+          }}
         ></input>
         <h5>Subcategories:</h5>
         {category.subcategories.map((sub) => (

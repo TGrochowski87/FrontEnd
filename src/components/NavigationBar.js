@@ -19,7 +19,7 @@ const NavigationBar = ({ userName, setUserName }) => {
   };
 
   return (
-    <Navbar expand='lg'>
+    <Navbar collapseOnSelect expand='lg'>
       <Navbar.Brand href='/'>
         <img src={icon} width='50px' alt='Home' />
         <h2>Home Budget Planner</h2>
@@ -35,17 +35,22 @@ const NavigationBar = ({ userName, setUserName }) => {
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link as={Link} to='/expenses'>
+                <Nav.Link eventKey='1' as={Link} to='/expenses'>
                   Expenses
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link as={Link} to='/planning'>
-                  Plan ahead
+                <Nav.Link eventKey='2' as={Link} to='/planning/expense'>
+                  Plan expenses
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link as={Link} to='/categories'>
+                <Nav.Link eventKey='3' as={Link} to='/planning/income'>
+                  Plan incomes
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey='4' as={Link} to='/categories'>
                   Categories
                 </Nav.Link>
               </Nav.Item>

@@ -9,11 +9,9 @@ const CategoryPlan = ({ plan, editPlan }) => {
     setInputPrice(plan.price);
   }, [plan]);
 
-  const submitHandler = async (event) => {
-    if (event.key === "Enter") {
-      await editPlan(plan.id, inputPrice);
-      setEditActive(false);
-    }
+  const submitHandler = async () => {
+    await editPlan(plan.id, inputPrice);
+    setEditActive(false);
   };
 
   return (
@@ -29,12 +27,12 @@ const CategoryPlan = ({ plan, editPlan }) => {
           autoFocus
           type="number"
           value={inputPrice}
-          onBlur={() => {
-            setEditActive(false);
-          }}
+          onBlur={submitHandler}
           onChange={(event) => setInputPrice(event.target.value)}
           onKeyDown={(event) => {
-            submitHandler(event);
+            if (event.key === "Enter") {
+              submitHandler();
+            }
           }}
         ></input>
       ) : (

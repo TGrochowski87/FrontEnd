@@ -14,11 +14,11 @@ import './styles/App.scss';
 import CategoryPage from './components/categories/CategoryPage';
 import ExpensesPage from './components/expenses/ExpensesPage';
 import HomePage from './components/home/HomePage';
-import IncomesPage from './components/incomes/IncomesPage';
 import Login from './components/login/Login';
 import Register from './components/login/Register';
-import PlanningPage from './components/planning/PlanningPage';
 import LogoutInfoModal from './components/utils/LogoutInfoModal';
+import ExpensePlanningPage from './components/planning/expenses/ExpensePlanningPage';
+import IncomePlanningPage from './components/planning/incomes/IncomePlanningPage';
 
 function App() {
   const [logoutShow, setLogoutShow] = useState(false);
@@ -77,10 +77,20 @@ function App() {
             }
           />
           <Route
-            path='/planning'
+            path='/planning/expense'
             render={(props) =>
               sessionStorage.getItem('isAuthenticated') ? (
-                <PlanningPage {...props} />
+                <ExpensePlanningPage {...props} />
+              ) : (
+                <Redirect to='/login' />
+              )
+            }
+          />
+          <Route
+            path='/planning/income'
+            render={(props) =>
+              sessionStorage.getItem('isAuthenticated') ? (
+                <IncomePlanningPage {...props} />
               ) : (
                 <Redirect to='/login' />
               )
