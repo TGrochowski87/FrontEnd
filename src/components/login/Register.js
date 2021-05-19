@@ -26,7 +26,7 @@ const Register = () => {
       email: emailInput,
       name: usernameInput,
     };
-    fd.append("user", data);
+    fd.append("user", JSON.stringify(data));
 
     await post("", fd);
 

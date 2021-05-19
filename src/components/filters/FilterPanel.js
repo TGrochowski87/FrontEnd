@@ -57,14 +57,12 @@ const FilterPanel = ({ expenses, setFilteredExpenses }) => {
     await get("/category/expense/over/notarchived").then((response) =>
       setCategories(response.map((cat) => cat.name))
     );
-    //setCategories(categoriesTemp.map((cat) => cat.name));
   };
 
   const userGet = async () => {
     await get("/users").then((response) => {
       setUsers(response.map((user) => user.data.name));
     });
-    //setUsers(usersTemp.map((user) => user.data.name));
   };
 
   const getProperties = async () => {
@@ -75,11 +73,6 @@ const FilterPanel = ({ expenses, setFilteredExpenses }) => {
         minDate: new Date(response.minDate),
       });
     });
-    // setFilterProperties({
-    //   maxPrice: propertiesTemp.maxPrice,
-    //   maxDate: new Date(propertiesTemp.maxDate),
-    //   minDate: new Date(propertiesTemp.minDate),
-    // });
   };
 
   useEffect(() => {
@@ -90,7 +83,10 @@ const FilterPanel = ({ expenses, setFilteredExpenses }) => {
   useEffect(() => {
     categoryGet();
     userGet();
-    getProperties();
+
+    if (expenses.length > 0) {
+      getProperties();
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -4,24 +4,24 @@ import {
   MonetizationOnOutlined,
   PersonAddOutlined,
   DescriptionOutlined,
-} from '@material-ui/icons';
+} from "@material-ui/icons";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { Spinner } from 'react-bootstrap';
+import { Spinner } from "react-bootstrap";
 
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import useFetch from 'use-http';
+import useFetch from "use-http";
 
-import Expense from './../expense/Expense';
-import ExpenseItem from './../expense/ExpenseItem';
-import ExpenseWizard from '../expense/ExpenseWizard';
-import FilterPanel from '../../filters/FilterPanel';
-import ContainerCard from '../../utils/ContainerCard';
+import Expense from "./../expense/Expense";
+import ExpenseItem from "./../expense/ExpenseItem";
+import ExpenseWizard from "../expense/ExpenseWizard";
+import FilterPanel from "../../filters/FilterPanel";
+import ContainerCard from "../../utils/ContainerCard";
 
-import ExpensesListHeader from './ExpensesListHeader';
-import ExpensesListRecord from './ExpensesListRecord';
+import ExpensesListHeader from "./ExpensesListHeader";
+import ExpensesListRecord from "./ExpensesListRecord";
 
 const ExpensesList = () => {
   const [categories] = useState([]);
@@ -34,20 +34,20 @@ const ExpensesList = () => {
   const [hasMoreExpensesToFetch, setHasMoreExpensesToFetch] = useState(true);
 
   const icons = {
-    category: <CategoryOutlined fontSize='small' />,
-    price: <MonetizationOnOutlined fontSize='small' />,
-    date: <EventOutlined fontSize='small' />,
-    user: <PersonAddOutlined fontSize='small' />,
-    description: <DescriptionOutlined fontSize='small' />,
+    category: <CategoryOutlined fontSize="small" />,
+    price: <MonetizationOnOutlined fontSize="small" />,
+    date: <EventOutlined fontSize="small" />,
+    user: <PersonAddOutlined fontSize="small" />,
+    description: <DescriptionOutlined fontSize="small" />,
   };
 
   const { get, post, del, response } = useFetch(
     `https://webhomebudget.azurewebsites.net/api`,
     {
       headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('userToken'),
+        Authorization: "Bearer " + sessionStorage.getItem("userToken"),
       },
-      cachePolicy: 'no-cache',
+      cachePolicy: "no-cache",
     }
   );
 
@@ -67,13 +67,13 @@ const ExpensesList = () => {
 
   const expensePost = async (formData) => {
     console.log(formData);
-    await post('/budget/expenses', formData);
+    await post("/budget/expenses", formData);
     if (response.ok) {
-      console.log('response ok, expense post should refresh expenses');
+      console.log("response ok, expense post should refresh expenses");
       expenseGetRefresh(expenses.length - 1);
     } else {
       console.log(
-        'response not ok, expense post should inform user about failure'
+        "response not ok, expense post should inform user about failure"
       );
     }
   };
@@ -82,7 +82,7 @@ const ExpensesList = () => {
     console.log(id);
     await del(`/budget/expenses/${id}`);
     if (response.ok) {
-      console.log('expense delete: ', id);
+      console.log("expense delete: ", id);
       expenseGetRefresh(expenses.length);
     }
   };
@@ -96,10 +96,10 @@ const ExpensesList = () => {
       `/budget/expenses/page/1/${numberOfExpenses}`
     );
     if (response.ok) {
-      console.log('expense get respone ok, new expenses: ', newExpenses);
+      console.log("expense get response ok, new expenses: ", newExpenses);
       setExpenses([...newExpenses.expensesOnPage]);
     } else {
-      console.log('expense get respone not ok, new expenses: ', newExpenses);
+      console.log("expense get response not ok, new expenses: ", newExpenses);
     }
   };
 
@@ -115,29 +115,29 @@ const ExpensesList = () => {
         expenses={expenses}
         setFilteredExpenses={setFilteredExpenses}
       />
-      <ExpenseWizard title='New expense' onWizardSubmit={expensePost} />
-      <ContainerCard className=''>
+      <ExpenseWizard title="New expense" onWizardSubmit={expensePost} />
+      <ContainerCard className="">
         <ContainerCard.Header>
           <ExpensesListHeader icons={icons}>
-            <h4 className='py-2'>Expenses</h4>
+            <h4 className="py-2">Expenses</h4>
           </ExpensesListHeader>
         </ContainerCard.Header>
         <ContainerCard.Body>
           <InfiniteScroll
-            className='no-scrollbar'
+            className="no-scrollbar"
             height={window.innerHeight * 0.75}
             dataLength={filteredExpenses.length}
             next={expenseGet}
             hasMore={hasMoreExpensesToFetch}
             scrollThreshold={1.0}
             loader={
-              <ExpensesListRecord className='py-1'>
-                <Spinner animation='border' />
+              <ExpensesListRecord className="py-1">
+                <Spinner animation="border" />
               </ExpensesListRecord>
             }
             endMessage={
-              <ExpensesListRecord className='py-2'>
-                <p className='text-muted font-italic'>No more records</p>
+              <ExpensesListRecord className="py-2">
+                <p className="text-muted font-italic">No more records</p>
               </ExpensesListRecord>
             }
           >
@@ -153,7 +153,7 @@ const ExpensesList = () => {
                   return (
                     <React.Fragment key={index}>
                       {addSeparator && (
-                        <ExpensesListRecord className='py-2 text-muted record-separator'>
+                        <ExpensesListRecord className="py-2 text-muted record-separator">
                           <ExpenseItem icon={icons?.date}>
                             <ExpenseItem.Date data={filteredExpense?.date} />
                           </ExpenseItem>
@@ -161,7 +161,7 @@ const ExpensesList = () => {
                       )}
                       <ExpensesListRecord
                         key={filteredExpense.id}
-                        className='record-expense'
+                        className="record-expense"
                       >
                         <Expense
                           expenseData={filteredExpense}
@@ -175,7 +175,7 @@ const ExpensesList = () => {
                 });
               })()
             ) : (
-              <ExpensesListRecord className='py-2'>
+              <ExpensesListRecord className="py-2">
                 <h5>No records</h5>
               </ExpensesListRecord>
             )}
