@@ -35,7 +35,11 @@ function App() {
         />
         <NavigationBar userName={userName} setUserName={setUserName} />
         <Switch>
-          <Route exact path='/' component={HomePage} />
+          <Route
+            exact
+            path='/'
+            render={(props) => <HomePage {...props} userName={userName} />}
+          />
           <Route
             path='/incomes'
             render={(props) =>

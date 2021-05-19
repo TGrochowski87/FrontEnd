@@ -6,7 +6,7 @@ import { FormControl } from 'react-bootstrap';
 
 import { Typeahead } from 'react-bootstrap-typeahead';
 
-const CategoryTypeahead = ({ onChange, selected }) => {
+const CategoryTypeahead = ({ onChange, selected, url }) => {
   const [categoryPlaceholder, setCategoryPlaceholder] =
     useState('Loading categories');
 
@@ -15,7 +15,7 @@ const CategoryTypeahead = ({ onChange, selected }) => {
     error,
     data: categoryOptions,
   } = useFetch(
-    `https://webhomebudget.azurewebsites.net/api/category/expense/notarchived`,
+    `https://webhomebudget.azurewebsites.net/${url}`,
     {
       headers: {
         Authorization: 'Bearer ' + sessionStorage.getItem('userToken'),

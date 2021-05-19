@@ -1,7 +1,15 @@
 import React from 'react';
 
+import { Container } from 'react-bootstrap';
+
+import IncomesList from './incomesList/IncomesList';
+
 const IncomesPage = () => {
-  return <div style={{ color: 'white' }}>incomes</div>;
+  return (
+    <Container className='py-3 list-container'>
+      <IncomesList />
+    </Container>
+  );
 };
 
 export default IncomesPage;

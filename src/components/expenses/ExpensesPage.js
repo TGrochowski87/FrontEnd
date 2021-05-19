@@ -6,7 +6,7 @@ import ExpensesList from './expensesList/ExpensesList';
 
 const ExpensesPage = () => {
   return (
-    <Container className='py-3 expenses-page'>
+    <Container className='py-3 list-container'>
       <ExpensesList />
     </Container>
   );
