@@ -2,14 +2,14 @@ import React from 'react';
 
 import { Container } from 'react-bootstrap';
 
-import ExpensesList from './expensesList/ExpensesList';
+import IncomesList from './incomesList/IncomesList';
 
-const ExpensesPage = () => {
+const IncomesPage = () => {
   return (
     <Container className='py-3 list-container'>
-      <ExpensesList />
+      <IncomesList />
     </Container>
   );
 };
 
-export default ExpensesPage;
+export default IncomesPage;

@@ -1,5 +1,3 @@
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
-
 import React, { useState } from 'react';
 
 import { Form, Button, Col, FormControl } from 'react-bootstrap';
@@ -11,30 +9,21 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import CategoryTypeahead from './../../utils/CategoryTypeahead';
 import ContainerCollapse from '../../utils/ContainerCollapse';
-import ImageCarousel from './../../utils/ImageCarousel';
-import ImagePicker from './../../utils/ImagePicker';
 
-const ExpenseWizard = ({ onWizardSubmit, title }) => {
+const IncomeWizard = ({ onWizardSubmit, title }) => {
   const [category, setCategory] = useState([]);
   const [price, setPrice] = useState('');
   const [date, setDate] = useState(new Date());
-  const [description, setDescription] = useState('');
-  const [images, setImages] = useState([]);
 
-  const submitNewExpense = (e) => {
+  const submitNewIncome = (e) => {
     e.preventDefault();
     const dataPost = {
       date: date.toJSON(),
       categoryId: category?.[0]?.id,
       price,
-      description,
-      budgetId: 1,
     };
     const formData = new FormData();
     formData.append('data', JSON.stringify(dataPost));
-    images.forEach((img) => {
-      formData.append('files', img);
-    });
     for (const fd of formData) {
       console.log(fd);
     }
@@ -45,12 +34,10 @@ const ExpenseWizard = ({ onWizardSubmit, title }) => {
     setCategory([]);
     setPrice('');
     setDate(new Date());
-    setDescription('');
-    setImages([]);
   };
 
   return (
-    <ContainerCollapse className='container-overflow-visible mb-3'>
+    <ContainerCollapse className='container-overflow-visible my-3'>
       <ContainerCollapse.StaticHeader className='py-3'>
         <h4>{title}</h4>
       </ContainerCollapse.StaticHeader>
@@ -58,7 +45,7 @@ const ExpenseWizard = ({ onWizardSubmit, title }) => {
         <Form
           className='text-left'
           onSubmit={(e) => {
-            submitNewExpense(e);
+            submitNewIncome(e);
           }}
         >
           <Form.Row>
@@ -67,7 +54,7 @@ const ExpenseWizard = ({ onWizardSubmit, title }) => {
               <CategoryTypeahead
                 onChange={setCategory}
                 selected={category}
-                url={'api/category/expense/notarchived'}
+                url={'/api/category/incomes/notarchived'}
               />
             </Form.Group>
             <Form.Group as={Col} md={4} controlId='formGroupPrice'>
@@ -101,43 +88,6 @@ const ExpenseWizard = ({ onWizardSubmit, title }) => {
               />
             </Form.Group>
           </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} controlId='formGroupDescription'>
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                as='textarea'
-                rows={1}
-                placeholder='Describe your expense'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group
-              as={Col}
-              md={4}
-              className='d-flex align-items-center'
-              controlId='formGroupImagesList'
-            >
-              <Form.Label srOnly>Images</Form.Label>
-              <ImageCarousel
-                images={images}
-                onButtonClick={(image) => {
-                  const newImages = images.filter((img) => {
-                    return JSON.stringify(img) !== JSON.stringify(image);
-                  });
-                  setImages(newImages);
-                }}
-                carouselHeight='125px'
-                buttonIcon={<DeleteForeverOutlinedIcon />}
-              />
-            </Form.Group>
-            <Form.Group as={Col} md={8} controlId='formGroupImagesPicker'>
-              <Form.Label srOnly>Images</Form.Label>
-              <ImagePicker images={images} onNewImages={setImages} />
-            </Form.Group>
-          </Form.Row>
           <Form.Row className='justify-content-center'>
             <Button
               variant='outline-secondary'
@@ -162,4 +112,4 @@ const ExpenseWizard = ({ onWizardSubmit, title }) => {
   );
 };
 
-export default ExpenseWizard;
+export default IncomeWizard;
