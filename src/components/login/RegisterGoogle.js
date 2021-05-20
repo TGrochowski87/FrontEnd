@@ -18,7 +18,7 @@ const RegisterGoogle = () => {
 
     await post("", registerData);
     if (response.ok) {
-      history.push("/");
+      history.push("/login");
     }
   };
 

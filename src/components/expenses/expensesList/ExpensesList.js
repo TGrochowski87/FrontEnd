@@ -119,7 +119,7 @@ const ExpensesList = () => {
         expenses={expenses}
         setFilteredExpenses={setFilteredExpenses}
       />
-      <ExpenseWizard title='New expense' onWizardSubmit={expensePost} />
+      <ExpenseWizard title="New expense" onWizardSubmit={expensePost} />
       <ContainerCard>
         <ContainerCard.Header>
           <ExpensesListHeader icons={icons}>

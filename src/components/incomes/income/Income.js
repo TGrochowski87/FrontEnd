@@ -1,15 +1,12 @@
-import {
-  KeyboardCapslockOutlined,
-  DeleteForeverOutlined,
-} from '@material-ui/icons';
+import { KeyboardCapslockOutlined } from "@material-ui/icons";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Col, Button, Row } from 'react-bootstrap';
+import { Col, Button, Row } from "react-bootstrap";
 
-import ContainerCollapse from './../../utils/ContainerCollapse';
+import ContainerCollapse from "./../../utils/ContainerCollapse";
 
-import IncomeItem from './IncomeItem';
+import IncomeItem from "./IncomeItem";
 
 const Income = ({ incomeData, icons, onIncomeDelete, onIncomePut }) => {
   const [showingDetails, setShowingDetails] = useState(false);
@@ -37,10 +34,10 @@ const Income = ({ incomeData, icons, onIncomeDelete, onIncomePut }) => {
           </IncomeItem.Container>
         )}
       </ContainerCollapse.DynamicHeader>
-      <ContainerCollapse.Body className='px-1'>
+      <ContainerCollapse.Body className="px-1">
         <Row noGutters>
           <IncomeItem.Container>
-            <Col xs={12} sm className='my-1'>
+            <Col xs={12} sm className="my-1">
               <IncomeItem icon={icons?.category}>
                 <IncomeItem.Text data={incomeData?.category} />
               </IncomeItem>
@@ -54,11 +51,11 @@ const Income = ({ incomeData, icons, onIncomeDelete, onIncomePut }) => {
                 <IncomeItem.Date data={incomeData?.date} />
               </IncomeItem>
             </Col>
-            <Col xs={12} sm className='my-1'>
-              <Row noGutters className='d-flex justify-content-center my-1'>
+            <Col xs={12} sm className="my-1">
+              <Row noGutters className="d-flex justify-content-center my-1">
                 <Button
-                  className='w-50'
-                  variant='outline-secondary'
+                  className="w-50"
+                  variant="outline-secondary"
                   onClick={() => {
                     console.log(incomeData);
                     onIncomeDelete(incomeData?.id);
@@ -67,10 +64,10 @@ const Income = ({ incomeData, icons, onIncomeDelete, onIncomePut }) => {
                   Delete
                 </Button>
               </Row>
-              <Row noGutters className='d-flex justify-content-center my-1'>
+              <Row noGutters className="d-flex justify-content-center my-1">
                 <Button
-                  className='w-50'
-                  variant='outline-secondary'
+                  className="w-50"
+                  variant="outline-secondary"
                   onClick={() => {
                     onIncomePut(incomeData?.id);
                   }}

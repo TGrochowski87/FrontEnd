@@ -31,13 +31,13 @@ const LoginGoogle = ({ setUserName, setLogoutShow }) => {
 
         setLogoutShow(true);
       }, 10800000);
+
+      history.push("/");
     }
   };
 
   const successHandler = (response) => {
-    googlePost(response.tokenId).then(() => {
-      history.push("/");
-    });
+    googlePost(response.tokenId);
   };
 
   const failureHandler = (response) => {
