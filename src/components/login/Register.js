@@ -31,7 +31,7 @@ const Register = () => {
     await post("", fd);
 
     if (response.ok) {
-      history.push("/");
+      history.push("/login");
     }
   };
 

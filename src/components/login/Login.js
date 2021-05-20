@@ -13,6 +13,8 @@ const Login = ({ setUserName, setLogoutShow }) => {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
 
+  const [wrongInput, setWrongInput] = useState(false);
+
   const { post, response } = useFetch(
     `https://webhomebudget.azurewebsites.net/api/login`
   );
@@ -23,25 +25,26 @@ const Login = ({ setUserName, setLogoutShow }) => {
     await post("", {
       email: emailInput,
       password: passwordInput,
-    })
-      .then((res) => {
-        if (response.ok) {
-          sessionStorage.setItem("userToken", res.result.access_Token);
-          setUserName(res.result.userName);
-          sessionStorage.setItem("isAuthenticated", true);
+    }).then((res) => {
+      if (response.ok) {
+        sessionStorage.setItem("userToken", res.result.access_Token);
+        setUserName(res.result.userName);
+        sessionStorage.setItem("isAuthenticated", true);
 
-          setTimeout(() => {
-            sessionStorage.removeItem("isAuthenticated");
-            sessionStorage.removeItem("userToken");
-            setUserName("");
+        setTimeout(() => {
+          sessionStorage.removeItem("isAuthenticated");
+          sessionStorage.removeItem("userToken");
+          setUserName("");
 
-            setLogoutShow(true);
-          }, 10800000); //10800000
-        }
-      })
-      .then(() => {
+          setLogoutShow(true);
+        }, 10800000); //10800000
+
         history.push("/");
-      });
+      } else {
+        console.log("wrong");
+        setWrongInput(true);
+      }
+    });
   };
 
   return (
@@ -61,20 +64,28 @@ const Login = ({ setUserName, setLogoutShow }) => {
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
+                  className={wrongInput ? "wrong-input" : ""}
                   type="email"
                   placeholder="Email"
                   value={emailInput}
                   onChange={(event) => setEmailInput(event.target.value)}
+                  onFocus={() => {
+                    setWrongInput(false);
+                  }}
                 />
               </Form.Group>
 
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
+                  className={wrongInput ? "wrong-input" : ""}
                   type="password"
                   placeholder="Password"
                   value={passwordInput}
                   onChange={(event) => setPasswordInput(event.target.value)}
+                  onFocus={() => {
+                    setWrongInput(false);
+                  }}
                 />
               </Form.Group>
 
