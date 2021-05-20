@@ -20,7 +20,7 @@ const NavigationBar = ({ userName, setUserName }) => {
 
   return (
     <Navbar collapseOnSelect expand='lg'>
-      <Navbar.Brand eventKey='0' as={Link} to='/'>
+      <Navbar.Brand as={Link} to='/'>
         <img src={icon} width='50px' alt='Home' />
         <h2>Home Budget Planner</h2>
       </Navbar.Brand>
