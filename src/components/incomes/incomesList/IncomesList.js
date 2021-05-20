@@ -64,8 +64,11 @@ const IncomesList = () => {
     console.log(formData);
     await post('/budget/incomes', formData);
     if (response.ok) {
-      console.log('response ok, income post should refresh incomes');
-      incomeGetRefresh(incomes.length - 1);
+      if (incomes.length < incomesPerPage) {
+        incomeGetRefresh(incomes.length + 1);
+      } else {
+        incomeGetRefresh(incomes.length - 1);
+      }
     } else {
       console.log(
         'response not ok, income post should inform user about failure'
@@ -83,7 +86,7 @@ const IncomesList = () => {
   };
 
   const incomePut = async (id) => {
-    incomeGetRefresh(incomes.length);
+    // incomeGetRefresh(incomes.length);
   };
 
   const incomeGetRefresh = async (numberOfIncomes) => {
