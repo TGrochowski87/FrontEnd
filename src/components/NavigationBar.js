@@ -21,54 +21,64 @@ const NavigationBar = ({ userName, setUserName }) => {
   return (
     <Navbar collapseOnSelect expand='lg'>
       <Navbar.Brand as={Link} to='/'>
-        <img src={icon} width='50px' alt='Home' />
-        <h2>Home Budget Planner</h2>
+        <img src={icon} width='40px' height='40px' alt='Home' />
+        <h2 className='m-0'>Home Budget Planner</h2>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='ml-auto'>
           {userName ? (
             <>
-              <Nav.Item>
-                <Nav.Link eventKey='1' as={Link} to='/incomes'>
-                  Incomes
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey='2' as={Link} to='/expenses'>
-                  Expenses
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey='3' as={Link} to='/planning/expense'>
+              {/* <Nav.Link eventKey='1' as={Link} to='/incomes'>
+                Incomes
+              </Nav.Link>
+              <Nav.Link eventKey='2' as={Link} to='/expenses'>
+                Expenses
+              </Nav.Link>
+              <Nav.Link eventKey='3' as={Link} to='/planning/expense'>
+                Plan expenses
+              </Nav.Link>
+              <Nav.Link eventKey='4' as={Link} to='/planning/income'>
+                Plan incomes
+              </Nav.Link>
+              <Nav.Link eventKey='5' as={Link} to='/categories'>
+                Categories
+              </Nav.Link>
+              <Nav.Link eventKey='6' as={Link} to='/analysis'>
+                Analysis
+              </Nav.Link>
+              <NavDropdown alignRight title={userName} id='basic-nav-dropdown'>
+                <NavDropdown.Item as={Link} to='/' onClick={logoutHandler}>
+                  Log out
+                </NavDropdown.Item>
+              </NavDropdown> */}
+              <NavDropdown alignRight title='Expenses'>
+                <NavDropdown.Item as={Link} to='/expenses'>
+                  Your expenses
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to='/planning/expense'>
                   Plan expenses
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey='4' as={Link} to='/planning/income'>
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown alignRight title='Incomes'>
+                <NavDropdown.Item as={Link} to='/incomes'>
+                  Your incomes
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to='/planning/income'>
                   Plan incomes
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey='5' as={Link} to='/categories'>
-                  Categories
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <NavDropdown
-                  alignRight
-                  title={userName}
-                  id='collasible-nav-dropdown'
-                >
-                  <NavDropdown.Item>My account</NavDropdown.Item>
-                  <NavDropdown.Item>Budget analysis</NavDropdown.Item>
-                  <NavDropdown.Item>Manage budget</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to='/' onClick={logoutHandler}>
-                    Log out
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </Nav.Item>
+                </NavDropdown.Item>
+              </NavDropdown>
+              <Nav.Link as={Link} to='/categories'>
+                Categories
+              </Nav.Link>
+              <Nav.Link as={Link} to='/analysis'>
+                Analysis
+              </Nav.Link>
+              <NavDropdown alignRight title={userName}>
+                <NavDropdown.Item as={Link} to='/' onClick={logoutHandler}>
+                  Log out
+                </NavDropdown.Item>
+              </NavDropdown>
             </>
           ) : (
             <Nav.Link as={Link} to='/login'>

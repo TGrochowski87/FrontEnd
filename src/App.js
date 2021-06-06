@@ -11,6 +11,7 @@ import useSessionStorageState from './SessionStorageState';
 
 import NavigationBar from './components/NavigationBar';
 import './styles/App.scss';
+import AnalysisPage from './components/analysis/AnalysisPage';
 import CategoryPage from './components/categories/CategoryPage';
 import ExpensesPage from './components/expenses/ExpensesPage';
 import HomePage from './components/home/HomePage';
@@ -96,6 +97,16 @@ function App() {
             render={(props) =>
               sessionStorage.getItem('isAuthenticated') ? (
                 <IncomePlanningPage {...props} />
+              ) : (
+                <Redirect to='/login' />
+              )
+            }
+          />
+          <Route
+            path='/analysis'
+            render={(props) =>
+              sessionStorage.getItem('isAuthenticated') ? (
+                <AnalysisPage {...props} />
               ) : (
                 <Redirect to='/login' />
               )
