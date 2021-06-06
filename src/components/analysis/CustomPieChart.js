@@ -99,8 +99,12 @@ const CustomPieChart = ({ title, chartFor, month, year, onlyYear }) => {
     );
   };
 
-  const renderOuterLabel = ({ name, percent }) => {
+  const renderOuterFullLabel = ({ name, percent }) => {
     return `${name} ${(percent * 100).toFixed(2)}%`;
+  };
+
+  const renderOuterPercentLabel = ({ percent }) => {
+    return `${(percent * 100).toFixed(2)}%`;
   };
 
   return (
@@ -115,25 +119,26 @@ const CustomPieChart = ({ title, chartFor, month, year, onlyYear }) => {
         {data?.length !== 0 ? (
           <ResponsiveContainer>
             <PieChart label={true}>
-              {chartFor === 'expense' && (
-                <Legend
-                  iconType='circle'
-                  payload={data.main.map((item) => {
-                    return {
-                      type: 'circle',
-                      id: item.name,
-                      value: item.name,
-                      color: item.color,
-                    };
-                  })}
-                />
-              )}
+              <Legend
+                iconType='circle'
+                payload={data.main.map((item) => {
+                  return {
+                    type: 'circle',
+                    id: item.name,
+                    value: item.name,
+                    color: item.color,
+                  };
+                })}
+              />
+
               <Pie
                 data={data.main}
                 dataKey='value'
                 nameKey='name'
                 label={
-                  chartFor === 'income' ? renderOuterLabel : renderInnerLabel
+                  chartFor === 'income'
+                    ? renderOuterPercentLabel
+                    : renderInnerLabel
                 }
                 labelLine={chartFor === 'income'}
                 cx='50%'
@@ -149,7 +154,7 @@ const CustomPieChart = ({ title, chartFor, month, year, onlyYear }) => {
                 data={data.sub}
                 dataKey='value'
                 nameKey='name'
-                label={renderOuterLabel}
+                label={renderOuterFullLabel}
                 cx='50%'
                 cy='50%'
                 innerRadius='60%'
