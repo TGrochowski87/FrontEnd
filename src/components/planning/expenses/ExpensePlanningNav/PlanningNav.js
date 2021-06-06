@@ -55,11 +55,6 @@ const PlanningNav = ({ plans, monthNames, addMonthPlan }) => {
             />
           ))}
         </div>
-        <Link to={0} smooth>
-          <div className="archive-nav">
-            <p>ARCHIVE</p>
-          </div>
-        </Link>
         <div
           className="new-plan"
           onClick={() => {
@@ -71,6 +66,11 @@ const PlanningNav = ({ plans, monthNames, addMonthPlan }) => {
             <AddIcon />
           </>
         </div>
+        <Link to={0} smooth>
+          <div className="archive-nav">
+            <p>ARCHIVE</p>
+          </div>
+        </Link>
       </div>
     </div>
   );

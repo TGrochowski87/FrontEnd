@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import useFetch from "use-http";
 
-const LoginGoogle = ({ setUserName, setLogoutShow }) => {
+const LoginGoogle = ({ setUserName, logout }) => {
   const history = useHistory();
 
   const { post, response } = useFetch(
@@ -19,17 +19,12 @@ const LoginGoogle = ({ setUserName, setLogoutShow }) => {
     const token = await post("", loginData);
 
     if (response.ok) {
-      console.log(token);
       sessionStorage.setItem("userToken", token.result.access_Token);
       setUserName(token.result.userName);
       sessionStorage.setItem("isAuthenticated", true);
 
       setTimeout(() => {
-        sessionStorage.removeItem("isAuthenticated");
-        sessionStorage.removeItem("userToken");
-        setUserName("");
-
-        setLogoutShow(true);
+        logout();
       }, 10800000);
 
       history.push("/");

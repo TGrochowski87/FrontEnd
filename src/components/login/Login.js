@@ -7,7 +7,7 @@ import useFetch from "use-http";
 
 import LoginGoogle from "./LoginGoogle";
 
-const Login = ({ setUserName, setLogoutShow }) => {
+const Login = ({ setUserName, logout }) => {
   const history = useHistory();
 
   const [emailInput, setEmailInput] = useState("");
@@ -32,11 +32,8 @@ const Login = ({ setUserName, setLogoutShow }) => {
         sessionStorage.setItem("isAuthenticated", true);
 
         setTimeout(() => {
-          sessionStorage.removeItem("isAuthenticated");
-          sessionStorage.removeItem("userToken");
-          setUserName("");
-
-          setLogoutShow(true);
+          console.log("w timeoucie");
+          logout();
         }, 10800000); //10800000
 
         history.push("/");
@@ -52,10 +49,7 @@ const Login = ({ setUserName, setLogoutShow }) => {
       <Container className="my-5 w-50 login-space">
         <Row xs={1}>
           <Col>
-            <LoginGoogle
-              setUserName={setUserName}
-              setLogoutShow={setLogoutShow}
-            />
+            <LoginGoogle setUserName={setUserName} logout={logout} />
           </Col>
         </Row>
         <Row>

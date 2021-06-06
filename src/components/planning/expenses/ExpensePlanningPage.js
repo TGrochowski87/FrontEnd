@@ -21,7 +21,6 @@ const ExpensePlanningPage = () => {
     "November",
     "December",
   ]);
-  //const [monthPlans, setMonthPlans] = useState([]);
 
   const { get, post, put, response } = useFetch(
     `https://webhomebudget.azurewebsites.net/api/plan/expenses`,

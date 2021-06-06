@@ -1,13 +1,9 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 
 const LogoutInfoModal = ({ logoutShow, setLogoutShow }) => {
-  const history = useHistory();
-
   const handleClose = () => {
     setLogoutShow(false);
-    history.push("/");
   };
 
   return (

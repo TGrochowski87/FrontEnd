@@ -1,0 +1,18 @@
+.recharts-wrapper {
+  .recharts-tooltip-wrapper {
+    background-color: rgb(93, 113, 148);
+
+    .recharts-default-tooltip {
+      background: none !important;
+      border: none !important;
+
+      padding: 6px !important;
+
+      //   ul {
+      //     li {
+      //       padding: 6px !important;
+      //     }
+      //   }
+    }
+  }
+}
