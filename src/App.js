@@ -9,8 +9,10 @@ import {
 
 import useSessionStorageState from "./SessionStorageState";
 
-import NavigationBar from "./components/utils/NavigationBar";
+import TestPage from "./components/utils/TestPage";
+import NavigationBar from "./components/NavigationBar";
 import "./styles/App.scss";
+import AnalysisPage from "./components/analysis/AnalysisPage";
 import CategoryPage from "./components/categories/CategoryPage";
 import ExpensesPage from "./components/expenses/ExpensesPage";
 import HomePage from "./components/home/HomePage";
@@ -20,8 +22,6 @@ import Register from "./components/login/Register";
 import LogoutInfoModal from "./components/utils/LogoutInfoModal";
 import ExpensePlanningPage from "./components/planning/expenses/ExpensePlanningPage";
 import IncomePlanningPage from "./components/planning/incomes/IncomePlanningPage";
-
-import TestPage from "./components/utils/TestPage";
 
 function App() {
   const [logoutShow, setLogoutShow] = useState(false);
@@ -104,6 +104,16 @@ function App() {
             render={(props) =>
               sessionStorage.getItem("isAuthenticated") ? (
                 <IncomePlanningPage {...props} />
+              ) : (
+                <Redirect to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/analysis"
+            render={(props) =>
+              sessionStorage.getItem("isAuthenticated") ? (
+                <AnalysisPage {...props} />
               ) : (
                 <Redirect to="/login" />
               )
