@@ -56,6 +56,8 @@ const CustomLineChart = ({ title, chartFor, month, year, onlyYear }) => {
 
   useEffect(() => {
     dataGet();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chartFor, month, year, onlyYear]);
 
   return (

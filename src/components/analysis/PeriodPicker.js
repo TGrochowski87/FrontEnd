@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Form, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { Col, Form, Row } from "react-bootstrap";
 
-import monthNames from './months';
+import monthNames from "./months";
 
 const PeriodPicker = ({ pickMonth, pickYear, onlyYear }) => {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
@@ -11,14 +11,20 @@ const PeriodPicker = ({ pickMonth, pickYear, onlyYear }) => {
 
   useEffect(() => {
     pickMonth && pickMonth(selectedMonth);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedMonth]);
 
   useEffect(() => {
     pickYear && pickYear(selectedYear);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedYear]);
 
   useEffect(() => {
     onlyYear && onlyYear(showYear);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showYear]);
 
   useEffect(() => {
@@ -64,17 +70,17 @@ const PeriodPicker = ({ pickMonth, pickYear, onlyYear }) => {
         <Row>
           <Col>
             <Form.Check
-              type='checkbox'
-              id='year-checkbox'
-              label='Show year'
+              type="checkbox"
+              id="year-checkbox"
+              label="Show year"
               onChange={(e) => handleShowYearChange(e.target.checked)}
             />
           </Col>
           <Col>
             <Form.Control
-              as='select'
-              size='sm'
-              aria-label='Select month'
+              as="select"
+              size="sm"
+              aria-label="Select month"
               value={selectedMonth}
               onChange={(e) => handleSelectedMonthChange(e.target.value)}
               disabled={showYear}

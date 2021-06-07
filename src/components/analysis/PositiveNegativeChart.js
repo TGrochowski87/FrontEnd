@@ -60,14 +60,17 @@ const PositiveNegativeChart = () => {
       await expenseAnalysisGet();
       await incomeAnalysisGet();
     };
-
     setData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (incomeData?.length !== 0 && expenseData?.length !== 0) {
       calculateDifference();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [incomeData, expenseData]);
 
   useEffect(() => {

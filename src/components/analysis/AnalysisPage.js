@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { Col, Container, Row } from "react-bootstrap";
 
@@ -7,23 +7,6 @@ import PeriodPicker from "./PeriodPicker";
 import PositiveNegativeChart from "./PositiveNegativeChart";
 import CustomLineChart from "./CustomLineChart";
 import CustomBarChart from "./CustomBarChart";
-
-const ChartMock = ({ children }) => {
-  // later to delete
-  return (
-    <div
-      style={{
-        color: "white",
-        backgroundColor: "#355F77",
-        width: "100%",
-        height: "444px",
-        border: "1px solid black",
-      }}
-    >
-      {children}
-    </div>
-  );
-};
 
 const AnalysisPage = () => {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
