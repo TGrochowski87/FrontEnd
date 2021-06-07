@@ -18,9 +18,9 @@ const PlanningNav = ({ plans, monthNames, addMonthPlan }) => {
         activeForMobile ? "mobile-active-panel" : ""
       }`}
       style={
-        scrollY > 66.357
+        scrollY > 56
           ? { position: "fixed", top: "0" }
-          : { position: "absolute", top: "68.359px" }
+          : { position: "absolute", top: "56px" }
       }
     >
       <div
@@ -33,11 +33,7 @@ const PlanningNav = ({ plans, monthNames, addMonthPlan }) => {
       >
         <p>NAVIGATE</p>
       </div>
-      <div
-        className="planning-nav"
-
-        //style={{ position: window.scrollY < 66.357 ? "fixed" : "absolute" }}
-      >
+      <div className="planning-nav">
         <div className="planning-nav-header">
           <>
             <h3>Income planning</h3>

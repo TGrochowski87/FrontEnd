@@ -9,8 +9,7 @@ import {
 
 import useSessionStorageState from "./SessionStorageState";
 
-import TestPage from "./components/utils/TestPage";
-import NavigationBar from "./components/NavigationBar";
+import NavigationBar from "./components/utils/NavigationBar";
 import "./styles/App.scss";
 import AnalysisPage from "./components/analysis/AnalysisPage";
 import CategoryPage from "./components/categories/CategoryPage";
@@ -29,7 +28,6 @@ function App() {
   const [userName, setUserName] = useSessionStorageState("", "userName");
 
   const logout = () => {
-    console.log("w funkcji");
     sessionStorage.removeItem("isAuthenticated");
     sessionStorage.removeItem("userToken");
     setUserName("");
@@ -51,7 +49,6 @@ function App() {
             path="/"
             render={(props) => <HomePage {...props} userName={userName} />}
           />
-          <Route path="/test" component={TestPage} />
           <Route
             path="/incomes"
             render={(props) =>
