@@ -22,7 +22,7 @@ const PositiveNegativeChart = () => {
   const [differenceData, setDifferenceData] = useState([]);
   const [maxAbsValue, setMaxAbsValue] = useState(0);
 
-  const { get } = useFetch(
+  const { get, response } = useFetch(
     `https://webhomebudget.azurewebsites.net/api/analysis`,
     {
       headers: {
@@ -33,15 +33,19 @@ const PositiveNegativeChart = () => {
   );
 
   const expenseAnalysisGet = async () => {
-    await get("/expense/yearly").then((response) => {
-      setExpenseData(response);
-    });
+    const data = await get("/expense/yearly");
+
+    if (response.ok) {
+      setExpenseData(data);
+    }
   };
 
   const incomeAnalysisGet = async () => {
-    await get("/income/yearly").then((response) => {
-      setIncomeData(response);
-    });
+    const data = await get("/income/yearly");
+
+    if (response.ok) {
+      setIncomeData(data);
+    }
   };
 
   const calculateDifference = async () => {
@@ -95,7 +99,7 @@ const PositiveNegativeChart = () => {
       <ResponsiveContainer>
         <BarChart
           data={differenceData}
-          maxBarSize={120}
+          maxBarSize={100}
           margin={{
             top: 5,
             right: 30,

@@ -54,7 +54,6 @@ const AnalysisPage = () => {
             <Col>
               <CustomLineChart
                 title="Expenses - over a period"
-                chartFor="expense"
                 month={month}
                 year={year}
                 onlyYear={onlyYear}
@@ -83,13 +82,13 @@ const AnalysisPage = () => {
               />
             </Col>
             <Col>
-              <CustomLineChart
+              {/* <CustomLineChart
                 title="Incomes - over a period"
                 chartFor="income"
                 month={month}
                 year={year}
                 onlyYear={onlyYear}
-              />
+              /> */}
             </Col>
             <Col>
               <CustomBarChart

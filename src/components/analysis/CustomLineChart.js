@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import useFetch from "use-http";
 
-const CustomLineChart = ({ title, chartFor, month, year, onlyYear }) => {
+const CustomLineChart = ({ title, month, year, onlyYear }) => {
   const [data, setData] = useState([]);
 
   const { get, response } = useFetch(
@@ -24,10 +24,10 @@ const CustomLineChart = ({ title, chartFor, month, year, onlyYear }) => {
     }
   );
 
-  const dataGet = async () => {
+  const generateUrl = (type) => {
     const monthParam = month < 10 ? "0" + month : month;
     const yearParam = year;
-    const chartForParam = chartFor;
+    const chartForParam = type;
     const periodParam = onlyYear ? "yearly" : "monthly";
 
     let url = `/analysis/${chartForParam}/${periodParam}`;
@@ -35,7 +35,11 @@ const CustomLineChart = ({ title, chartFor, month, year, onlyYear }) => {
       url += `?date=01/${monthParam}/${yearParam}`;
     }
 
-    const newData = await get(url);
+    return url;
+  };
+
+  const getExpenseData = async () => {
+    const newData = await get(generateUrl("expense"));
 
     if (!newData || newData?.length === 0) {
       setData([]);
@@ -43,22 +47,58 @@ const CustomLineChart = ({ title, chartFor, month, year, onlyYear }) => {
     }
 
     if (response.ok) {
-      const formattedData = newData.map((data, index) => {
+      let sum = 0;
+      const formattedData = newData.map((record, index) => {
+        sum += record.sumByDate;
+
         return {
           name: index + 1,
-          sum: data.sumByDate,
+          expense: sum,
+          income: 0,
         };
       });
 
-      setData(formattedData);
+      return formattedData;
     }
   };
 
-  useEffect(() => {
-    dataGet();
+  const getIncomeData = async (dataWithExpense) => {
+    const newData = await get(generateUrl("income"));
 
+    if (!newData || newData?.length === 0) {
+      setData([]);
+      return;
+    }
+
+    if (response.ok) {
+      let sum = 0;
+      const formattedData = dataWithExpense.map((record, index) => {
+        sum += newData[index].sumByDate;
+
+        return {
+          ...record,
+          income: sum,
+        };
+      });
+      return formattedData;
+    }
+  };
+
+  const configureData = async () => {
+    const dataWithExpense = await getExpenseData();
+    const configuredData = await getIncomeData(dataWithExpense);
+    setData(configuredData);
+  };
+
+  useEffect(() => {
+    const configure = async () => {
+      await configureData();
+    };
+    configure().then(() => {
+      //console.log(data);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chartFor, month, year, onlyYear]);
+  }, [month, year, onlyYear]);
 
   return (
     <div>
@@ -85,11 +125,12 @@ const CustomLineChart = ({ title, chartFor, month, year, onlyYear }) => {
             />
             <Legend />
             <Line
-              type="linear"
-              dataKey="sum"
+              type="monotone"
+              dataKey="expense"
               stroke="#8884d8"
               activeDot={{ r: 8 }}
             />
+            <Line type="monotone" dataKey="income" stroke="#68E255" />
           </LineChart>
         </ResponsiveContainer>
       </div>

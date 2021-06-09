@@ -53,13 +53,29 @@ const CustomBarChart = ({ title, chartFor, month, year, onlyYear }) => {
           newMax = Math.abs(data.difference);
         }
 
+        const shownBalance =
+          data.planned > data.real ? data.real : data.planned;
+
         return {
           name: data.categoryName,
-          balance: chartFor === "income" ? -data.difference : data.difference,
+          balance: shownBalance,
+          color:
+            chartFor === "expense"
+              ? data.difference >= 0
+                ? "#82ca9d"
+                : "#C12C30"
+              : data.difference < 0
+              ? "#82ca9d"
+              : "#C12C30",
+          difference:
+            Math.abs(data.difference) - shownBalance > 0
+              ? Math.abs(data.difference) - shownBalance
+              : 0,
         };
       });
 
       setMaxAbsValue(Math.round(newMax + 0.1 * newMax));
+      console.log(formattedData);
       setData(formattedData);
     }
   };
@@ -80,7 +96,7 @@ const CustomBarChart = ({ title, chartFor, month, year, onlyYear }) => {
         style={{ height: "500px" }}
       >
         <ResponsiveContainer>
-          <BarChart data={data} maxBarSize={120}>
+          <BarChart data={data} maxBarSize={100}>
             <CartesianGrid strokeDasharray="3 3" fill="#373C47" />
             <XAxis dataKey="name" />
             <YAxis type="number" domain={[-maxAbsValue, maxAbsValue]} />
@@ -94,24 +110,28 @@ const CustomBarChart = ({ title, chartFor, month, year, onlyYear }) => {
                 {
                   id: 0,
                   type: "square",
-                  value: "positive",
-                  color: "#82ca9d",
+                  value: "real amount within planned",
+                  color: "#E1E1E1",
                 },
                 {
                   id: 1,
                   type: "square",
-                  value: "negative",
+                  value: "below planned amount",
+                  color: "#82ca9d",
+                },
+                {
+                  id: 2,
+                  type: "square",
+                  value: "above planned amount",
                   color: "#C12C30",
                 },
               ]}
             />
             <ReferenceLine y={0} stroke="#000" ifOverflow="extendDomain" />
-            <Bar dataKey="balance" fill="#E1E1E1">
+            <Bar dataKey="balance" stackId="a" fill="#E1E1E1" />
+            <Bar dataKey="difference" stackId="a">
               {data.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={entry.balance > 0 ? "#82ca9d" : "#C12C30"}
-                />
+                <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Bar>
           </BarChart>
