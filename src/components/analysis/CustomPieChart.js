@@ -109,7 +109,13 @@ const CustomPieChart = ({ title, chartFor, month, year, onlyYear }) => {
 
   return (
     <div>
-      <h5 style={{ color: "whitesmoke", borderBottom: "1px solid whitesmoke" }}>
+      <h5
+        style={{
+          color: "whitesmoke",
+          borderBottom: "1px solid whitesmoke",
+          margin: "0 5%",
+        }}
+      >
         {title}
       </h5>
       <div

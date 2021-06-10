@@ -75,8 +75,10 @@ const CustomBarChart = ({ title, chartFor, month, year, onlyYear }) => {
       });
 
       setMaxAbsValue(Math.round(newMax + 0.1 * newMax));
-      console.log(formattedData);
       setData(formattedData);
+    } else {
+      setData([]);
+      return;
     }
   };
 
@@ -88,7 +90,13 @@ const CustomBarChart = ({ title, chartFor, month, year, onlyYear }) => {
 
   return (
     <div>
-      <h5 style={{ color: "whitesmoke", borderBottom: "1px solid whitesmoke" }}>
+      <h5
+        style={{
+          color: "whitesmoke",
+          borderBottom: "1px solid whitesmoke",
+          margin: "0 5%",
+        }}
+      >
         {title}
       </h5>
       <div
@@ -96,7 +104,7 @@ const CustomBarChart = ({ title, chartFor, month, year, onlyYear }) => {
         style={{ height: "500px" }}
       >
         <ResponsiveContainer>
-          <BarChart data={data} maxBarSize={100}>
+          <BarChart data={data} maxBarSize={50}>
             <CartesianGrid strokeDasharray="3 3" fill="#373C47" />
             <XAxis dataKey="name" />
             <YAxis type="number" domain={[-maxAbsValue, maxAbsValue]} />

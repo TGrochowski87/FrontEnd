@@ -11,7 +11,9 @@ import {
 } from "recharts";
 import useFetch from "use-http";
 
-const CustomLineChart = ({ title, month, year, onlyYear }) => {
+const CustomLineChart = ({ month, year, onlyYear }) => {
+  const [expenseData, setExpenseData] = useState([]);
+  const [incomeData, setIncomeData] = useState([]);
   const [data, setData] = useState([]);
 
   const { get, response } = useFetch(
@@ -47,18 +49,7 @@ const CustomLineChart = ({ title, month, year, onlyYear }) => {
     }
 
     if (response.ok) {
-      let sum = 0;
-      const formattedData = newData.map((record, index) => {
-        sum += record.sumByDate;
-
-        return {
-          name: index + 1,
-          expense: sum,
-          income: 0,
-        };
-      });
-
-      return formattedData;
+      setExpenseData(newData);
     }
   };
 
@@ -71,69 +62,79 @@ const CustomLineChart = ({ title, month, year, onlyYear }) => {
     }
 
     if (response.ok) {
-      let sum = 0;
-      const formattedData = dataWithExpense.map((record, index) => {
-        sum += newData[index].sumByDate;
-
-        return {
-          ...record,
-          income: sum,
-        };
-      });
-      return formattedData;
+      setIncomeData(newData);
     }
   };
 
   const configureData = async () => {
-    const dataWithExpense = await getExpenseData();
-    const configuredData = await getIncomeData(dataWithExpense);
+    let sumExpense = 0;
+    let sumIncome = 0;
+    const configuredData = expenseData.map((record, index) => {
+      sumExpense += record.sumByDate;
+      sumIncome += incomeData[index].sumByDate;
+
+      return {
+        name: index + 1,
+        expense: sumExpense,
+        income: sumIncome,
+      };
+    });
+
     setData(configuredData);
   };
 
   useEffect(() => {
-    const configure = async () => {
-      await configureData();
+    if (incomeData?.length !== 0 && expenseData?.length !== 0) {
+      configureData();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [incomeData, expenseData]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      await getExpenseData();
+      await getIncomeData();
     };
-    configure().then(() => {
-      //console.log(data);
-    });
+
+    loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [month, year, onlyYear]);
 
   return (
-    <div>
-      <h5 style={{ color: "whitesmoke", borderBottom: "1px solid whitesmoke" }}>
-        {title}
-      </h5>
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "500px" }}
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: "500px" }}
+    >
+      <ResponsiveContainer
+        width="100%"
+        height="100%"
+        minHeight="100"
+        minWidth="100"
       >
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
-            <CartesianGrid
-              strokeDasharray="5 5"
-              fill="#373C47"
-              vertical={false}
-            />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip
-              formatter={(value) => {
-                return `${value.toFixed(2)} $`;
-              }}
-            />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="expense"
-              stroke="#8884d8"
-              activeDot={{ r: 8 }}
-            />
-            <Line type="monotone" dataKey="income" stroke="#68E255" />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+        <LineChart data={data} width="100%" height="100%">
+          <CartesianGrid
+            strokeDasharray="5 5"
+            fill="#373C47"
+            vertical={false}
+          />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip
+            formatter={(value) => {
+              return `${value.toFixed(2)} $`;
+            }}
+          />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="expense"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+          <Line type="monotone" dataKey="income" stroke="#68E255" />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 };
