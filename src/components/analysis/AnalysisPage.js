@@ -74,7 +74,7 @@ const AnalysisPage = () => {
               <Tab.Pane eventKey="1">
                 <Row>
                   <Col xs={2}></Col>
-                  <Col xs={8}>
+                  <Col xs={8} style={{ minWidth: "350px" }}>
                     {activeTab === 1 ? <PositiveNegativeChart /> : <></>}
                   </Col>
                   <Col xs={2}></Col>
@@ -82,7 +82,7 @@ const AnalysisPage = () => {
               </Tab.Pane>
               <Tab.Pane eventKey="2">
                 <Row className="sm-direction-column">
-                  <Col xs={6}>
+                  <Col xs={6} style={{ minWidth: "350px" }}>
                     {activeTab === 2 ? (
                       <CustomPieChart
                         title="Expenses"
@@ -95,7 +95,7 @@ const AnalysisPage = () => {
                       <></>
                     )}
                   </Col>
-                  <Col xs={6}>
+                  <Col xs={6} style={{ minWidth: "350px" }}>
                     {activeTab === 2 ? (
                       <CustomPieChart
                         title="Incomes"
@@ -113,7 +113,7 @@ const AnalysisPage = () => {
               <Tab.Pane eventKey="3">
                 <Row>
                   <Col xs={2}></Col>
-                  <Col xs={8}>
+                  <Col xs={8} style={{ minWidth: "350px" }}>
                     {activeTab === 3 ? (
                       <CustomLineChart
                         month={month}
@@ -129,7 +129,7 @@ const AnalysisPage = () => {
               </Tab.Pane>
               <Tab.Pane eventKey="4">
                 <Row>
-                  <Col xs={6}>
+                  <Col xs={6} style={{ minWidth: "350px" }}>
                     {activeTab === 4 ? (
                       <CustomBarChart
                         title="Expenses"
@@ -142,7 +142,7 @@ const AnalysisPage = () => {
                       <></>
                     )}
                   </Col>
-                  <Col xs={6}>
+                  <Col xs={6} style={{ minWidth: "350px" }}>
                     {activeTab === 4 ? (
                       <CustomBarChart
                         title="Incomes"

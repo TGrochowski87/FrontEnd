@@ -97,16 +97,7 @@ const PositiveNegativeChart = () => {
       style={{ height: "500px" }}
     >
       <ResponsiveContainer>
-        <BarChart
-          data={differenceData}
-          maxBarSize={100}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
+        <BarChart data={differenceData} maxBarSize={100}>
           <CartesianGrid strokeDasharray="3 3" fill="#373C47" />
           <XAxis dataKey="date" />
           <YAxis type="number" domain={[-maxAbsValue, maxAbsValue]} />
