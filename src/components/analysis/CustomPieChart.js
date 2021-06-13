@@ -1,38 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { PieChart, Pie, ResponsiveContainer, Cell, Legend } from "recharts";
+import { Form } from 'react-bootstrap';
 
-import useFetch from "use-http";
+import { PieChart, Pie, ResponsiveContainer, Cell, Legend } from 'recharts';
 
-import mainColors from "./colors";
+import useFetch from 'use-http';
+
+import mainColors from './colors';
 
 const CustomPieChart = ({ title, chartFor, month, year, onlyYear }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     dataGet();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chartFor, month, year, onlyYear]);
 
   const { get, response } = useFetch(
     `https://webhomebudget.azurewebsites.net/api`,
     {
       headers: {
-        Authorization: "Bearer " + sessionStorage.getItem("userToken"),
+        Authorization: 'Bearer ' + sessionStorage.getItem('userToken'),
       },
-      cachePolicy: "no-cache",
+      cachePolicy: 'no-cache',
     }
   );
 
   const dataGet = async () => {
-    const monthParam = month < 10 ? "0" + month : month;
+    const monthParam = month < 10 ? '0' + month : month;
     const yearParam = year;
     const chartForParam = chartFor;
-    const periodParam = onlyYear ? "yearly" : "monthly";
+    const periodParam = onlyYear ? 'yearly' : 'monthly';
 
     let url = `/analysis/${chartForParam}/${periodParam}/categorised`;
-    if (periodParam === "monthly") {
+    if (periodParam === 'monthly') {
       url += `?date=01/${monthParam}/${yearParam}`;
     }
 
@@ -90,9 +90,9 @@ const CustomPieChart = ({ title, chartFor, month, year, onlyYear }) => {
       <text
         x={x}
         y={y}
-        fill="white"
-        textAnchor={x > cx ? "start" : "end"}
-        dominantBaseline="central"
+        fill='white'
+        textAnchor={x > cx ? 'start' : 'end'}
+        dominantBaseline='central'
       >
         {(percent * 100).toFixed(2)}%
       </text>
@@ -109,27 +109,21 @@ const CustomPieChart = ({ title, chartFor, month, year, onlyYear }) => {
 
   return (
     <div>
-      <h5
-        style={{
-          color: "whitesmoke",
-          borderBottom: "1px solid whitesmoke",
-          margin: "0 5%",
-        }}
-      >
+      <h5 style={{ color: 'white', borderBottom: '1px solid white' }}>
         {title}
       </h5>
       <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "500px" }}
+        className='d-flex justify-content-center align-items-center'
+        style={{ height: '500px' }}
       >
         {data?.length !== 0 ? (
           <ResponsiveContainer>
             <PieChart label={true}>
               <Legend
-                iconType="circle"
+                iconType='circle'
                 payload={data.main.map((item) => {
                   return {
-                    type: "circle",
+                    type: 'circle',
                     id: item.name,
                     value: item.name,
                     color: item.color,
@@ -139,18 +133,18 @@ const CustomPieChart = ({ title, chartFor, month, year, onlyYear }) => {
 
               <Pie
                 data={data.main}
-                dataKey="value"
-                nameKey="name"
+                dataKey='value'
+                nameKey='name'
                 label={
-                  chartFor === "income"
+                  chartFor === 'income'
                     ? renderOuterPercentLabel
                     : renderInnerLabel
                 }
-                labelLine={chartFor === "income"}
-                cx="50%"
-                cy="50%"
-                outerRadius="50%"
-                fill="#8884d8"
+                labelLine={chartFor === 'income'}
+                cx='50%'
+                cy='50%'
+                outerRadius='50%'
+                fill='#8884d8'
               >
                 {data.main.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
@@ -158,19 +152,19 @@ const CustomPieChart = ({ title, chartFor, month, year, onlyYear }) => {
               </Pie>
               <Pie
                 data={data.sub}
-                dataKey="value"
-                nameKey="name"
+                dataKey='value'
+                nameKey='name'
                 label={renderOuterFullLabel}
-                cx="50%"
-                cy="50%"
-                innerRadius="60%"
-                outerRadius="70%"
-                fill="#ffa600"
+                cx='50%'
+                cy='50%'
+                innerRadius='60%'
+                outerRadius='70%'
+                fill='#ffa600'
               />
             </PieChart>
           </ResponsiveContainer>
         ) : (
-          <p className="font-italic" style={{ color: "white" }}>
+          <p className='font-italic' style={{ color: 'white' }}>
             No data available for this period
           </p>
         )}

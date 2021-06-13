@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { Col, Container, Row, Tab, Nav } from "react-bootstrap";
+import { Col, Container, Row, Tab, Nav } from 'react-bootstrap';
 
-import CustomPieChart from "./CustomPieChart";
-import PeriodPicker from "./PeriodPicker";
-import PositiveNegativeChart from "./PositiveNegativeChart";
-import CustomLineChart from "./CustomLineChart";
-import CustomBarChart from "./CustomBarChart";
+import CustomBarChart from './CustomBarChart';
+import CustomLineChart from './CustomLineChart';
+import CustomPieChart from './CustomPieChart';
+import DataExporter from './DataExporter';
+import PeriodPicker from './PeriodPicker';
+import PositiveNegativeChart from './PositiveNegativeChart';
 
 const AnalysisPage = () => {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -15,14 +16,14 @@ const AnalysisPage = () => {
   const [activeTab, setActiveTab] = useState(1);
 
   return (
-    <Container className="analysis-page" fluid>
-      <Tab.Container defaultActiveKey="1">
+    <Container className='analysis-page' fluid>
+      <Tab.Container defaultActiveKey='1'>
         <Row>
           <Col sm={3}>
-            <Nav variant="pills" className="flex-column">
+            <Nav variant='pills' className='flex-column'>
               <Nav.Item>
                 <Nav.Link
-                  eventKey="1"
+                  eventKey='1'
                   onClick={() => {
                     setActiveTab(1);
                   }}
@@ -32,7 +33,7 @@ const AnalysisPage = () => {
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link
-                  eventKey="2"
+                  eventKey='2'
                   onClick={() => {
                     setActiveTab(2);
                   }}
@@ -42,7 +43,7 @@ const AnalysisPage = () => {
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link
-                  eventKey="3"
+                  eventKey='3'
                   onClick={() => {
                     setActiveTab(3);
                   }}
@@ -52,7 +53,7 @@ const AnalysisPage = () => {
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link
-                  eventKey="4"
+                  eventKey='4'
                   onClick={() => {
                     setActiveTab(4);
                   }}
@@ -61,32 +62,33 @@ const AnalysisPage = () => {
                 </Nav.Link>
               </Nav.Item>
             </Nav>
-            <div className="picker">
+            <div className='picker'>
               <PeriodPicker
                 pickMonth={setMonth}
                 pickYear={setYear}
                 onlyYear={setOnlyYear}
               />
+              <DataExporter />
             </div>
           </Col>
           <Col sm={9}>
             <Tab.Content>
-              <Tab.Pane eventKey="1">
+              <Tab.Pane eventKey='1'>
                 <Row>
                   <Col xs={2}></Col>
-                  <Col xs={8} style={{ minWidth: "350px" }}>
+                  <Col xs={8} style={{ minWidth: '350px' }}>
                     {activeTab === 1 ? <PositiveNegativeChart /> : <></>}
                   </Col>
                   <Col xs={2}></Col>
                 </Row>
               </Tab.Pane>
-              <Tab.Pane eventKey="2">
-                <Row className="sm-direction-column">
-                  <Col xs={6} style={{ minWidth: "350px" }}>
+              <Tab.Pane eventKey='2'>
+                <Row className='sm-direction-column'>
+                  <Col xs={6} style={{ minWidth: '350px' }}>
                     {activeTab === 2 ? (
                       <CustomPieChart
-                        title="Expenses"
-                        chartFor="expense"
+                        title='Expenses'
+                        chartFor='expense'
                         month={month}
                         year={year}
                         onlyYear={onlyYear}
@@ -95,11 +97,11 @@ const AnalysisPage = () => {
                       <></>
                     )}
                   </Col>
-                  <Col xs={6} style={{ minWidth: "350px" }}>
+                  <Col xs={6} style={{ minWidth: '350px' }}>
                     {activeTab === 2 ? (
                       <CustomPieChart
-                        title="Incomes"
-                        chartFor="income"
+                        title='Incomes'
+                        chartFor='income'
                         month={month}
                         year={year}
                         onlyYear={onlyYear}
@@ -110,10 +112,10 @@ const AnalysisPage = () => {
                   </Col>
                 </Row>
               </Tab.Pane>
-              <Tab.Pane eventKey="3">
+              <Tab.Pane eventKey='3'>
                 <Row>
                   <Col xs={2}></Col>
-                  <Col xs={8} style={{ minWidth: "350px" }}>
+                  <Col xs={8} style={{ minWidth: '350px' }}>
                     {activeTab === 3 ? (
                       <CustomLineChart
                         month={month}
@@ -127,13 +129,13 @@ const AnalysisPage = () => {
                   <Col xs={2}></Col>
                 </Row>
               </Tab.Pane>
-              <Tab.Pane eventKey="4">
+              <Tab.Pane eventKey='4'>
                 <Row>
-                  <Col xs={6} style={{ minWidth: "350px" }}>
+                  <Col xs={6} style={{ minWidth: '350px' }}>
                     {activeTab === 4 ? (
                       <CustomBarChart
-                        title="Expenses"
-                        chartFor="expense"
+                        title='Expenses'
+                        chartFor='expense'
                         month={month}
                         year={year}
                         onlyYear={onlyYear}
@@ -142,11 +144,11 @@ const AnalysisPage = () => {
                       <></>
                     )}
                   </Col>
-                  <Col xs={6} style={{ minWidth: "350px" }}>
+                  <Col xs={6} style={{ minWidth: '350px' }}>
                     {activeTab === 4 ? (
                       <CustomBarChart
-                        title="Incomes"
-                        chartFor="income"
+                        title='Incomes'
+                        chartFor='income'
                         month={month}
                         year={year}
                         onlyYear={onlyYear}
