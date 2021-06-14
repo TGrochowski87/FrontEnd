@@ -1,0 +1,14 @@
+.data-exporter {
+  .card {
+    background-color: transparent;
+    border-color: #355f77;
+
+    .card-header {
+      cursor: pointer;
+      &:hover {
+        background-color: rgb(213, 222, 238);
+        color: rgb(40, 43, 51);
+      }
+    }
+  }
+}
