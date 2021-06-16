@@ -54,9 +54,9 @@ const FilterPanel = ({ expenses, setFilteredExpenses }) => {
   });
 
   const categoryGet = async () => {
-    await get("/category/expense/over/notarchived").then((response) =>
-      setCategories(response.map((cat) => cat.name))
-    );
+    await get("/category/expense/notarchived").then((response) => {
+      setCategories(response.map((cat) => cat.name));
+    });
   };
 
   const userGet = async () => {
@@ -67,6 +67,7 @@ const FilterPanel = ({ expenses, setFilteredExpenses }) => {
 
   const getProperties = async () => {
     await get("/budget/expenses/properties").then((response) => {
+      console.log(response);
       setFilterProperties({
         maxPrice: response.maxPrice,
         maxDate: new Date(response.maxDate),
@@ -89,7 +90,7 @@ const FilterPanel = ({ expenses, setFilteredExpenses }) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [expenses]);
 
   useEffect(() => {
     if (expenses === undefined) {
