@@ -45,6 +45,7 @@ const DataExporter = () => {
 
   useEffect(() => {
     dataMinMaxGet();
+    // eslint-disable-next-line
   }, []);
 
   const dataMinMaxGet = async () => {

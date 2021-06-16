@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { Form } from 'react-bootstrap';
-
 import { PieChart, Pie, ResponsiveContainer, Cell, Legend } from 'recharts';
 
 import useFetch from 'use-http';
@@ -13,6 +11,7 @@ const CustomPieChart = ({ title, chartFor, month, year, onlyYear }) => {
 
   useEffect(() => {
     dataGet();
+    // eslint-disable-next-line
   }, [chartFor, month, year, onlyYear]);
 
   const { get, response } = useFetch(
