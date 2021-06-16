@@ -94,7 +94,6 @@ const CustomBarChart = ({ title, chartFor, month, year, onlyYear }) => {
         style={{
           color: "whitesmoke",
           borderBottom: "1px solid whitesmoke",
-          margin: "0 5%",
         }}
       >
         {title}
@@ -107,7 +106,20 @@ const CustomBarChart = ({ title, chartFor, month, year, onlyYear }) => {
           <BarChart data={data} maxBarSize={50}>
             <CartesianGrid strokeDasharray="3 3" fill="#373C47" />
             <XAxis dataKey="name" />
-            <YAxis type="number" domain={[-maxAbsValue, maxAbsValue]} />
+            <YAxis
+              type="number"
+              domain={[0, maxAbsValue]}
+              interval="preserveStartEnd"
+              ticks={[
+                0,
+                Math.round(maxAbsValue * 0.2),
+                Math.round(maxAbsValue * 0.4),
+                Math.round(maxAbsValue * 0.6),
+                Math.round(maxAbsValue * 0.8),
+                Math.round(maxAbsValue),
+              ]}
+              unit="$"
+            />
             <Tooltip
               formatter={(value) => {
                 return `${value.toFixed(2)} $`;

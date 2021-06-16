@@ -10,7 +10,6 @@
     margin: 5% 5%;
     padding: 0;
     width: 90%;
-    //background-color: yellow;
 
     display: flex;
     flex-direction: row;
@@ -18,10 +17,6 @@
     justify-content: center;
     align-items: flex-start;
     align-content: flex-start;
-
-    // overflow: scroll;
-    // -ms-overflow-style: none; /* IE and Edge */
-    // scrollbar-width: none; /* Firefox */
 
     .list-header {
       width: 100%;
@@ -63,7 +58,7 @@
 
     .category-card {
       position: relative;
-      border: solid 1px; //rgb(83, 172, 83);
+      border: solid 1px;
       border-radius: 5px;
       overflow: hidden;
       width: 18rem;
