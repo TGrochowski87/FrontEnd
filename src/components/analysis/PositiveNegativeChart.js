@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 import {
   ResponsiveContainer,
@@ -11,10 +11,11 @@ import {
   Tooltip,
   Legend,
   ReferenceLine,
-} from "recharts";
-import useFetch from "use-http";
+} from 'recharts';
 
-import months from "./months";
+import useFetch from 'use-http';
+
+import months from './months';
 
 const PositiveNegativeChart = () => {
   const [expenseData, setExpenseData] = useState([]);
@@ -26,14 +27,14 @@ const PositiveNegativeChart = () => {
     `https://webhomebudget.azurewebsites.net/api/analysis`,
     {
       headers: {
-        Authorization: "Bearer " + sessionStorage.getItem("userToken"),
+        Authorization: 'Bearer ' + sessionStorage.getItem('userToken'),
       },
-      cachePolicy: "no-cache",
+      cachePolicy: 'no-cache',
     }
   );
 
   const expenseAnalysisGet = async () => {
-    const data = await get("/expense/yearly");
+    const data = await get('/expense/yearly');
 
     if (response.ok) {
       setExpenseData(data);
@@ -41,7 +42,7 @@ const PositiveNegativeChart = () => {
   };
 
   const incomeAnalysisGet = async () => {
-    const data = await get("/income/yearly");
+    const data = await get('/income/yearly');
 
     if (response.ok) {
       setIncomeData(data);
@@ -93,14 +94,14 @@ const PositiveNegativeChart = () => {
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center"
-      style={{ height: "500px" }}
+      className='d-flex justify-content-center align-items-center'
+      style={{ height: '500px' }}
     >
       <ResponsiveContainer>
         <BarChart data={differenceData} maxBarSize={100}>
-          <CartesianGrid strokeDasharray="3 3" fill="#373C47" />
-          <XAxis dataKey="date" />
-          <YAxis type="number" domain={[-maxAbsValue, maxAbsValue]} />
+          <CartesianGrid strokeDasharray='3 3' fill='#373C47' />
+          <XAxis dataKey='date' />
+          <YAxis type='number' domain={[-maxAbsValue, maxAbsValue]} />
           <Tooltip
             formatter={(value) => {
               return `${value.toFixed(2)} $`;
@@ -110,24 +111,24 @@ const PositiveNegativeChart = () => {
             payload={[
               {
                 id: 0,
-                type: "square",
-                value: "positive",
-                color: "#82ca9d",
+                type: 'square',
+                value: 'positive',
+                color: '#82ca9d',
               },
               {
                 id: 1,
-                type: "square",
-                value: "negative",
-                color: "#C12C30",
+                type: 'square',
+                value: 'negative',
+                color: '#C12C30',
               },
             ]}
           />
-          <ReferenceLine y={0} stroke="#000" />
-          <Bar dataKey="balance" fill="#E1E1E1">
+          <ReferenceLine y={0} stroke='#000' />
+          <Bar dataKey='balance' fill='#E1E1E1'>
             {differenceData.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={entry.balance > 0 ? "#82ca9d" : "#C12C30"}
+                fill={entry.balance > 0 ? '#82ca9d' : '#C12C30'}
               />
             ))}
           </Bar>
